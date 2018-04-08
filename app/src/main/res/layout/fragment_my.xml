@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/write">
+
+    <org.birdback.histudents.base.TitleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title_back_isShow="false"
+        app:title_center_text="个人中心"/>
+    <View
+        style="@style/common_line_horizontal"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="个人中心"/>
+</LinearLayout>

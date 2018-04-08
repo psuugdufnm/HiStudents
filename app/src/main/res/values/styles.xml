@@ -1,11 +1,45 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="common_line_horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">#999999</item>
+    </style>
+
+    <!-- 首页 tab 按钮样式 -->
+    <style name="main_tab_rb">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/txt_color1</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="dialog_bg_transparent" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+
+    <style name="AppProgressBarStyle" parent="@android:style/Widget.DeviceDefault.ProgressBar">
+        <item name="android:minHeight">30dip</item>
+        <item name="android:minWidth">30dip</item>
+        <item name="android:maxHeight">30dip</item>
+        <item name="android:maxWidth">30dip</item>
+        <!--<item name="android:indeterminateTint">你自定义的颜色</item>-->
+    </style>
+
+
 
 </resources>

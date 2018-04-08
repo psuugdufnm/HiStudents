@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cus_title_view_head"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="#ffffff"
+    android:paddingRight="10dp"
+    >
+
+    <TextView
+        android:id="@+id/cus_title_view_label"
+        style="@style/title_style"
+        android:text="hi students" />
+
+    <RadioGroup
+        android:id="@+id/cus_title_view_rgp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/cus_title_view_rbt_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:checked="true"
+            android:paddingBottom="5dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="5dp"
+            android:text="左" />
+
+        <RadioButton
+            android:id="@+id/cus_title_view_rbt_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:paddingBottom="5dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="5dp"
+            android:text="右" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/cus_title_view_back_img_ll"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        >
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/cus_title_view_back_img"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/btn_break" />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/cus_title_view_right_rl"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true">
+
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/cus_title_view_num_tip"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="#FFFFFF"
+            android:textSize="8sp" />
+
+        <ImageView
+            android:id="@+id/cus_title_view_right_img"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/cus_title_view_right_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="完成"
+        android:visibility="gone"
+        />
+</RelativeLayout>

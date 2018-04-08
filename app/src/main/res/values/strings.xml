@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">HiStudents</string>
+    <string name="main_tab_0">订单处理</string>
+    <string name="main_tab_1">订单查询</string>
+    <string name="main_tab_2">个人中心</string>
 </resources>

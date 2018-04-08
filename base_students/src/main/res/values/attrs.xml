@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--TitleView-->
+    <declare-styleable name="CusTitleView">
+        <!--标题文字-->
+        <attr name="title_center_text" format="string" localization="suggested"/>
+        <!--返回键的图标-->
+        <attr name="title_back_src" format="reference"/>
+        <!--是否显示返回键-->
+        <attr name="title_back_isShow" format="boolean"/>
+        <!--是否显示中间的RadioGroup-->
+        <attr name="title_rgp_isShow" format="boolean"/>
+        <!--RadioGroup左侧的RadioButton标签-->
+        <attr name="title_left_rbtn_text" format="string"/>
+        <!--RadioGroup右侧的RadioButton标签-->
+        <attr name="title_right_rbth_text" format="string"/>
+        <!--右侧的文本按钮，如支付完成后只显示右侧按钮“完成”-->
+        <attr name="title_right_label" format="string" localization='suggested'/>
+        <!--右侧的文本按钮颜色”-->
+        <attr name="title_right_label_color" format="color"/>
+        <!--右侧标签图标-->
+        <attr name="title_right_label_img_src" format="reference"/>
+        <!--右侧的文本按钮是否显示-->
+        <attr name="title_right_label_isShow" format="boolean"/>
+        <!--右侧消息提示布局是否显示-->
+        <attr name="title_right_rl_isShow" format="boolean"/>
+        <!--右侧图标-->
+        <attr name="title_right_img_src" format="reference"/>
+        <!--右侧图标右上角的数字提示信息-->
+        <attr name="title_right_num_text" format="string"/>
+        <!--右侧图标是否显示-->
+        <attr name="title_right_img_isShow" format="boolean"/>
+        <!--右侧图标右上角的数字提示是否显示-->
+        <attr name="title_right_num_isShow" format="boolean"/>
+    </declare-styleable>
+</resources>
