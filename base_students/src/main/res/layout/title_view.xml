@@ -3,14 +3,12 @@
     android:id="@+id/cus_title_view_head"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:background="#ffffff"
-    android:paddingRight="10dp"
-    >
+    android:background="@color/colorAccent"
+    android:paddingRight="10dp">
 
     <TextView
         android:id="@+id/cus_title_view_label"
-        style="@style/title_style"
-        android:text="hi students" />
+        style="@style/title_style" />
 
     <RadioGroup
         android:id="@+id/cus_title_view_rgp"

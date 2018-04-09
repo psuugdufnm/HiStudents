@@ -1,44 +1,28 @@
 package org.birdback.histudents;
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
+
 import android.bluetooth.BluetoothSocket;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
-import android.os.Message;
-import android.support.annotation.RequiresApi;
+
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 import org.birdback.histudents.Fragment.MyFragment;
 import org.birdback.histudents.Fragment.OrderManagerFragment;
 import org.birdback.histudents.Fragment.OrderSearchFragment;
 import org.birdback.histudents.core.CoreBaseFragment;
-import org.birdback.histudents.utils.TextUtils;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static int REQUEST_ENABLE_BT = 10;
-    private ArrayList<String> mArray = new ArrayList<>();;
-    private BluetoothSocket mmSocket;
-    private OutputStream outputStream;
 
-    private UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     private RadioButton radio0,radio1,radio2;
     private FrameLayout mFrameLayout;
@@ -56,8 +40,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initView();
 
         initListener();
-
-        //initBuleTooth();
 
         switchFragment(0);
 
@@ -118,31 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         transaction.commit();
     }
 
-    private void initBuleTooth() {
-        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (mBluetoothAdapter == null) {
-            TextUtils.makeText("设备不支持蓝牙");
-            return;
-        }
 
-        if (!mBluetoothAdapter.isEnabled()) {
-            TextUtils.makeText("蓝牙未启用");
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-            return;
-        }
-
-        //获取到的集合是已配对的设备 02:30:C8:92:E2:3A
-        Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-        if (pairedDevices.size() > 0) {
-
-            for (BluetoothDevice device : pairedDevices) {
-                new ConnectThread(device).start();
-                mArray.add(device.getName() + "\n" + device.getAddress());
-
-            }
-        }
-    }
 
     @Override
     public void onClick(View view) {
@@ -162,46 +120,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private class ConnectThread extends Thread {
-        public ConnectThread(BluetoothDevice device) {
-            try {
-                mmSocket = device.createRfcommSocketToServiceRecord(uuid);
-            } catch (IOException e) {
-                TextUtils.makeText("mmSocket连接失败");
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        public void run() {
-            try {
-                //连接socket
-                mmSocket.connect();
-                //连接成功获取输出流
-                outputStream = mmSocket.getOutputStream();
-
-                send("3年Android开发经验，擅长Android,Java。目前就职于某大" +
-                        "型金融公司，负责产品开发、维护与性能优化，善于钻研技术，学习能力" +
-                        "强，对工作热爱细心，工作效率高，思维开阔，定位问题迅速。喜欢运动、旅游。/n");
-            } catch (Exception connectException) {
-                Log.e("test", "连接失败");
-                TextUtils.makeText("连接失败");
-            }
-        }
-    }
-
-    /**
-     * 发送数据
-     */
-    public void send(String text) {
-        try {
-            byte[] data = text.getBytes("gbk");
-            outputStream.write(data, 0, data.length);
-            outputStream.flush();
-            outputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            TextUtils.makeText("send 败");
-        }
-    }
 }

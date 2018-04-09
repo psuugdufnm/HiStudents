@@ -3,7 +3,7 @@ package org.birdback.histudents.utils;
 import android.content.Context;
 import android.widget.Toast;
 
-import org.birdback.histudents.BaseApplication;
+import org.birdback.histudents.base.BaseApplication;
 
 /**
  * Created by Administrator on 2018/4/8.

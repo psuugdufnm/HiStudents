@@ -5,6 +5,7 @@ import android.view.View;
 
 import org.birdback.histudents.Fragment.Model.MyFragmentModel;
 import org.birdback.histudents.Fragment.Presenter.MyFragmentPresenter;
+import org.birdback.histudents.Fragment.contract.MyContract;
 import org.birdback.histudents.R;
 import org.birdback.histudents.core.CoreBaseFragment;
 
@@ -12,7 +13,7 @@ import org.birdback.histudents.core.CoreBaseFragment;
  * Created by Administrator on 2018/4/8.
  */
 
-public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentModel> {
+public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentModel> implements MyContract.View  {
     @Override
     public int getLayoutId() {
         return R.layout.fragment_my;
@@ -20,6 +21,14 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentM
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
+
+    }
+    @Override
+    public void initListener() {
+    }
+
+    @Override
+    public void showMessage(String msg) {
 
     }
 }

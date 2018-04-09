@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <org.birdback.histudents.base.TitleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title_back_isShow="true"
+        app:title_center_text="打印机管理"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/write"
+        android:paddingBottom="@dimen/dp15"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp20"
+            android:layout_marginBottom="@dimen/dp20"
+            android:src="@mipmap/icon_printer2"/>
+
+        <TextView
+            android:id="@+id/tv_print_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/sp18"
+            android:textColor="@color/txt_color1"
+            android:text="打印机名称"/>
+
+        <TextView
+            android:id="@+id/tv_connect_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dp15"
+            android:textSize="@dimen/sp15"
+            android:textColor="@color/txt_color_green"
+            android:text="已连接"/>
+    </LinearLayout>
+    <View
+        style="@style/common_line_horizontal_80"/>
+
+    <View
+        style="@style/common_line_horizontal_80"
+        android:layout_marginTop="@dimen/dp10"/>
+    <TextView
+        android:id="@+id/tv_print_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp15"
+        android:background="@drawable/selector_bg_item"
+        android:text="打印测试页" />
+    <View
+        style="@style/common_line_horizontal_80"/>
+
+</LinearLayout>

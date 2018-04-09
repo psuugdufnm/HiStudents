@@ -42,51 +42,16 @@ public abstract class CoreBaseActivity<P extends CoreBaseContract.CoreBasePresen
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        initTypeface();
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         init(savedInstanceState);
     }
 
-    protected void initTypeface() {
-        if (mTypeface == null) {
-            mTypeface = Typeface.createFromAsset(getAssets(), "LanTingXiHei.ttf");
-        }
-        if (mTypefaceBlod == null) {
-            mTypefaceBlod = Typeface.createFromAsset(getAssets(), "LanTingXiHei_BOLD.ttf");
-        }
 
-        LayoutInflaterCompat.setFactory(LayoutInflater.from(this), new LayoutInflaterFactory() {
-            @Override
-            public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
-                AppCompatDelegate delegate = getDelegate();
-                View view = delegate.createView(parent, name, context, attrs);
-
-                if (view != null && (view instanceof TextView)) {
-                    TextView tv = (TextView) view;
-                    if (tv.getTypeface() != null && tv.getTypeface().isBold()) {
-                        tv.setTypeface(mTypefaceBlod);
-                    } else {
-                        tv.setTypeface(mTypeface);
-                    }
-                }
-                if (view != null && (view instanceof EditText)) {
-                    ((EditText) view).setTypeface(mTypeface);
-                    EditText et = (EditText) view;
-                    if (et.getTypeface() != null && et.getTypeface().isBold()) {
-                        et.setTypeface(mTypefaceBlod);
-                    } else {
-                        et.setTypeface(mTypeface);
-                    }
-                }
-                return view;
-            }
-        });
-    }
 
     private void init(Bundle savedInstanceState) {
         mTAG = getClass().getSimpleName();
@@ -96,7 +61,7 @@ public abstract class CoreBaseActivity<P extends CoreBaseContract.CoreBasePresen
             mPresenter.attachVM(this, mModel, this);
         }
         initView(savedInstanceState);
-
+        initListener();
     }
 
 
@@ -111,6 +76,7 @@ public abstract class CoreBaseActivity<P extends CoreBaseContract.CoreBasePresen
     }
 
     public abstract int getLayoutId();
+    public abstract void initListener();
 
     protected abstract void initView(Bundle savedInstanceState);
 

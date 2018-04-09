@@ -1,4 +1,4 @@
-package org.birdback.histudents;
+package org.birdback.histudents.base;
 
 import android.app.Application;
 import android.content.Context;

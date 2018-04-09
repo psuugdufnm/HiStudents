@@ -59,8 +59,7 @@ public abstract class CoreBaseFragment<P extends CoreBaseContract.CoreBasePresen
         super.onViewCreated(view, savedInstanceState);
     }
 
-    protected void initListener() {
-    }
+
 
     public void getBundle(Bundle arguments) {
     }
@@ -70,6 +69,7 @@ public abstract class CoreBaseFragment<P extends CoreBaseContract.CoreBasePresen
     }
 
     public abstract int getLayoutId();
+    public abstract void initListener();
 
     /**
      * 初始化View
