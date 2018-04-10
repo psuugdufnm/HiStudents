@@ -11,9 +11,10 @@
         app:title_back_isShow="false"
         app:title_center_text="订单管理"/>
     <View
-        style="@style/common_line_horizontal"/>
+        style="@style/common_line_horizontal_80"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -47,7 +48,7 @@
                     android:src="@mipmap/icon_print_red"/>
             </LinearLayout>
             <View
-                style="@style/common_line_horizontal"/>
+                style="@style/common_line_horizontal_80"/>
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 

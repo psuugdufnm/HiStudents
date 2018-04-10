@@ -1,8 +1,5 @@
 package org.birdback.histudents;
 
-
-import android.bluetooth.BluetoothSocket;
-
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -15,10 +12,6 @@ import org.birdback.histudents.Fragment.MyFragment;
 import org.birdback.histudents.Fragment.OrderManagerFragment;
 import org.birdback.histudents.Fragment.OrderSearchFragment;
 import org.birdback.histudents.core.CoreBaseFragment;
-
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 

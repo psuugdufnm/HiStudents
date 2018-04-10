@@ -20,4 +20,8 @@ public class TextUtils {
     public static void makeText(String text){
         Toast.makeText(mContext,text,Toast.LENGTH_SHORT).show();
     }
+
+    public static void makeText(int text){
+        Toast.makeText(mContext,String.valueOf(text),Toast.LENGTH_SHORT).show();
+    }
 }
