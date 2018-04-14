@@ -17,6 +17,7 @@ import org.birdback.histudents.net.Callback.OnFailureCallBack;
 import org.birdback.histudents.net.Callback.OnSuccessCallBack;
 import org.birdback.histudents.net.HttpServer;
 import org.birdback.histudents.service.RequestParams;
+import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.TextUtils;
 
 
@@ -47,7 +48,7 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
                 HttpServer.getDataFromServer(RequestParams.getInstance().getTest(), new OnSuccessCallBack<Object>() {
                     @Override
                     public void onSuccess(Object entity) {
-                        TextUtils.makeText(entity.toString());
+                        TextUtils.makeText(Session.getCookie());
 
                     }
                 }, new OnFailureCallBack() {

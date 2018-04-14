@@ -7,30 +7,20 @@ package org.birdback.histudents.utils;
 
 public class Session {
 
-    private static String bankNumber;
     private static String cookie = "";
 
 
-    public static String getBankNumber() {
-        if (VerifyUtil.isEmpty(bankNumber)) {
-            bankNumber = SharedPreUtil.getValue("bankNumber", "");
-        }
-        return bankNumber;
-    }
-
-    public static void setBankNumber(String bankNumber) {
-        Session.bankNumber = bankNumber;
-        SharedPreUtil.putValue("bankNumber", VerifyUtil.isEmpty(bankNumber) ? "" : bankNumber);
-    }
-
-    public static void logout() {
-
-    }
-
     public static String getCookie() {
+        if (VerifyUtil.isEmpty(cookie)) {
+            cookie = SharedPreUtil.getValue("cookie", "");
+        }
         return cookie;
     }
-    public static void setCookie(String c){
-        cookie = c;
+
+    public static void setCookie(String cookie) {
+        Session.cookie = cookie;
+        SharedPreUtil.putValue("cookie", VerifyUtil.isEmpty(cookie) ? "" : cookie);
     }
+
+
 }

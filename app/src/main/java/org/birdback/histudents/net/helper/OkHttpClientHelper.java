@@ -1,6 +1,8 @@
 package org.birdback.histudents.net.helper;
 
 import org.birdback.histudents.base.BaseApplication;
+import org.birdback.histudents.net.cookie.AddCookiesInterceptor;
+import org.birdback.histudents.net.cookie.ReceivedCookiesInterceptor;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -17,6 +19,8 @@ public class OkHttpClientHelper {
 
     private final static long TIMEOUT = 30;  //超时时间
     private static HttpInterceptor mInterceptor;
+    private static ReceivedCookiesInterceptor receivedCookiesInterceptor;
+    private static AddCookiesInterceptor addCookiesInterceptor;
     private static CookieJar mCookie;
     private static OkHttpClient.Builder mOkHttpClient;
     private static OkHttpClient.Builder mOkHttpClientHttps;
@@ -59,13 +63,24 @@ public class OkHttpClientHelper {
                 .readTimeout(TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(TIMEOUT, TimeUnit.SECONDS);
         // .cache(cache)// 设置缓存
-        if (mInterceptor == null)
+        if (mInterceptor == null){
             mInterceptor = new HttpInterceptor();
-        client.addInterceptor(mInterceptor);
-        if (mCookie == null) {
-            mCookie = new HttpCookie();
+
         }
-        client.cookieJar(mCookie);
+        if (receivedCookiesInterceptor == null) {
+
+            receivedCookiesInterceptor = new ReceivedCookiesInterceptor();
+        }
+        if (addCookiesInterceptor == null) {
+
+            addCookiesInterceptor = new AddCookiesInterceptor();
+        }
+
+        client.addInterceptor(receivedCookiesInterceptor);
+        client.addInterceptor(addCookiesInterceptor);
+
+        client.addInterceptor(mInterceptor);
+
         return client;
     }
 

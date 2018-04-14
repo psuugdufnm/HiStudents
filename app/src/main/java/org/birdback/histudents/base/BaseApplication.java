@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 
+import org.birdback.histudents.utils.SharedPreUtil;
 import org.birdback.histudents.utils.TextUtils;
 
 /**
@@ -27,6 +28,7 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mApplication = this;
+        SharedPreUtil.initialize(this);
         mApplication.registerReceiver(mReceiver,makeFilter());
     }
 

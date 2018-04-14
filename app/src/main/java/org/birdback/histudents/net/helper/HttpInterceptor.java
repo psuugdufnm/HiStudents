@@ -6,6 +6,7 @@ import org.birdback.histudents.utils.TextUtils;
 import org.birdback.histudents.utils.VerifyUtil;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -30,7 +31,6 @@ public class HttpInterceptor implements Interceptor {
 
         Request request = original.newBuilder()
                 .header("Accept", "application/json")
-                .header("cookie", Session.getCookie())
                 .method(original.method(), original.body())
                 .build();
 
@@ -47,6 +47,7 @@ public class HttpInterceptor implements Interceptor {
                 body, request.headers().toString().replaceAll("\\n", "\\\n║                   ")));
 
         Response response = chain.proceed(request);
+
 
         long t2 = System.currentTimeMillis();
         ResponseBody responseBody = response.peekBody(1024 * 1024);
@@ -65,13 +66,8 @@ public class HttpInterceptor implements Interceptor {
                 responseBodyStr.replaceAll("\\n", ""),
                 response.headers().toString().replaceAll("\\n", "\\\n║                   ")));
 
-        String phpsessid = response.headers().get("PHPSESSID");
-        if (!VerifyUtil.isEmpty(phpsessid)){
-            Session.setCookie(phpsessid);
-        }
         return response;
     }
-
 
 
     public static String bodyToString(final RequestBody request) {
