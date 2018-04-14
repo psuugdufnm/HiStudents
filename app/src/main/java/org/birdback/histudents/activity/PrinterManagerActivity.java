@@ -32,8 +32,7 @@ import java.util.UUID;
 
 public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPresenter,PrinterManagerModel> implements PrinterManagerContract.View, View.OnClickListener {
 
-    private static int REQUEST_ENABLE_BT = 10;
-    public static final int PRINT_TYPE = 1664;
+    private static final String FINISH = "finish";
     private BluetoothSocket mmSocket;
     private OutputStream outputStream;
 
@@ -42,6 +41,7 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
 
     private TextView mTvPrintTest,mTvPrintName,mTvConnectStatus;
     private PrintBean mPrintBean;
+    private String mPrintStatus;
 
     public static void start(Context mContext) {
         mContext.startActivity(new Intent(mContext,PrinterManagerActivity.class));
@@ -150,8 +150,8 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
                 mmSocket.connect();
                 //连接成功获取输出流
                 outputStream = mmSocket.getOutputStream();
-
                 send(outputStream);
+                mPrintStatus = FINISH;
             } catch (Exception connectException) {
                 connectException.printStackTrace();
             }
@@ -161,7 +161,7 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
     /**
      * 发送数据
      */
-    public void send(OutputStream outputStream) {
+    public synchronized void send(OutputStream outputStream) {
         PrintUtils.setOutputStream(outputStream);
         PrintUtils.selectCommand(PrintUtils.RESET);
         PrintUtils.selectCommand(PrintUtils.LINE_SPACING_DEFAULT);

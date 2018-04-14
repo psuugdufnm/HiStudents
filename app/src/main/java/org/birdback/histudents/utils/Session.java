@@ -8,6 +8,7 @@ package org.birdback.histudents.utils;
 public class Session {
 
     private static String bankNumber;
+    private static String cookie = "";
 
 
     public static String getBankNumber() {
@@ -20,5 +21,16 @@ public class Session {
     public static void setBankNumber(String bankNumber) {
         Session.bankNumber = bankNumber;
         SharedPreUtil.putValue("bankNumber", VerifyUtil.isEmpty(bankNumber) ? "" : bankNumber);
+    }
+
+    public static void logout() {
+
+    }
+
+    public static String getCookie() {
+        return cookie;
+    }
+    public static void setCookie(String c){
+        cookie = c;
     }
 }
