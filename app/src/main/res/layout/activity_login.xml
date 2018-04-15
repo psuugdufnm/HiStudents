@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <org.birdback.histudents.base.TitleView
+        android:id="@+id/title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title_back_isShow="false"
+        app:title_center_text="同学你好(商家版)"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/write"
+        android:paddingBottom="@dimen/dp40"
+        android:paddingLeft="@dimen/dp40"
+        android:paddingRight="@dimen/dp40"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dp20">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp15"
+                android:text="用户名"/>
+            <EditText
+                android:id="@+id/et_name"
+                style="@style/etStyle"
+                android:gravity="left|center"
+                android:layout_marginLeft="@dimen/dp20"
+                android:inputType="number"
+                android:maxLength="11"
+                android:padding="15dp"
+                android:textSize="@dimen/sp15"
+                android:hint="请输入用户名"/>
+
+        </LinearLayout>
+
+        <View
+            style="@style/common_line_horizontal_80"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp15"
+                android:text="密    码"/>
+            <EditText
+                android:id="@+id/et_pwd"
+                style="@style/etStyle"
+                android:gravity="left|center"
+                android:layout_marginLeft="@dimen/dp20"
+                android:padding="15dp"
+                android:hint="请输入密码"
+                android:inputType="textPassword"
+                android:textSize="@dimen/sp15"/>
+
+        </LinearLayout>
+        <View
+            style="@style/common_line_horizontal_80"/>
+
+        <Button
+            android:id="@+id/btn_login"
+            style="@style/buttonStyle"
+            android:background="@drawable/button_bg"
+            android:layout_marginTop="@dimen/dp40"
+            android:text="登录"/>
+    </LinearLayout>
+</LinearLayout>

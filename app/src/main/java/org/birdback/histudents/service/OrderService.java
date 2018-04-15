@@ -40,4 +40,9 @@ public interface OrderService {
     @POST
     Observable<ResponseEntity<Object>> requestTest(@Url String url);
 
+    @FormUrlEncoded
+    @POST(RequestUrl.BASE_URL + RequestUrl.LOGIN)
+    Observable<ResponseEntity<Object>> login(@Field("mobile") String mobile,
+                                             @Field("pwd") String pwd);
+
 }

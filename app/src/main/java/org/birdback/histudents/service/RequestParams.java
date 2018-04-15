@@ -14,7 +14,7 @@ import java.util.Map;
 
 /**
  * RequestParams
- * Created by Loong on 16/4/26.
+ * Created by meixin.song on 18/4/15.
  */
 public class RequestParams {
     private static RequestParams requestParams;
@@ -34,6 +34,13 @@ public class RequestParams {
         RequestVo reqVo = new RequestVo();
         reqVo.hasDialog = true;
         reqVo.observable = HttpServer.getService(OrderService.class).getTest(RequestUrl.BASE_URL+ RequestUrl.TEST);
+        return reqVo;
+    }
+
+    public RequestVo login(String name,String pwd) {
+        RequestVo reqVo = new RequestVo();
+        reqVo.hasDialog = true;
+        reqVo.observable = HttpServer.getService(OrderService.class).login(name,pwd);
         return reqVo;
     }
 

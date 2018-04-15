@@ -2,6 +2,7 @@ package org.birdback.histudents.web;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
@@ -95,8 +96,6 @@ public class WebFragment extends CoreBaseFragment{
         public void ajaxRequest(String json){
             final AjaxRequestInfo info = new Gson().fromJson(json, AjaxRequestInfo.class);
 
-
-
             HttpServer.getDataFromServer(WebFragment.this,
                     RequestParams.getInstance().getAjaxRequest(info.url,info.postData),
                     new OnSuccessCallBack<Object>() {
@@ -107,6 +106,7 @@ public class WebFragment extends CoreBaseFragment{
                     String callBack = info.successFunc.replace(")",",'" + json + "')");
 
                     final String js = "javascript:window."+ callBack;
+
 
                     mHandler.post(new Runnable() {
                         @Override
@@ -133,28 +133,6 @@ public class WebFragment extends CoreBaseFragment{
             });
         }
 
-        @JavascriptInterface
-        public void showJsText(String text){
-            mWebView.loadUrl("javascript:jsText('"+ text +"')");
-        }
 
-
-        /**
-         * 网页加载Url调用JS函数.
-         *
-         * @param js
-         */
-        public void invokeJs(String js) {
-            LogUtil.i(TAG, "js: " + js);
-            if (VerifyUtil.isEmpty(js)) {
-                return;
-            }
-            if (!js.startsWith("javascript:")) {
-                js = "javascript:" + js;
-            }
-            /*if (isViewAttached()) {
-                getView().invokeJs(js);
-            }*/
-        }
     }
 }

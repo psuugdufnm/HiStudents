@@ -1,5 +1,7 @@
 package org.birdback.histudents;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -11,12 +13,14 @@ import android.widget.RadioButton;
 import org.birdback.histudents.Fragment.MyFragment;
 import org.birdback.histudents.Fragment.OrderManagerFragment;
 import org.birdback.histudents.Fragment.OrderSearchFragment;
+import org.birdback.histudents.activity.LoginActivity;
 import org.birdback.histudents.core.CoreBaseFragment;
+import org.birdback.histudents.utils.Session;
+import org.birdback.histudents.utils.TextUtils;
+import org.birdback.histudents.utils.VerifyUtil;
 import org.birdback.histudents.web.WebFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
-
 
     private RadioButton radio0,radio1,radio2;
     private FrameLayout mFrameLayout;
@@ -26,9 +30,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private WebFragment myFragment;
     private WebFragment searchFragment;
 
+
+    public static void start(Context context) {
+        context.startActivity(new Intent(context,MainActivity.class));
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (VerifyUtil.isEmpty(Session.getCookie())) {
+            LoginActivity.start(MainActivity.this);
+            finish();
+        }
+
+
+
         setContentView(R.layout.activity_main);
 
         initView();
@@ -114,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
 
 
 }

@@ -2,8 +2,13 @@ package org.birdback.histudents.net.cookie;
 
 
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
+import org.birdback.histudents.activity.LoginActivity;
+import org.birdback.histudents.base.BaseApplication;
 import org.birdback.histudents.utils.Session;
+import org.birdback.histudents.utils.TextUtils;
+import org.birdback.histudents.utils.VerifyUtil;
 
 import java.io.IOException;
 
@@ -23,7 +28,13 @@ public class AddCookiesInterceptor implements Interceptor {
 
         final Request.Builder builder = chain.request().newBuilder();
 
-        builder.addHeader("cookie", Session.getCookie());
+        String cookie = Session.getCookie();
+
+        if (!VerifyUtil.isEmpty(cookie)) {
+            builder.addHeader("cookie", cookie);
+        }
+
+
         return chain.proceed(builder.build());
     }
 }

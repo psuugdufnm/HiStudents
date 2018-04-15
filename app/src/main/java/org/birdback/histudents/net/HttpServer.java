@@ -1,5 +1,8 @@
 package org.birdback.histudents.net;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 
 import io.reactivex.Observable;
@@ -11,10 +14,12 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
+import io.reactivex.functions.IntFunction;
 import io.reactivex.schedulers.Schedulers;
 
 
 import org.birdback.histudents.core.CoreBaseActivity;
+import org.birdback.histudents.core.CoreBaseContract;
 import org.birdback.histudents.core.CoreBaseFragment;
 import org.birdback.histudents.entity.RequestVo;
 import org.birdback.histudents.entity.ResponseEntity;
@@ -56,6 +61,20 @@ public class HttpServer {
         startService(reqVo.observable, subscriber);
     }
 
+    public static <T> void getDataFromServer(CoreBaseContract.CoreBasePresenter presenter,
+                                             RequestVo reqVo,
+                                             OnSuccessCallBack<T> onSuccess,
+                                             OnFailureCallBack onFailure) {
+        Observer<T> subscriber;
+        if (reqVo.hasDialog) {
+            presenter.showProgressDialog();
+            subscriber = new MyObserver<>(onSuccess, onFailure, presenter);
+        } else {
+            subscriber = new MyObserver<>(onSuccess, onFailure);
+        }
+        startService(reqVo.observable, subscriber);
+    }
+
 
     private static <T> void startService(Observable<ResponseEntity<T>> observable, Observer<T> observer) {
         observable.compose(HttpServer.<T>applySchedulers())
@@ -70,6 +89,7 @@ public class HttpServer {
         private OnFailureCallBack onFailure;
         private CoreBaseActivity activity;
         private CoreBaseFragment fragment;
+        private CoreBaseContract.CoreBasePresenter presenter;
 
         private MyObserver(OnSuccessCallBack<T> onSuccess, OnFailureCallBack onFailure) {
             this.onSuccess = onSuccess;
@@ -86,6 +106,12 @@ public class HttpServer {
             this.onSuccess = onSuccess;
             this.onFailure = onFailure;
             this.fragment = fragment;
+        }
+
+        private MyObserver(OnSuccessCallBack<T> onSuccess, OnFailureCallBack onFailure, CoreBaseContract.CoreBasePresenter presenter) {
+            this.onSuccess = onSuccess;
+            this.onFailure = onFailure;
+            this.presenter = presenter;
         }
 
         @Override
@@ -142,10 +168,15 @@ public class HttpServer {
         }
 
         private void closeDialog() {
-            if (activity != null) {
+            if (presenter != null) {
+                presenter.closeProgressDialog();
+                presenter = null;
+            } else if (activity != null) {
+                if (activity.isFinishing() || activity.isDestroyed()) return;
                 activity.closeProgressDialog();
                 activity = null;
             } else if (fragment != null) {
+                if (fragment.getActivity()==null||fragment.getActivity().isFinishing()||fragment.getActivity().isDestroyed()) return;
                 fragment.closeProgressDialog();
                 fragment = null;
             }
@@ -153,6 +184,7 @@ public class HttpServer {
             onSuccess = null;
             onFailure = null;
         }
+
     }
 
 
