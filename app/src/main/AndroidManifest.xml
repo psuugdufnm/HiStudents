@@ -27,6 +27,8 @@
 
         <activity android:name=".activity.PrinterManagerActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".web.WebActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

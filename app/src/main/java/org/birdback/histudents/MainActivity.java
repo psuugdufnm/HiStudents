@@ -12,6 +12,7 @@ import org.birdback.histudents.Fragment.MyFragment;
 import org.birdback.histudents.Fragment.OrderManagerFragment;
 import org.birdback.histudents.Fragment.OrderSearchFragment;
 import org.birdback.histudents.core.CoreBaseFragment;
+import org.birdback.histudents.web.WebFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -22,8 +23,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FragmentManager mFragmentManager;
     private CoreBaseFragment mCacheFragment;
     private OrderManagerFragment managerFragment;
-    private MyFragment myFragment;
-    private OrderSearchFragment searchFragment;
+    private WebFragment myFragment;
+    private WebFragment searchFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +72,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case 1:
                 if (searchFragment == null) {
-                    searchFragment = new OrderSearchFragment();
+                    searchFragment = new WebFragment();
+                    searchFragment.setUrl("http://store.birdback.org/test/shop");
                     transaction.add(R.id.container, searchFragment, MyFragment.class.getSimpleName());
                 } else {
                     transaction.show(searchFragment);
@@ -80,7 +82,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case 2:
                 if (myFragment == null) {
-                    myFragment = new MyFragment();
+                    myFragment = new WebFragment();
+                    myFragment.setUrl("http://store.birdback.org/test/index");
                     transaction.add(R.id.container, myFragment, MyFragment.class.getSimpleName());
                 } else {
                     transaction.show(myFragment);

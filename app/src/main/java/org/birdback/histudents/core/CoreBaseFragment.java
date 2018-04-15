@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -28,11 +30,13 @@ public abstract class CoreBaseFragment<P extends CoreBaseContract.CoreBasePresen
     public M mModel;
     public Activity mActivity;
     private Dialog mProgressDialog;
+    protected Handler mHandler;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.mActivity = (Activity) context;
+        this.mHandler = new Handler(Looper.getMainLooper());
     }
 
     @Nullable
@@ -84,6 +88,9 @@ public abstract class CoreBaseFragment<P extends CoreBaseContract.CoreBasePresen
         super.onDestroy();
         if (mPresenter != null) {
             mPresenter.detachVM();
+        }
+        if (mHandler != null){
+            mHandler = null;
         }
     }
 

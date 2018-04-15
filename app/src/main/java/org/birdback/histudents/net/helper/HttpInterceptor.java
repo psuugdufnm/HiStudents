@@ -63,7 +63,7 @@ public class HttpInterceptor implements Interceptor {
                         "╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════",
                 String.valueOf(t2 - t1),
                 response.request().url(),
-                responseBodyStr.replaceAll("\\n", ""),
+                responseBodyStr,
                 response.headers().toString().replaceAll("\\n", "\\\n║                   ")));
 
         return response;

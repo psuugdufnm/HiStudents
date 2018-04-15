@@ -22,6 +22,7 @@ import org.birdback.histudents.utils.TextUtils;
 
 
 /**
+ * 订单管理
  * Created by meixin.song on 2018/4/8.
  */
 
@@ -45,11 +46,11 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
         view.findViewById(R.id.button_text).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HttpServer.getDataFromServer(RequestParams.getInstance().getTest(), new OnSuccessCallBack<Object>() {
+                HttpServer.getDataFromServer(OrderManagerFragment.this,
+                        RequestParams.getInstance().getTest(), new OnSuccessCallBack<String>() {
                     @Override
-                    public void onSuccess(Object entity) {
-                        TextUtils.makeText(Session.getCookie());
-
+                    public void onSuccess(String data) {
+                        TextUtils.makeText(data);
                     }
                 }, new OnFailureCallBack() {
                     @Override

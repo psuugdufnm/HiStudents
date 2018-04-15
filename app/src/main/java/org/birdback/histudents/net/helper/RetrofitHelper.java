@@ -2,6 +2,7 @@ package org.birdback.histudents.net.helper;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
+import org.birdback.histudents.net.RequestUrl;
 import org.birdback.histudents.utils.GsonStringConverterFactory;
 
 import retrofit2.Retrofit;
@@ -31,7 +32,7 @@ public class RetrofitHelper {
     private static Retrofit.Builder createRetrofit() {
 
         return new Retrofit.Builder()
-                .baseUrl("http://dev.xxd.com/userCenter/")
+                .baseUrl(RequestUrl.BASE_URL)
                 // 添加Gson支持
                 .addConverterFactory(GsonStringConverterFactory.create())
                 // 添加RxJava支持
