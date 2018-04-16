@@ -1,8 +1,13 @@
 package org.birdback.histudents.web;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
@@ -17,16 +22,22 @@ import com.google.gson.JsonObject;
 import org.birdback.histudents.Fragment.Model.OrderSearchModel;
 import org.birdback.histudents.Fragment.Presenter.OrderSearchPresenter;
 import org.birdback.histudents.Fragment.contract.OrderSearchContract;
+import org.birdback.histudents.MainActivity;
 import org.birdback.histudents.R;
+import org.birdback.histudents.activity.LoginActivity;
 import org.birdback.histudents.base.TitleView;
+import org.birdback.histudents.core.CoreBaseActivity;
 import org.birdback.histudents.core.CoreBaseFragment;
 import org.birdback.histudents.net.Callback.OnFailureCallBack;
 import org.birdback.histudents.net.Callback.OnSuccessCallBack;
 import org.birdback.histudents.net.HttpServer;
 import org.birdback.histudents.service.RequestParams;
 import org.birdback.histudents.utils.LogUtil;
+import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.TextUtils;
 import org.birdback.histudents.utils.VerifyUtil;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -35,12 +46,27 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by meixin.song on 2018/4/8.
  */
 
-public class WebFragment extends CoreBaseFragment{
+public class WebFragment extends CoreBaseFragment {
 
 
     private WebView mWebView;
     private TitleView mTitleView;
     private String mWebUrl;
+    private MainActivity mActivity;
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 1:
+                    //修改title
+                    mTitleView.setTitleText(String.valueOf(msg.obj));
+                    break;
+            }
+        }
+    };
 
     public void setUrl(String webUrl){
         this.mWebUrl = webUrl;
@@ -55,6 +81,7 @@ public class WebFragment extends CoreBaseFragment{
     protected void initView(View view, Bundle savedInstanceState) {
         mWebView = view.findViewById(R.id.web_view);
         mTitleView = view.findViewById(R.id.title_view);
+        mActivity = (MainActivity) getActivity();
     }
 
     @Override
@@ -78,18 +105,41 @@ public class WebFragment extends CoreBaseFragment{
     }
 
     private final class JSInterface {
-        /**
-         * 注意这里的@JavascriptInterface注解， target是4.2以上都需要添加这个注解，否则无法调用
-         * @param text
-         */
+
+
         @JavascriptInterface
-        public void showTips(String text){
-            TextUtils.makeText(text);
+        public void showTips(String json){
+
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject(json);
+                String msg = jsonObject.optString("msg");
+                TextUtils.makeText(msg);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
         @JavascriptInterface
-        public void setTitle(String text){
-            mTitleView.setTitleText(text);
+        public void setTitle(String json){
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject(json);
+                String title = jsonObject.optString("title");
+                Message message = new Message();
+                message.what = 1;
+                message.obj = title;
+                mHandler.sendMessage(message);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @JavascriptInterface
+        public void logout(String obj){
+            Session.logout();
+            LoginActivity.start(mActivity);
+            mActivity.finish();
         }
 
         @JavascriptInterface

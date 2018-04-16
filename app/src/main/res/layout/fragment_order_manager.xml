@@ -49,11 +49,6 @@
             </LinearLayout>
             <View
                 style="@style/common_line_horizontal_80"/>
-            <Button
-                android:id="@+id/button_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="test"/>
 
 
 te        </LinearLayout>

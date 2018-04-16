@@ -44,5 +44,16 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
 
     compile 'com.jiongbull:jlog:1.0.5'
+    // 获取walle写入信息(渠道&utm等)
+    compile 'com.meituan.android.walle:library:1.1.5'
+
+    //友盟推送基础库
+    compile 'com.umeng.sdk:common:latest.integration'
+    compile 'com.umeng.sdk:utdid:1.1.5.3'
+    //集成调试库，上线前务必删除
+    compile 'com.umeng.sdk:debug:latest.integration'
+
+    //PushSDK
+    compile 'com.umeng.sdk:push:4.1.0'
 
 }

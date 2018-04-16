@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import org.birdback.histudents.entity.RequestVo;
 import org.birdback.histudents.net.HttpServer;
 import org.birdback.histudents.net.RequestUrl;
+import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.VerifyUtil;
 
 import java.util.HashMap;
@@ -30,17 +31,11 @@ public class RequestParams {
         return requestParams;
     }
 
-    public RequestVo getTest() {
-        RequestVo reqVo = new RequestVo();
-        reqVo.hasDialog = true;
-        reqVo.observable = HttpServer.getService(OrderService.class).getTest(RequestUrl.BASE_URL+ RequestUrl.TEST);
-        return reqVo;
-    }
 
     public RequestVo login(String name,String pwd) {
         RequestVo reqVo = new RequestVo();
         reqVo.hasDialog = true;
-        reqVo.observable = HttpServer.getService(OrderService.class).login(name,pwd);
+        reqVo.observable = HttpServer.getService(OrderService.class).login(name,pwd, Session.getDeviceToken());
         return reqVo;
     }
 

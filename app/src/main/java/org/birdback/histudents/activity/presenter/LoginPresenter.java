@@ -23,7 +23,7 @@ public class LoginPresenter extends LoginContract.Presenter {
             return;
         }
 
-        if (mMode!=null){
+        if (mMode != null){
             mMode.requestLogin(name,pwd);
         }
     }

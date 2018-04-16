@@ -9,8 +9,7 @@
         android:id="@+id/title_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title_back_isShow="false"
-        app:title_center_text="title"/>
+        app:title_back_isShow="false"/>
     <View
         style="@style/common_line_horizontal"/>
     <WebView

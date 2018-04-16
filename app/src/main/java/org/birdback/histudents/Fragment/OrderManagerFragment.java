@@ -43,24 +43,6 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
         mRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
         mContext = getActivity();
 
-        view.findViewById(R.id.button_text).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                HttpServer.getDataFromServer(OrderManagerFragment.this,
-                        RequestParams.getInstance().getTest(), new OnSuccessCallBack<String>() {
-                    @Override
-                    public void onSuccess(String data) {
-                        TextUtils.makeText(data);
-                    }
-                }, new OnFailureCallBack() {
-                    @Override
-                    public void onFailure(int code, String msg) {
-
-                    }
-                });
-
-            }
-        });
     }
 
     @Override

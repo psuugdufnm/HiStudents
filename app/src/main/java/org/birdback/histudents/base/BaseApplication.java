@@ -8,8 +8,16 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 
+import com.umeng.commonsdk.UMConfigure;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.PushAgent;
+
+import org.birdback.histudents.utils.DeviceUtil;
+import org.birdback.histudents.utils.LogUtil;
+import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.SharedPreUtil;
 import org.birdback.histudents.utils.TextUtils;
+
 
 /**
  *
@@ -29,7 +37,31 @@ public class BaseApplication extends Application {
         super.onCreate();
         mApplication = this;
         SharedPreUtil.initialize(this);
+        DeviceUtil.initChannel();
         mApplication.registerReceiver(mReceiver,makeFilter());
+        initUMeng();
+    }
+    private void initUMeng() {
+        UMConfigure.setLogEnabled(true);//log开关
+        UMConfigure.init(mApplication,
+                "5accc807f43e483284000225",
+                DeviceUtil.getChannel()
+                ,UMConfigure.DEVICE_TYPE_PHONE
+                , "3585897f047c73f3b91f43a1af189c22");
+        PushAgent mPushAgent = PushAgent.getInstance(this);
+        //注册推送服务，每次调用register方法都会回调该接口
+        mPushAgent.register(new IUmengRegisterCallback() {
+            @Override
+            public void onSuccess(String deviceToken) {
+                //注册成功会返回device token
+                LogUtil.d("device token ===== " + deviceToken);
+                Session.setDeviceToken(deviceToken);
+            }
+            @Override
+            public void onFailure(String s, String s1) {
+            }
+        });
+
     }
 
     @Override

@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import org.birdback.histudents.activity.contract.PrinterManagerContract;
 
 /**
- * Created by Administrator on 2018/4/9.
+ * Created by meixin.song on 2018/4/9.
  */
 
 public class PrinterManagerModel implements PrinterManagerContract.Model {

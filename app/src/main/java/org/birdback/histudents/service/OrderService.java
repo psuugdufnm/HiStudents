@@ -29,10 +29,6 @@ import retrofit2.http.Url;
 public interface OrderService {
 
 
-    @GET/*(RequestUrl.BASE_URL + RequestUrl.TEST)*/
-    Observable<ResponseEntity<Object>> getTest(@Url String url);
-
-
     @Multipart
     @POST
     Observable<ResponseEntity<Object>> requestTest(@Url String url, @PartMap Map<String, String> map);
@@ -43,6 +39,7 @@ public interface OrderService {
     @FormUrlEncoded
     @POST(RequestUrl.BASE_URL + RequestUrl.LOGIN)
     Observable<ResponseEntity<Object>> login(@Field("mobile") String mobile,
-                                             @Field("pwd") String pwd);
+                                             @Field("pwd") String pwd,
+                                                @Field("deviceToken") String deviceToken);
 
 }
