@@ -49,9 +49,23 @@
             </LinearLayout>
             <View
                 style="@style/common_line_horizontal_80"/>
+            <TextView
+                android:id="@+id/tv_empty_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/dp10"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:drawableTop="@drawable/icon_empty"
+                android:drawablePadding="@dimen/dp10"
+                android:text="暂无新订单"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-
-te        </LinearLayout>
+        </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

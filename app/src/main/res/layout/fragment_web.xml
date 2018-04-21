@@ -10,10 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title_back_isShow="false"/>
-    <View
-        style="@style/common_line_horizontal"/>
-    <WebView
-        android:id="@+id/web_view"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <WebView
+            android:id="@+id/web_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
+
 </LinearLayout>

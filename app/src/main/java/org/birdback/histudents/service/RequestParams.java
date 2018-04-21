@@ -39,6 +39,17 @@ public class RequestParams {
         return reqVo;
     }
 
+    /**
+     * 订单列表
+     * @return
+     */
+    public RequestVo requestOrderList() {
+        RequestVo reqVo = new RequestVo();
+        reqVo.hasDialog = true;
+        reqVo.observable = HttpServer.getService(OrderService.class).requestOrderList();
+        return reqVo;
+    }
+
     public RequestVo getAjaxRequest(String url, String postData) {
         HashMap<String, String> map = bornPostParam(postData);
         RequestVo reqVo = new RequestVo();

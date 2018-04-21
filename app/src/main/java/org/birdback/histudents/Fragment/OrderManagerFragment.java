@@ -1,8 +1,16 @@
 package org.birdback.histudents.Fragment;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -12,13 +20,19 @@ import org.birdback.histudents.Fragment.Presenter.OrderManagerPresenter;
 import org.birdback.histudents.Fragment.contract.OrderManagerContract;
 import org.birdback.histudents.R;
 import org.birdback.histudents.activity.PrinterManagerActivity;
+import org.birdback.histudents.adapter.OnRecyclerViewListener;
+import org.birdback.histudents.adapter.OrderListAdapter;
 import org.birdback.histudents.core.CoreBaseFragment;
+import org.birdback.histudents.entity.OrderListEntity;
 import org.birdback.histudents.net.Callback.OnFailureCallBack;
 import org.birdback.histudents.net.Callback.OnSuccessCallBack;
 import org.birdback.histudents.net.HttpServer;
 import org.birdback.histudents.service.RequestParams;
 import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.TextUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -31,6 +45,14 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
     private ImageView mIvPrint; //打印机
     private Context mContext;
     private SwipeRefreshLayout mRefreshLayout;
+    private RecyclerView mRecyclerView;
+    private List<OrderListEntity.GrabListBean> mDatas = new ArrayList<>();
+    private OrderListAdapter adapter;
+
+    private String[] perms = {Manifest.permission.CALL_PHONE};
+    private final int PERMS_REQUEST_CODE = 200;
+    private String phone;
+    private View mEmptyView;
 
     @Override
     public int getLayoutId() {
@@ -41,6 +63,8 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
     protected void initView(View view, Bundle savedInstanceState) {
         mIvPrint = view.findViewById(R.id.iv_print);
         mRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
+        mRecyclerView = view.findViewById(R.id.recycler_view);
+        mEmptyView = view.findViewById(R.id.tv_empty_view);
         mContext = getActivity();
 
     }
@@ -50,8 +74,55 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
         mIvPrint.setOnClickListener(this);
         mRefreshLayout.setOnRefreshListener(this);
 
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        adapter = new OrderListAdapter(mDatas);
+        mRecyclerView.setAdapter(adapter);
+        adapter.setOnRecyclerViewListener(new OnRecyclerViewListener(){
+            @Override
+            public void onItemClick(View itemView,int position) {
+                if (itemView.getId() == R.id.tv_phone) {
+                    phone = mDatas.get(position).getAddr_phone();
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
+                        requestPermissions(perms,PERMS_REQUEST_CODE);//请求权限
+                    } else {
+                        callPhone(phone);
+                    }
+                }
+
+                if (itemView.getId() == R.id.btn_jiedan) {
+                    String orderNo = mDatas.get(position).getOrder_no();
+                    TextUtils.makeText(orderNo);
+                }
+            }
+        });
+
+        mRefreshLayout.setRefreshing(true);
+        mPresenter.requestList();
+
     }
 
+    @Override
+    public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults) {
+        switch (permsRequestCode) {
+            case PERMS_REQUEST_CODE:
+                boolean storageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                if (storageAccepted) {
+                    callPhone(phone);
+                } else {
+                    Log.i("MainActivity", "没有权限操作这个请求");
+                }
+                break;
+
+        }
+    }
+
+    public void callPhone(String phone){
+
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        Uri data = Uri.parse("tel:" + phone);
+        intent.setData(data);
+        startActivity(intent);
+    }
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -75,9 +146,25 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
 
     @Override
     public void onRefresh() {
+        mPresenter.requestList();
+
+    }
+
+    @Override
+    public void requestListSuccess(OrderListEntity entity) {
         if (mRefreshLayout.isRefreshing()){
             mRefreshLayout.setRefreshing(false);
         }
+        if (entity.getGrab_list().size() > 0){
+            mEmptyView.setVisibility(View.GONE);
+            mDatas.clear();
+            mDatas.addAll(entity.getGrab_list());
+            adapter.notifyDataSetChanged();
+        }else {
+            mEmptyView.setVisibility(View.VISIBLE);
+        }
 
     }
+
+
 }
