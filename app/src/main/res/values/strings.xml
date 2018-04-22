@@ -3,4 +3,5 @@
     <string name="main_tab_0">订单处理</string>
     <string name="main_tab_1">订单查询</string>
     <string name="main_tab_2">个人中心</string>
+    <string name="string_fond_bluetooth_tip">发现%1s台蓝牙设备</string>
 </resources>

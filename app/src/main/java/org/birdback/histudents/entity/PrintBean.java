@@ -7,7 +7,6 @@ import android.view.View;
 
 /**
  * 类说明:蓝牙设备的实体类
- * 阳（360621904@qq.com）  2017/4/27  19:57
  */
 public class PrintBean {
     public static final int PRINT_TYPE = 1664;

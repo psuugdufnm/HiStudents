@@ -59,8 +59,10 @@
                 android:id="@+id/tv_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:drawablePadding="@dimen/dp5"
                 android:padding="@dimen/dp10"
-                android:drawableLeft="@mipmap/icon_phone"/>
+                android:drawableRight="@mipmap/icon_phone"/>
         </LinearLayout>
 
         <TextView

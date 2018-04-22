@@ -14,22 +14,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-
 import org.birdback.histudents.Fragment.Model.OrderManagerModel;
 import org.birdback.histudents.Fragment.Presenter.OrderManagerPresenter;
 import org.birdback.histudents.Fragment.contract.OrderManagerContract;
 import org.birdback.histudents.R;
 import org.birdback.histudents.activity.PrinterManagerActivity;
+import org.birdback.histudents.activity.SeachPrinterActivity;
 import org.birdback.histudents.adapter.OnRecyclerViewListener;
 import org.birdback.histudents.adapter.OrderListAdapter;
 import org.birdback.histudents.core.CoreBaseFragment;
 import org.birdback.histudents.entity.OrderListEntity;
-import org.birdback.histudents.net.Callback.OnFailureCallBack;
-import org.birdback.histudents.net.Callback.OnSuccessCallBack;
-import org.birdback.histudents.net.HttpServer;
-import org.birdback.histudents.service.RequestParams;
 import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.TextUtils;
+import org.birdback.histudents.utils.VerifyUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +37,7 @@ import java.util.List;
  * Created by meixin.song on 2018/4/8.
  */
 
-public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter,OrderManagerModel> implements View.OnClickListener,OrderManagerContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter,OrderManagerModel> implements View.OnClickListener,OrderManagerContract.View, SwipeRefreshLayout.OnRefreshListener, OnRecyclerViewListener {
 
     private ImageView mIvPrint; //打印机
     private Context mContext;
@@ -77,24 +74,7 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         adapter = new OrderListAdapter(mDatas);
         mRecyclerView.setAdapter(adapter);
-        adapter.setOnRecyclerViewListener(new OnRecyclerViewListener(){
-            @Override
-            public void onItemClick(View itemView,int position) {
-                if (itemView.getId() == R.id.tv_phone) {
-                    phone = mDatas.get(position).getAddr_phone();
-                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
-                        requestPermissions(perms,PERMS_REQUEST_CODE);//请求权限
-                    } else {
-                        callPhone(phone);
-                    }
-                }
-
-                if (itemView.getId() == R.id.btn_jiedan) {
-                    String orderNo = mDatas.get(position).getOrder_no();
-                    TextUtils.makeText(orderNo);
-                }
-            }
-        });
+        adapter.setOnRecyclerViewListener(this);
 
         mRefreshLayout.setRefreshing(true);
         mPresenter.requestList();
@@ -132,7 +112,13 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_print:
-                PrinterManagerActivity.start(mContext);
+                if(!VerifyUtil.isEmpty(Session.getBluetoothAddress())){
+                    //已有配对蓝牙打印机
+                    PrinterManagerActivity.start(mContext);
+                }else {
+                    //无配对打印机
+                    SeachPrinterActivity.start(mContext);
+                }
                 break;
             default:
                 break;
@@ -166,5 +152,35 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
 
     }
 
+    @Override
+    public void submitSuccess() {
+        //TODO
+    }
 
+    @Override
+    public void submitFailure() {
+
+    }
+
+
+    @Override
+    public void onItemClick(View itemView, int position) {
+        if (itemView.getId() == R.id.tv_phone) {
+            phone = mDatas.get(position).getAddr_phone();
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
+                requestPermissions(perms,PERMS_REQUEST_CODE);//请求权限
+            } else {
+                callPhone(phone);
+            }
+        }
+
+        if (itemView.getId() == R.id.btn_jiedan) {
+            String orderNo = mDatas.get(position).getOrder_no();
+            if (!VerifyUtil.isEmpty(orderNo)) {
+                mPresenter.requestSubmit(orderNo);
+            }else {
+                TextUtils.makeText("订单异常，请刷新");
+            }
+        }
+    }
 }

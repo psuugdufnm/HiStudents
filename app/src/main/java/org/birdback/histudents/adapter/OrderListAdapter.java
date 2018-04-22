@@ -15,7 +15,8 @@ import org.birdback.histudents.entity.OrderListEntity;
 import java.util.List;
 
 /**
- * Created by Administrator on 2018/4/21.
+ * 订单列表
+ * Created by songmeixin on 2018/4/21.
  */
 
 public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.ViewHolder> implements View.OnClickListener {
@@ -34,10 +35,10 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         OrderListEntity.GrabListBean entity = mData.get(position);
 
-
         holder.tvNo.setText("#".concat(entity.getOrder_num()));
         holder.tvName.setText(entity.getAddr_name().concat("(" +entity.getAddr_sex() + ")"));
         holder.tvAddress.setText(entity.getAddress());
+        holder.tvPhone.setText(entity.getAddr_phone());
         holder.tvPayPrice.setText(entity.getPay_price());
         holder.tvRealPrice.setText("￥".concat(entity.getReal_price()));
         holder.tvRebate.setText(String.valueOf(entity.getRebate()));
@@ -58,12 +59,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
         holder.btnJiedan.setOnClickListener(this);
 
     }
-    @Override
-    public void onClick(View v) {
-        if (mOnRecyclerViewListener != null) {
-            mOnRecyclerViewListener.onItemClick(v,Integer.parseInt(String.valueOf(v.getTag())));
-        }
-    }
+
 
     @Override
     public int getItemCount() {
@@ -71,10 +67,15 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     }
 
     public OnRecyclerViewListener mOnRecyclerViewListener;
-
-
     public void setOnRecyclerViewListener(OnRecyclerViewListener l) {
         this.mOnRecyclerViewListener = l;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (mOnRecyclerViewListener != null) {
+            mOnRecyclerViewListener.onItemClick(v,Integer.parseInt(String.valueOf(v.getTag())));
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/write">
+    android:background="@color/bg">
     <org.birdback.histudents.base.TitleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title_back_isShow="false"
-        app:title_center_text="订单管理"/>
+        app:title_center_text="新订单"/>
     <View
         style="@style/common_line_horizontal_80"/>
 
@@ -24,6 +24,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/write"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
                 <TextView
@@ -45,7 +46,7 @@
                     android:paddingTop="@dimen/dp15"
                     android:paddingBottom="@dimen/dp15"
                     android:scaleType="center"
-                    android:src="@mipmap/icon_print_red"/>
+                    android:src="@mipmap/icon_print_true"/>
             </LinearLayout>
             <View
                 style="@style/common_line_horizontal_80"/>

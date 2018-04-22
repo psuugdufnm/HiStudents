@@ -3,6 +3,8 @@
     <color name="colorPrimary">#00B586</color>
     <color name="colorPrimaryDark">#00B586</color>
     <color name="colorAccent">#00B586</color>
+    <color name="colorAccent_30">#3000B586</color>
+    <color name="colorAccent_10">#1000B586</color>
 
 
     <color name="write">#FFFFFF</color>

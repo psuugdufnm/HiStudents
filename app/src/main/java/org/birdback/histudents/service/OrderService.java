@@ -46,4 +46,8 @@ public interface OrderService {
     @GET(RequestUrl.BASE_URL + RequestUrl.ORDER_LIST)
     Observable<ResponseEntity<OrderListEntity>> requestOrderList();
 
+    @FormUrlEncoded
+    @POST(RequestUrl.BASE_URL + RequestUrl.ORDER_SUBMIT)
+    Observable<ResponseEntity<Object>> requestSubmit(@Field("order_no") String orderNo);
+
 }

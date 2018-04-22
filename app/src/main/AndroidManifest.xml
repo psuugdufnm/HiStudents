@@ -4,9 +4,14 @@
 
 
     <uses-permission android:name="android.permission.INTERNET"/>
+
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
     <uses-permission android:name="android.permission.CALL_PHONE" />
+
 
 
     <application
@@ -33,6 +38,8 @@
         <activity android:name=".web.WebActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.SeachPrinterActivity"
             android:screenOrientation="portrait"/>
 
 

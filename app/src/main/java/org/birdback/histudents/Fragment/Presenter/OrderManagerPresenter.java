@@ -36,4 +36,21 @@ public class OrderManagerPresenter extends OrderManagerContract.Presenter {
     public void requestListSuccess(OrderListEntity entity) {
         mView.requestListSuccess(entity);
     }
+
+    @Override
+    public void requestSubmit(String orderNo) {
+        if (mMode != null) {
+            mMode.requestSubmit(orderNo);
+        }
+    }
+
+    @Override
+    public void submitSuccess() {
+        mView.submitSuccess();
+    }
+
+    @Override
+    public void submitFailure() {
+        mView.submitFailure();
+    }
 }

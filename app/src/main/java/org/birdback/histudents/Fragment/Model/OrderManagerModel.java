@@ -10,6 +10,7 @@ import org.birdback.histudents.net.Callback.OnFailureCallBack;
 import org.birdback.histudents.net.Callback.OnSuccessCallBack;
 import org.birdback.histudents.net.HttpServer;
 import org.birdback.histudents.service.RequestParams;
+import org.birdback.histudents.utils.TextUtils;
 
 
 /**
@@ -35,6 +36,21 @@ public class OrderManagerModel implements OrderManagerContract.Model {
             @Override
             public void onFailure(int code, String msg) {
                 presenter.mView.showMessage(msg);
+            }
+        });
+    }
+
+    @Override
+    public void requestSubmit(String orderNo) {
+        HttpServer.getDataFromServer(RequestParams.getInstance().requestSubmit(orderNo), new OnSuccessCallBack() {
+            @Override
+            public void onSuccess(Object entity) {
+                presenter.submitSuccess();
+            }
+        }, new OnFailureCallBack() {
+            @Override
+            public void onFailure(int code, String msg) {
+                presenter.submitFailure();
             }
         });
     }
