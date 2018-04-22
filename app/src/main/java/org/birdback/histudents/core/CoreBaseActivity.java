@@ -25,15 +25,12 @@ import org.birdback.histudents.utils.ReflectUtil;
 
 
 /**
- * Created by JinXuGuang on 2017/3/9
- * <p>
- * Email:Aalizzwell@gmail.com
+ * base activity
  */
 
 public abstract class CoreBaseActivity<P extends CoreBaseContract.CoreBasePresenter, M extends CoreBaseContract.CoreBaseModel> extends AppCompatActivity{
 
-    public Typeface mTypeface;
-    public Typeface mTypefaceBlod;
+
 
     public P mPresenter;
     public M mModel;

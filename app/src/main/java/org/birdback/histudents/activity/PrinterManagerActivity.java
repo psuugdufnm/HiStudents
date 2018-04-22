@@ -51,6 +51,7 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            closeProgressDialog();
             switch (msg.what){
                 case 1:
                     mTvConnectStatus.setTextColor(getResources().getColor(R.color.txt_color_red));
@@ -78,17 +79,23 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
     }
 
     @Override
-    public void initListener() {
-        mTvPrintTest.setOnClickListener(this);
-        mTvPrintChange.setOnClickListener(this);
-    }
-
-    @Override
     protected void initView(Bundle savedInstanceState) {
         mTvPrintTest = findViewById(R.id.tv_print_test);
         mTvPrintChange = findViewById(R.id.tv_print_change);
         mTvPrintName = findViewById(R.id.tv_print_name);
         mTvConnectStatus = findViewById(R.id.tv_connect_status);
+    }
+
+    @Override
+    public void initListener() {
+        mTvPrintTest.setOnClickListener(this);
+        mTvPrintChange.setOnClickListener(this);
+
+        initBuleTooth();
+        initInfo();
+
+        showProgressDialog();
+        new ConnectThread().start();
     }
 
     @Override
@@ -104,6 +111,7 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
             case R.id.tv_print_change:
                 //更换打印机
                 SeachPrinterActivity.start(PrinterManagerActivity.this);
+                finish();
                 break;
         }
     }
@@ -111,10 +119,7 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
     @Override
     protected void onResume() {
         super.onResume();
-        initBuleTooth();
-        initInfo();
 
-        new ConnectThread().start();
 
     }
 

@@ -77,7 +77,12 @@ public class SeachPrinterActivity extends CoreBaseActivity implements OnRecycler
         BluetoothDevice btDev = mAdapter.getRemoteDevice(device.getAddress());
         try {
             //通过反射来配对对应的蓝牙
-            createBond(btDev.getClass(), btDev);
+            boolean bond = createBond(btDev.getClass(), btDev);
+            if (!bond && device.getBondState() == BluetoothDevice.BOND_BONDED){
+                //已绑定的设备
+                Session.setBluetoothAddress(device.getAddress());
+                finish();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
