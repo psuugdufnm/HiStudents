@@ -34,7 +34,6 @@ import java.util.UUID;
 
 public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPresenter,PrinterManagerModel> implements PrinterManagerContract.View, View.OnClickListener {
 
-    private static final String FINISH = "finish";
     private static final String CONNSTATUS1 = "已连接";
     private static final String CONNSTATUS2 = "失去连接";
     private BluetoothSocket mmSocket;
@@ -44,7 +43,6 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
 
     private TextView mTvPrintTest,mTvPrintName,mTvConnectStatus,mTvPrintChange;
     private PrintBean mPrintBean;
-    private String mPrintStatus;
     private BluetoothAdapter mBluetoothAdapter;
 
     private Handler mHandler = new Handler(){
@@ -103,6 +101,7 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
         switch (view.getId()) {
             case R.id.tv_print_test:
                 if (CONNSTATUS1.equals(mTvConnectStatus.getText().toString())){
+                    showProgressDialog();
                     new SendThread().start();
                 }else {
                     TextUtils.makeText("请连接蓝牙打印机");
@@ -116,12 +115,6 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
-    }
 
     private void initInfo() {
 
@@ -174,8 +167,9 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
                 //连接成功获取输出流
                 outputStream = mmSocket.getOutputStream();
                 send(outputStream);
-                mPrintStatus = FINISH;
+                mHandler.sendEmptyMessage(4);
             } catch (Exception connectException) {
+                mHandler.sendEmptyMessage(4);
                 Log.d("","打印失败，请检查蓝牙是否断开");
                 connectException.printStackTrace();
             }

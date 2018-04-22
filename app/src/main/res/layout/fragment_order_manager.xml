@@ -43,6 +43,7 @@
                     android:id="@+id/iv_print"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/selector_bg_item"
                     android:paddingTop="@dimen/dp15"
                     android:paddingBottom="@dimen/dp15"
                     android:scaleType="center"
