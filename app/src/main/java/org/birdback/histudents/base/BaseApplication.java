@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.AudioManager;
 import android.util.Log;
 
 import com.umeng.commonsdk.UMConfigure;
@@ -38,8 +39,8 @@ public class BaseApplication extends Application {
         mApplication = this;
         SharedPreUtil.initialize(this);
         DeviceUtil.initChannel();
-        mApplication.registerReceiver(mReceiver,makeFilter());
         initUMeng();
+        mApplication.registerReceiver(mReceiver,makeFilter());
     }
     private void initUMeng() {
         UMConfigure.setLogEnabled(true);//log开关

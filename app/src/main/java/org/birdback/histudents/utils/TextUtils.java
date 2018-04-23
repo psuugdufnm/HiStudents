@@ -13,7 +13,7 @@ import org.birdback.histudents.base.BaseApplication;
 public class TextUtils {
 
     private static final Context mContext;
-
+    private static Toast toast;
     static {
         mContext = BaseApplication.getApplication();
     }

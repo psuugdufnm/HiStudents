@@ -2,21 +2,21 @@ package org.birdback.histudents;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 
 import org.birdback.histudents.Fragment.MyFragment;
 import org.birdback.histudents.Fragment.OrderManagerFragment;
-import org.birdback.histudents.Fragment.OrderSearchFragment;
 import org.birdback.histudents.activity.LoginActivity;
 import org.birdback.histudents.core.CoreBaseFragment;
 import org.birdback.histudents.utils.Session;
-import org.birdback.histudents.utils.TextUtils;
 import org.birdback.histudents.utils.VerifyUtil;
 import org.birdback.histudents.web.WebFragment;
 
@@ -44,9 +44,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             LoginActivity.start(MainActivity.this);
             finish();
         }
-
-
-
         setContentView(R.layout.activity_main);
 
         initView();
@@ -55,6 +52,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switchFragment(0);
 
+        checkAudioInfo();
+
+    }
+
+    private void checkAudioInfo() {
+        AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+        int max = am.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION);
+        int current = am.getStreamVolume(AudioManager.STREAM_NOTIFICATION);
+        if (max-2 > current) {
+            //把音量设置到最大
+            am.setStreamVolume(AudioManager.STREAM_NOTIFICATION, max,1);
+        }
     }
 
     private void initListener() {
