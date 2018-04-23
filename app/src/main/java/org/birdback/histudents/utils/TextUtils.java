@@ -26,13 +26,9 @@ public class TextUtils {
         showToast(String.valueOf(text));
     }
 
-    public static void showToast(String text){
-        if (toast == null) {
-            toast= Toast.makeText(mContext,text, Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER,0,0);
-        }else{
-            toast.setText(text);
-        }
+    private static void showToast(String text){
+        Toast toast = Toast.makeText(mContext, text, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER,0,0);
         toast.show();
     }
 }

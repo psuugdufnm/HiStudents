@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title_back_isShow="true"
-        app:title_center_text="打印机管理"/>
+        app:title_center_text="查找蓝牙打印机"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,29 +18,33 @@
         android:paddingBottom="@dimen/dp15"
         android:orientation="vertical">
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/cycle"
             android:layout_marginTop="@dimen/dp20"
-            android:layout_marginBottom="@dimen/dp20"
-            android:src="@mipmap/icon_printer2"/>
+            android:layout_marginBottom="@dimen/dp15"
+            android:padding="@dimen/dp20"
+            android:src="@mipmap/icon_blue_tooth"
+            android:scaleType="center"/>
 
         <TextView
-            android:id="@+id/tv_print_name"
+            android:id="@+id/tv_tip1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="@dimen/sp18"
-            android:textColor="@color/txt_color1"/>
+            android:textColor="@color/txt_color4"
+            android:text="查找中..."/>
 
         <TextView
-            android:id="@+id/tv_connect_status"
+            android:id="@+id/tv_tip2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="@dimen/dp10"
             android:gravity="center"
-            android:layout_marginTop="@dimen/dp15"
-            android:textSize="@dimen/sp15"
-            android:text="......"
-            android:textColor="@color/txt_color_green"/>
+            android:textSize="@dimen/sp14"
+            android:textColor="@color/txt_color1"/>
     </LinearLayout>
     <View
         style="@style/common_line_horizontal_80"/>
@@ -48,22 +52,10 @@
     <View
         style="@style/common_line_horizontal_80"
         android:layout_marginTop="@dimen/dp10"/>
-    <TextView
-        android:id="@+id/tv_print_test"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dp15"
-        android:background="@drawable/selector_bg_item"
-        android:text="打印测试页" />
-    <View
-        style="@style/common_line_horizontal_80"/>
-    <TextView
-        android:id="@+id/tv_print_change"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dp15"
-        android:background="@drawable/selector_bg_item"
-        android:text="更换蓝牙打印机" />
+        android:layout_height="wrap_content"/>
     <View
         style="@style/common_line_horizontal_80"/>
 

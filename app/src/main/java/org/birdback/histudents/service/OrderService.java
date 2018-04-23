@@ -1,6 +1,7 @@
 package org.birdback.histudents.service;
 
 
+import org.birdback.histudents.entity.OrderListEntity;
 import org.birdback.histudents.entity.ResponseEntity;
 import org.birdback.histudents.net.RequestUrl;
 
@@ -41,5 +42,12 @@ public interface OrderService {
     Observable<ResponseEntity<Object>> login(@Field("mobile") String mobile,
                                              @Field("pwd") String pwd,
                                                 @Field("deviceToken") String deviceToken);
+
+    @GET(RequestUrl.BASE_URL + RequestUrl.ORDER_LIST)
+    Observable<ResponseEntity<OrderListEntity>> requestOrderList();
+
+    @FormUrlEncoded
+    @POST(RequestUrl.BASE_URL + RequestUrl.ORDER_SUBMIT)
+    Observable<ResponseEntity<Object>> requestSubmit(@Field("order_no") String orderNo);
 
 }

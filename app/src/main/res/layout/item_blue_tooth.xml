@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_bg_item"
+    android:paddingTop="@dimen/dp20"
+    android:paddingBottom="@dimen/dp20"
+    android:paddingLeft="@dimen/dp10"
+    android:paddingRight="@dimen/dp10">
+        <TextView
+            android:id="@+id/tv_bluetooth_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/txt_color4"
+            android:text="FK-POS201-U"/>
+        <TextView
+            android:id="@+id/tv_bluetooth_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/txt_color4"
+            android:layout_marginLeft="@dimen/dp5"
+            android:text="[已绑定]"/>
+        <TextView
+            android:id="@+id/tv_bluetooth_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/txt_color4"
+            android:layout_marginLeft="@dimen/dp5"
+            android:text="02:30:50:80:50"/>
+</LinearLayout>

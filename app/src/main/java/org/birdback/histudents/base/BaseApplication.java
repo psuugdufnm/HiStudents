@@ -84,8 +84,6 @@ public class BaseApplication extends Application {
         super.onTrimMemory(level);
     }
 
-
-
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
         @Override
@@ -123,7 +121,6 @@ public class BaseApplication extends Application {
             TextUtils.makeText("设备不支持蓝牙");
             return;
         }
-
         if (!mBluetoothAdapter.isEnabled()) {
             //打开蓝牙
             mBluetoothAdapter.enable();

@@ -10,6 +10,20 @@ public class Session {
     private static String cookie = "";
     private static String deviceToken = ""; //友盟推送设备唯一标识符
 
+    private static String bluetoothAddress = ""; //蓝牙打印机地址
+
+    public static String getBluetoothAddress() {
+        if (VerifyUtil.isEmpty(bluetoothAddress)) {
+            bluetoothAddress = SharedPreUtil.getValue("bluetoothAddress", "");
+        }
+        return bluetoothAddress;
+    }
+
+    public static void setBluetoothAddress(String bluetoothAddress) {
+        Session.bluetoothAddress = bluetoothAddress;
+        SharedPreUtil.putValue("bluetoothAddress", VerifyUtil.isEmpty(bluetoothAddress) ? "" : bluetoothAddress);
+    }
+
 
     public static String getCookie() {
         if (VerifyUtil.isEmpty(cookie)) {

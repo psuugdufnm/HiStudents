@@ -1,12 +1,13 @@
 package org.birdback.histudents.activity;
 
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import org.birdback.histudents.activity.presenter.PrinterManagerPresenter;
 import org.birdback.histudents.core.CoreBaseActivity;
 import org.birdback.histudents.entity.PrintBean;
 import org.birdback.histudents.utils.PrintUtils;
+import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.TextUtils;
 
 import java.io.IOException;
@@ -32,16 +34,38 @@ import java.util.UUID;
 
 public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPresenter,PrinterManagerModel> implements PrinterManagerContract.View, View.OnClickListener {
 
-    private static final String FINISH = "finish";
+    private static final String CONNSTATUS1 = "已连接";
+    private static final String CONNSTATUS2 = "失去连接";
     private BluetoothSocket mmSocket;
     private OutputStream outputStream;
 
     private UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
-
-    private TextView mTvPrintTest,mTvPrintName,mTvConnectStatus;
+    private TextView mTvPrintTest,mTvPrintName,mTvConnectStatus,mTvPrintChange;
     private PrintBean mPrintBean;
-    private String mPrintStatus;
+    private BluetoothAdapter mBluetoothAdapter;
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            closeProgressDialog();
+            switch (msg.what){
+                case 1:
+                    mTvConnectStatus.setTextColor(getResources().getColor(R.color.txt_color_red));
+                    mTvConnectStatus.setText(CONNSTATUS2);
+                    break;
+                case 2:
+                    mTvConnectStatus.setTextColor(getResources().getColor(R.color.txt_color_red));
+                    mTvConnectStatus.setText(CONNSTATUS2);
+                    break;
+                case 3:
+                    mTvConnectStatus.setText(CONNSTATUS1);
+                    mTvConnectStatus.setTextColor(getResources().getColor(R.color.txt_color_green));
+                    break;
+            }
+        }
+    };
 
     public static void start(Context mContext) {
         mContext.startActivity(new Intent(mContext,PrinterManagerActivity.class));
@@ -53,96 +77,88 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
     }
 
     @Override
-    public void initListener() {
-        mTvPrintTest.setOnClickListener(this);
+    protected void initView(Bundle savedInstanceState) {
+        mTvPrintTest = findViewById(R.id.tv_print_test);
+        mTvPrintChange = findViewById(R.id.tv_print_change);
+        mTvPrintName = findViewById(R.id.tv_print_name);
+        mTvConnectStatus = findViewById(R.id.tv_connect_status);
     }
 
     @Override
-    protected void initView(Bundle savedInstanceState) {
-        mTvPrintTest = findViewById(R.id.tv_print_test);
-        mTvPrintName = findViewById(R.id.tv_print_name);
-        mTvConnectStatus = findViewById(R.id.tv_connect_status);
+    public void initListener() {
+        mTvPrintTest.setOnClickListener(this);
+        mTvPrintChange.setOnClickListener(this);
+
+        initBuleTooth();
+        initInfo();
+
+        showProgressDialog();
+        new ConnectThread().start();
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_print_test:
-                new ConnectThread(mPrintBean.getDevice()).start();
+                if (CONNSTATUS1.equals(mTvConnectStatus.getText().toString())){
+                    showProgressDialog();
+                    new SendThread().start();
+                }else {
+                    TextUtils.makeText("请连接蓝牙打印机");
+                }
+                break;
+            case R.id.tv_print_change:
+                //更换打印机
+                SeachPrinterActivity.start(PrinterManagerActivity.this);
+                finish();
                 break;
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initBuleTooth();
-
-        initInfo();
-    }
 
     private void initInfo() {
+
         if (mPrintBean != null) {
             mTvPrintName.setText(mPrintBean.getName());
-            mTvConnectStatus.setText("已连接");
-            mTvConnectStatus.setTextColor(getResources().getColor(R.color.txt_color_green));
+
         }else {
             mTvPrintName.setText("暂无打印机");
-            mTvConnectStatus.setText("未连接");
+            mTvConnectStatus.setText(CONNSTATUS2);
             mTvConnectStatus.setTextColor(getResources().getColor(R.color.txt_color_red));
         }
 
     }
 
     private void initBuleTooth() {
-        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
             TextUtils.makeText("设备不支持蓝牙");
             return;
         }
-
         if (!mBluetoothAdapter.isEnabled()) {
-            /*这种方式打开蓝牙会弹出提示
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);*/
-            //这种方式打开蓝牙不会弹出提示，强制打开。关闭蓝牙用disable();
             mBluetoothAdapter.enable();
             return;
         }
 
-        //获取到的集合是已配对的设备 02:30:C8:92:E2:3A
-        //TODO 暂时还没有判断打印机是否开启~~~~~~~~~·
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         if (pairedDevices.size() > 0) {
-
             for (BluetoothDevice device : pairedDevices) {
-                BluetoothClass bluetoothClass = device.getBluetoothClass();
-                int deviceClass = bluetoothClass.getDeviceClass();
-                int majorDeviceClass = bluetoothClass.getMajorDeviceClass();
-                Log.d("BluetoothDevice" ,
-                        "name = " + device.getName() + "----deviceClass = " + deviceClass +
-                                "----majorDeviceClass = " + majorDeviceClass);
-
-                /**
-                 * name = MINISO D39F----deviceClass = 1028 ----majorDeviceClass = 1024
-                 * name = FK-POS201-U----deviceClass = 7936 ----majorDeviceClass = 7936
-                 */
-                mPrintBean = new PrintBean(device);
-
+                if (Session.getBluetoothAddress().equals(device.getAddress())){
+                    mPrintBean = new PrintBean(device);
+                }
             }
-
         }
-    }
-    private class ConnectThread extends Thread {
-        public ConnectThread(BluetoothDevice device) {
+        if (mPrintBean != null) {
             try {
-                mmSocket = device.createRfcommSocketToServiceRecord(uuid);
+                mmSocket = mPrintBean.getDevice().createRfcommSocketToServiceRecord(uuid);
             } catch (IOException e) {
-                TextUtils.makeText("连接失败");
+                mHandler.sendEmptyMessage(1);
                 e.printStackTrace();
             }
         }
 
+    }
+    private class SendThread extends Thread {
         @Override
         public void run() {
             try {
@@ -151,8 +167,24 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
                 //连接成功获取输出流
                 outputStream = mmSocket.getOutputStream();
                 send(outputStream);
-                mPrintStatus = FINISH;
+                mHandler.sendEmptyMessage(4);
             } catch (Exception connectException) {
+                mHandler.sendEmptyMessage(4);
+                Log.d("","打印失败，请检查蓝牙是否断开");
+                connectException.printStackTrace();
+            }
+        }
+    }
+
+    private class ConnectThread extends Thread {
+        @Override
+        public void run() {
+            try {
+                mmSocket.connect();
+                mHandler.sendEmptyMessage(3);
+            } catch (Exception connectException) {
+                Log.d("", CONNSTATUS2);
+                mHandler.sendEmptyMessage(2);
                 connectException.printStackTrace();
             }
         }
