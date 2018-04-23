@@ -1,6 +1,7 @@
 package org.birdback.histudents.utils;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import org.birdback.histudents.base.BaseApplication;
@@ -12,16 +13,26 @@ import org.birdback.histudents.base.BaseApplication;
 public class TextUtils {
 
     private static final Context mContext;
-
+    private static Toast toast;
     static {
         mContext = BaseApplication.getApplication();
     }
 
     public static void makeText(String text){
-        Toast.makeText(mContext,text,Toast.LENGTH_SHORT).show();
+        showToast(text);
     }
 
     public static void makeText(int text){
-        Toast.makeText(mContext,String.valueOf(text),Toast.LENGTH_SHORT).show();
+        showToast(String.valueOf(text));
+    }
+
+    public static void showToast(String text){
+        if (toast == null) {
+            toast= Toast.makeText(mContext,text, Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER,0,0);
+        }else{
+            toast.setText(text);
+        }
+        toast.show();
     }
 }
