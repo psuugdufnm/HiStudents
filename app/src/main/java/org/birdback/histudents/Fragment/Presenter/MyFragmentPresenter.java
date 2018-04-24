@@ -21,4 +21,9 @@ public class MyFragmentPresenter extends MyContract.Presenter {
     public void showMessage(String msg) {
 
     }
+
+    @Override
+    public void getList() {
+        mMode.getList();
+    }
 }

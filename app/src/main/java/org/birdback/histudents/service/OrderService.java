@@ -1,6 +1,7 @@
 package org.birdback.histudents.service;
 
 
+import org.birdback.histudents.entity.MyMenuEntity;
 import org.birdback.histudents.entity.OrderListEntity;
 import org.birdback.histudents.entity.ResponseEntity;
 import org.birdback.histudents.net.RequestUrl;
@@ -45,6 +46,9 @@ public interface OrderService {
 
     @GET(RequestUrl.BASE_URL + RequestUrl.ORDER_LIST)
     Observable<ResponseEntity<OrderListEntity>> requestOrderList();
+
+    @POST(RequestUrl.BASE_URL + RequestUrl.HOME_INDEX)
+    Observable<ResponseEntity<MyMenuEntity>> getList();
 
     @FormUrlEncoded
     @POST(RequestUrl.BASE_URL + RequestUrl.ORDER_SUBMIT)

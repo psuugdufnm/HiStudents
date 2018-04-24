@@ -10,6 +10,7 @@
     <dimen name="sp17">17sp</dimen>
     <dimen name="sp18">18sp</dimen>
     <dimen name="sp24">24sp</dimen>
+    <dimen name="sp36">36sp</dimen>
 
     <dimen name="dp1">1dp</dimen>
     <dimen name="dp2">2dp</dimen>

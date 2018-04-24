@@ -60,6 +60,16 @@ public class RequestParams {
         reqVo.observable = HttpServer.getService(OrderService.class).requestSubmit(orderNo);
         return reqVo;
     }
+    /**
+     * 立即接单
+     * @return
+     */
+    public RequestVo getList() {
+        RequestVo reqVo = new RequestVo();
+        reqVo.hasDialog = true;
+        reqVo.observable = HttpServer.getService(OrderService.class).getList();
+        return reqVo;
+    }
 
     public RequestVo getAjaxRequest(String url, String postData) {
         HashMap<String, String> map = bornPostParam(postData);

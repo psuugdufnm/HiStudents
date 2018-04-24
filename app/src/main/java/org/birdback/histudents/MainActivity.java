@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FragmentManager mFragmentManager;
     private CoreBaseFragment mCacheFragment;
     private OrderManagerFragment managerFragment;
-    private WebFragment myFragment;
+    private MyFragment myFragment;
     private WebFragment searchFragment;
 
 
@@ -110,8 +110,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case 2:
                 if (myFragment == null) {
-                    myFragment = new WebFragment();
-                    myFragment.setUrl("http://store.birdback.org/home/home");
+                    myFragment = new MyFragment();
+//                    myFragment.setUrl("http://store.birdback.org/home/home");
                     transaction.add(R.id.container, myFragment, MyFragment.class.getSimpleName());
                 } else {
                     transaction.show(myFragment);

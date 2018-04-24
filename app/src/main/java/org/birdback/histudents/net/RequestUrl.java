@@ -21,6 +21,7 @@ public class RequestUrl {
      */
     public static final String ORDER_LIST = "/order/grab_list";
     public static final String ORDER_SUBMIT = "/order/grab_order";
+    public static final String HOME_INDEX = "/home/index";
 
 
 
