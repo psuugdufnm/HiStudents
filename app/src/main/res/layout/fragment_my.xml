@@ -171,6 +171,15 @@
                 android:layout_marginTop="0.5dp"
                 android:layout_height="0dp"
                 android:layout_weight="4"/>
+
+            <TextView
+                android:id="@+id/tv_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_bg_item"
+                android:gravity="center"
+                android:padding="@dimen/dp10"
+                android:text="退出登录"/>
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 

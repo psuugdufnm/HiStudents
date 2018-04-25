@@ -11,11 +11,13 @@ import org.birdback.histudents.Fragment.Model.MyFragmentModel;
 import org.birdback.histudents.Fragment.Presenter.MyFragmentPresenter;
 import org.birdback.histudents.Fragment.contract.MyContract;
 import org.birdback.histudents.R;
+import org.birdback.histudents.activity.LoginActivity;
 import org.birdback.histudents.adapter.GridAdapter;
 import org.birdback.histudents.adapter.OnRecyclerViewListener;
 import org.birdback.histudents.core.CoreBaseFragment;
 import org.birdback.histudents.entity.MyMenuEntity;
 import org.birdback.histudents.net.RequestUrl;
+import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.VerifyUtil;
 import org.birdback.histudents.web.WebActivity;
 
@@ -26,7 +28,7 @@ import java.util.List;
  * Created by Administrator on 2018/4/8.
  */
 
-public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentModel> implements MyContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentModel> implements MyContract.View, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private RecyclerView recyclerView;
     private List<MyMenuEntity.MenuBean> mData = new ArrayList<>();
@@ -35,6 +37,7 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentM
     private TextView tvWaitReceipt,tvWaitSend,tvWaitCome;
     private TextView tvMonthOrderNum,tvMonthTurnover,tvMonthViewNum;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView tvLogout;
 
     @Override
     public int getLayoutId() {
@@ -56,6 +59,7 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentM
         tvMonthOrderNum = view.findViewById(R.id.tv_month_order_num);
         tvMonthTurnover = view.findViewById(R.id.tv_month_turnover);
         tvMonthViewNum = view.findViewById(R.id.tv_month_view_num);
+        tvLogout = view.findViewById(R.id.tv_logout);
 
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),4));
         gridAdapter = new GridAdapter(mData);
@@ -63,6 +67,7 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentM
     }
     @Override
     public void initListener() {
+        tvLogout.setOnClickListener(this);
         swipeRefreshLayout.setOnRefreshListener(this);
         mPresenter.getList();
 
@@ -113,5 +118,14 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentM
     @Override
     public void onRefresh() {
         mPresenter.getList();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.tv_logout) {
+            Session.logout();
+            LoginActivity.start(getActivity());
+            getActivity().finish();
+        }
     }
 }
