@@ -1,12 +1,16 @@
 package org.birdback.histudents.base;
 
+import android.Manifest;
 import android.app.Application;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.media.AudioManager;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 import com.umeng.commonsdk.UMConfigure;
@@ -40,6 +44,8 @@ public class BaseApplication extends Application {
         SharedPreUtil.initialize(this);
         DeviceUtil.initChannel();
         initUMeng();
+
+        openBlueTooth();
         mApplication.registerReceiver(mReceiver,makeFilter());
     }
     private void initUMeng() {
@@ -133,4 +139,5 @@ public class BaseApplication extends Application {
         filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
         return filter;
     }
+
 }

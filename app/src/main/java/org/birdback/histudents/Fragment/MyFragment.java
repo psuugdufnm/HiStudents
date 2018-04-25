@@ -1,6 +1,7 @@
 package org.birdback.histudents.Fragment;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -21,12 +22,15 @@ import java.util.List;
  * Created by Administrator on 2018/4/8.
  */
 
-public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentModel> implements MyContract.View  {
+public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentModel> implements MyContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView recyclerView;
     private List<MyMenuEntity.MenuBean> mData = new ArrayList<>();
     private GridAdapter gridAdapter;
     private TextView tvDayMoney,tvDayBrowseNum,tvDayPayNum,tvDayNum;
+    private TextView tvWaitReceipt,tvWaitSend,tvWaitCome;
+    private TextView tvMonthOrderNum,tvMonthTurnover,tvMonthViewNum;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public int getLayoutId() {
@@ -35,17 +39,27 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentM
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
         recyclerView = view.findViewById(R.id.recycler_view);
         tvDayMoney = view.findViewById(R.id.tv_day_money);
         tvDayBrowseNum = view.findViewById(R.id.tv_day_browse_num);
         tvDayPayNum = view.findViewById(R.id.tv_day_pay_num);
         tvDayNum = view.findViewById(R.id.tv_day_num);
+        tvWaitReceipt = view.findViewById(R.id.tv_wait_receipt);
+        tvWaitSend = view.findViewById(R.id.tv_wait_send);
+        tvWaitCome = view.findViewById(R.id.tv_wait_come);
+
+        tvMonthOrderNum = view.findViewById(R.id.tv_month_order_num);
+        tvMonthTurnover = view.findViewById(R.id.tv_month_turnover);
+        tvMonthViewNum = view.findViewById(R.id.tv_month_view_num);
+
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),4));
         gridAdapter = new GridAdapter(mData);
         recyclerView.setAdapter(gridAdapter);
     }
     @Override
     public void initListener() {
+        swipeRefreshLayout.setOnRefreshListener(this);
         mPresenter.getList();
     }
 
@@ -56,9 +70,13 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentM
 
     @Override
     public void getListSuccess(MyMenuEntity entity) {
+
         mData.clear();
         mData.addAll(entity.getMenu());
         gridAdapter.notifyDataSetChanged();
+        if (swipeRefreshLayout != null){
+            swipeRefreshLayout.setRefreshing(false);
+        }
 
         MyMenuEntity.DayStatBean dayStat = entity.getDay_stat();
 
@@ -66,5 +84,20 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentM
         tvDayBrowseNum.setText(dayStat.getView_num());
         tvDayPayNum.setText(dayStat.getPay_num());
         tvDayNum.setText(dayStat.getGoods_num());
+
+        MyMenuEntity.OrderStatBean orderStat = entity.getOrder_stat();
+        tvWaitReceipt.setText(orderStat.getWait_grab());
+        tvWaitSend.setText(orderStat.getWait_send());
+        tvWaitCome.setText(orderStat.getWait_succ());
+
+        MyMenuEntity.MonthStatBean monthStat = entity.getMonth_stat();
+        tvMonthOrderNum.setText(monthStat.getGoods_num());
+        tvMonthTurnover.setText(monthStat.getPay_money());
+        tvMonthViewNum.setText(monthStat.getView_num());
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.getList();
     }
 }

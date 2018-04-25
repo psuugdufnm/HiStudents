@@ -151,31 +151,31 @@ public class MyMenuEntity {
          * wait_succ : 30
          */
 
-        private int wait_grab;
-        private int wait_send;
-        private int wait_succ;
+        private String wait_grab;
+        private String wait_send;
+        private String wait_succ;
 
-        public int getWait_grab() {
+        public String getWait_grab() {
             return wait_grab;
         }
 
-        public void setWait_grab(int wait_grab) {
+        public void setWait_grab(String wait_grab) {
             this.wait_grab = wait_grab;
         }
 
-        public int getWait_send() {
+        public String getWait_send() {
             return wait_send;
         }
 
-        public void setWait_send(int wait_send) {
+        public void setWait_send(String wait_send) {
             this.wait_send = wait_send;
         }
 
-        public int getWait_succ() {
+        public String getWait_succ() {
             return wait_succ;
         }
 
-        public void setWait_succ(int wait_succ) {
+        public void setWait_succ(String wait_succ) {
             this.wait_succ = wait_succ;
         }
     }

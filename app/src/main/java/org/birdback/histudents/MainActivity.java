@@ -1,8 +1,12 @@
 package org.birdback.histudents;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.AudioManager;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +26,7 @@ import org.birdback.histudents.web.WebFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String TAG = "MainActivity";
     private RadioButton radio0,radio1,radio2;
     private FrameLayout mFrameLayout;
     private FragmentManager mFragmentManager;
@@ -54,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         checkAudioInfo();
 
+        requestPermission();
     }
 
     private void checkAudioInfo() {
@@ -143,6 +149,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private int REQUEST_PERMISSION_ACCESS_LOCATION = 102;
+    private void requestPermission() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            int checkAccessFinePermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+            if (checkAccessFinePermission != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        REQUEST_PERMISSION_ACCESS_LOCATION);
+                Log.e(TAG, "没有权限，请求权限");
+                return;
+            }
+            Log.e(TAG, "已有定位权限");
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_PERMISSION_ACCESS_LOCATION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.e(getPackageName(), "开启权限permission granted!");
+            } else {
+                Log.e(TAG, "没有定位权限，请先开启!");
+            }
+        }
+    }
 
 
 }
