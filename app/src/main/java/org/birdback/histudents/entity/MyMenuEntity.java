@@ -60,10 +60,10 @@ public class MyMenuEntity {
          * pay_money : 894.00
          */
 
-        private String view_num;
-        private String pay_num;
-        private String goods_num;
-        private String pay_money;
+        private String view_num = "";
+        private String pay_num = "";
+        private String goods_num = "";
+        private String pay_money = "";
 
         public String getView_num() {
             return view_num;
@@ -106,10 +106,10 @@ public class MyMenuEntity {
          * pay_money : 894.10
          */
 
-        private String view_num;
-        private String pay_num;
-        private String goods_num;
-        private String pay_money;
+        private String view_num = "";
+        private String pay_num = "";
+        private String goods_num = "";
+        private String pay_money = "";
 
         public String getView_num() {
             return view_num;
@@ -187,9 +187,9 @@ public class MyMenuEntity {
          * icon : http://juhuijia2.birdback.org/mapi/i/home2/shop.png?gv=16_9
          */
 
-        private String name;
-        private String url;
-        private String icon;
+        private String name = "";
+        private String url = "";
+        private String icon = "";
 
         public String getName() {
             return name;

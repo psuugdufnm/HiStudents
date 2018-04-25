@@ -4,30 +4,25 @@ import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
-import org.birdback.histudents.Fragment.Model.OrderSearchModel;
-import org.birdback.histudents.Fragment.Presenter.OrderSearchPresenter;
-import org.birdback.histudents.Fragment.contract.OrderSearchContract;
 import org.birdback.histudents.MainActivity;
 import org.birdback.histudents.R;
 import org.birdback.histudents.activity.LoginActivity;
 import org.birdback.histudents.base.TitleView;
-import org.birdback.histudents.core.CoreBaseActivity;
 import org.birdback.histudents.core.CoreBaseFragment;
 import org.birdback.histudents.net.Callback.OnFailureCallBack;
 import org.birdback.histudents.net.Callback.OnSuccessCallBack;
@@ -36,11 +31,9 @@ import org.birdback.histudents.service.RequestParams;
 import org.birdback.histudents.utils.LogUtil;
 import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.TextUtils;
-import org.birdback.histudents.utils.VerifyUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * WebView fragment
@@ -111,6 +104,12 @@ public class WebFragment extends CoreBaseFragment {
                 super.onPageFinished(view, url);
 
             }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+
+            }
         });
     }
 
@@ -166,8 +165,6 @@ public class WebFragment extends CoreBaseFragment {
                     String callBack = info.successFunc.replace(")",",'" + json + "')");
 
                     final String js = "javascript:window."+ callBack;
-
-
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {

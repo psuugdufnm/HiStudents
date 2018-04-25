@@ -61,7 +61,7 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
         mIvPrint = view.findViewById(R.id.iv_print);
         mRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mEmptyView = view.findViewById(R.id.tv_empty_view);
+        mEmptyView = view.findViewById(R.id.ll_empty_view);
         mContext = getActivity();
 
     }

@@ -42,6 +42,7 @@
                         style="@style/style_text1"
                         android:text="浏览人数"/>
                     <TextView
+                        android:id="@+id/tv_day_browse_num"
                         style="@style/style_text1"
                         android:layout_marginTop="@dimen/dp10"
                         android:textSize="@dimen/sp14"
@@ -53,6 +54,7 @@
                         style="@style/style_text1"
                         android:text="付款订单数"/>
                     <TextView
+                        android:id="@+id/tv_day_pay_num"
                         style="@style/style_text1"
                         android:layout_marginTop="@dimen/dp10"
                         android:textSize="@dimen/sp14"
@@ -64,6 +66,7 @@
                         style="@style/style_text1"
                         android:text="付款件数"/>
                     <TextView
+                        android:id="@+id/tv_day_num"
                         style="@style/style_text1"
                         android:layout_marginTop="@dimen/dp10"
                         android:textSize="@dimen/sp14"
