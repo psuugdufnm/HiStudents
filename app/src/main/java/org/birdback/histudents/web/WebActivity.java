@@ -86,6 +86,8 @@ public class WebActivity extends CoreBaseActivity implements SwipeRefreshLayout.
         Intent intent = getIntent();
         mWebUrl = intent.getStringExtra("url");
 
+
+        mRefreshLayout.setRefreshing(true);
         mRefreshLayout.setOnRefreshListener(this);
     }
 
@@ -174,6 +176,11 @@ public class WebActivity extends CoreBaseActivity implements SwipeRefreshLayout.
         public void openNewActivity(String json){
             OpenPageRequestInfo info = new Gson().fromJson(json, OpenPageRequestInfo.class);
             WebActivity.start(WebActivity.this,info.url);//todo: 添加请求参数，请求方式等，调试
+        }
+
+        @JavascriptInterface
+        public void swipeRefresh(String json){
+            mHandler.sendEmptyMessage(2);
         }
 
 

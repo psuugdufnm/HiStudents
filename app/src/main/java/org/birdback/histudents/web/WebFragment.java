@@ -84,6 +84,7 @@ public class WebFragment extends CoreBaseFragment implements SwipeRefreshLayout.
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
         mActivity = (MainActivity) getActivity();
 
+        swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setOnRefreshListener(this);
     }
 
