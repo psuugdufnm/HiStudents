@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
@@ -40,7 +41,7 @@ import org.json.JSONObject;
  * Created by meixin.song on 2018/4/8.
  */
 
-public class WebFragment extends CoreBaseFragment {
+public class WebFragment extends CoreBaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
 
     private WebView mWebView;
@@ -48,6 +49,7 @@ public class WebFragment extends CoreBaseFragment {
     private String mWebUrl;
     private MainActivity mActivity;
 
+    private SwipeRefreshLayout swipeRefreshLayout;
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler(){
         @Override
@@ -57,6 +59,10 @@ public class WebFragment extends CoreBaseFragment {
                 case 1:
                     //修改title
                     mTitleView.setTitleText(String.valueOf(msg.obj));
+                    break;
+                case 2:
+                    swipeRefreshLayout.setRefreshing(true);
+                    mWebView.loadUrl(mWebUrl == null ? "http://store.birdback.org/" : mWebUrl);
                     break;
             }
         }
@@ -75,7 +81,10 @@ public class WebFragment extends CoreBaseFragment {
     protected void initView(View view, Bundle savedInstanceState) {
         mWebView = view.findViewById(R.id.web_view);
         mTitleView = view.findViewById(R.id.title_view);
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
         mActivity = (MainActivity) getActivity();
+
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -102,15 +111,24 @@ public class WebFragment extends CoreBaseFragment {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-
+                if (swipeRefreshLayout != null){
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
-
+                if (swipeRefreshLayout != null){
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
+    }
+
+    @Override
+    public void onRefresh() {
+        mHandler.sendEmptyMessage(2);
     }
 
     private final class JSInterface {
@@ -142,13 +160,6 @@ public class WebFragment extends CoreBaseFragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
-
-        @JavascriptInterface
-        public void logout(String obj){
-            Session.logout();
-            LoginActivity.start(mActivity);
-            mActivity.finish();
         }
 
         @JavascriptInterface

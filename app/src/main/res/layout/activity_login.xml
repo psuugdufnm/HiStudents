@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title_back_isShow="false"
-        app:title_center_text="同学你好(商家版)"/>
+        app:title_center_text="同学快跑(商家版)"/>
 
     <LinearLayout
         android:layout_width="match_parent"

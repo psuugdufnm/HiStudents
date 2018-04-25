@@ -12,8 +12,12 @@ import org.birdback.histudents.Fragment.Presenter.MyFragmentPresenter;
 import org.birdback.histudents.Fragment.contract.MyContract;
 import org.birdback.histudents.R;
 import org.birdback.histudents.adapter.GridAdapter;
+import org.birdback.histudents.adapter.OnRecyclerViewListener;
 import org.birdback.histudents.core.CoreBaseFragment;
 import org.birdback.histudents.entity.MyMenuEntity;
+import org.birdback.histudents.net.RequestUrl;
+import org.birdback.histudents.utils.VerifyUtil;
+import org.birdback.histudents.web.WebActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +65,16 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentM
     public void initListener() {
         swipeRefreshLayout.setOnRefreshListener(this);
         mPresenter.getList();
+
+        gridAdapter.setOnItemclickListener(new OnRecyclerViewListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                MyMenuEntity.MenuBean menuBean = mData.get(position);
+                if (!VerifyUtil.isEmpty(menuBean.getUrl())){
+                    WebActivity.start(getActivity(), RequestUrl.BASE_URL + menuBean.getUrl());
+                }
+            }
+        });
     }
 
     @Override

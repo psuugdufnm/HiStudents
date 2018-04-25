@@ -21,7 +21,7 @@ import java.util.List;
  * Created by Administrator on 2018/4/24.
  */
 
-public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
+public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> implements View.OnClickListener {
     private List<MyMenuEntity.MenuBean> mData;
 
 
@@ -41,11 +41,26 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
         MyMenuEntity.MenuBean menuBean = mData.get(position);
         holder.mName.setText(menuBean.getName());
         Glide.with(BaseApplication.getApplication()).load(menuBean.getIcon()).into(holder.mIcon);
+
+        holder.itemView.setTag(String.valueOf(position));
+        holder.itemView.setOnClickListener(this);
+    }
+
+    OnRecyclerViewListener mOnClickListener;
+    public void setOnItemclickListener(OnRecyclerViewListener listener){
+        this.mOnClickListener = listener;
     }
 
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (mOnClickListener != null){
+            mOnClickListener.onItemClick(view,Integer.parseInt(view.getTag().toString()));
+        }
     }
 
 
