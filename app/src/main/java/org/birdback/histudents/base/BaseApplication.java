@@ -69,6 +69,8 @@ public class BaseApplication extends Application {
             }
         });
 
+        mPushAgent.setPushIntentServiceClass(MyPushIntentService.class);
+
     }
 
     @Override
