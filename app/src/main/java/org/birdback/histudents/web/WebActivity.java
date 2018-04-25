@@ -170,6 +170,12 @@ public class WebActivity extends CoreBaseActivity implements SwipeRefreshLayout.
                 e.printStackTrace();
             }
         }
+        @JavascriptInterface
+        public void openNewActivity(String json){
+            OpenPageRequestInfo info = new Gson().fromJson(json, OpenPageRequestInfo.class);
+            WebActivity.start(WebActivity.this,info.url);//todo: 添加请求参数，请求方式等，调试
+        }
+
 
 
         @JavascriptInterface
