@@ -1,6 +1,9 @@
 package org.birdback.histudents.Fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +22,7 @@ import org.birdback.histudents.entity.MyMenuEntity;
 import org.birdback.histudents.net.RequestUrl;
 import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.VerifyUtil;
+import org.birdback.histudents.view.HiDialog;
 import org.birdback.histudents.web.WebActivity;
 
 import java.util.ArrayList;
@@ -123,9 +127,19 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentM
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.tv_logout) {
-            Session.logout();
-            LoginActivity.start(getActivity());
-            getActivity().finish();
+            new HiDialog.Builder(getActivity())
+                    .setContent("退出登录后将收不到新订单通知，确定要退出登录吗？")
+                    .setLeftBtnText("取消")
+                    .setRightBtnText("确定")
+                    .setRightCallBack(new HiDialog.RightClickCallBack() {
+                        @Override
+                        public void dialogRightBtnClick() {
+                            Session.logout();
+                            LoginActivity.start(getActivity());
+                            getActivity().finish();
+                        }
+                    }).build();
+
         }
     }
 }

@@ -3,9 +3,9 @@
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
             <gradient
-                android:startColor="#209e71"
-                android:centerColor="#209e71"
-                android:endColor="#209e71"
+                android:startColor="#b13434"
+                android:centerColor="#b13434"
+                android:endColor="#b13434"
                 android:type="linear"/>
         </shape>
     </item>
@@ -13,18 +13,18 @@
         <shape android:shape="rectangle">
             <solid android:color="#94d7bf"/>
             <gradient
-                android:startColor="#94d7bf"
-                android:centerColor="#94d7bf"
-                android:endColor="#94d7bf"
+                android:startColor="#e88175"
+                android:centerColor="#e88175"
+                android:endColor="#e88175"
                 android:type="linear"/>
         </shape>
     </item>
     <item android:state_pressed="false">
         <shape android:shape="rectangle">
             <gradient
-                android:startColor="#00B586"
-                android:centerColor="#00B586"
-                android:endColor="#00B586"
+                android:startColor="#e88175"
+                android:centerColor="#e88175"
+                android:endColor="#e88175"
                 android:type="linear"/>
         </shape>
     </item>

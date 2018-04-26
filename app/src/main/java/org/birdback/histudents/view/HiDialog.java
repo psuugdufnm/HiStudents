@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import org.birdback.histudents.R;
 
-public class HiDialog extends DialogFragment implements View.OnClickListener{
+public class HiDialog extends DialogFragment implements View.OnClickListener {
 
     public static String TAG = "HiDialog";
     private LeftClickCallBack mLeftCallBack;

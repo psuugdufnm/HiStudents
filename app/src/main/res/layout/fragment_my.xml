@@ -176,7 +176,11 @@
                 android:id="@+id/tv_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/selector_bg_item"
+                android:layout_marginBottom="@dimen/dp20"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp20"
+                android:background="@drawable/button_bg_red"
+                android:textColor="@color/write"
                 android:gravity="center"
                 android:padding="@dimen/dp10"
                 android:text="退出登录"/>
