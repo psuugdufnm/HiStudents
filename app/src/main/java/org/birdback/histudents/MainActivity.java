@@ -5,10 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,9 +22,11 @@ import android.widget.RadioButton;
 import org.birdback.histudents.Fragment.MyFragment;
 import org.birdback.histudents.Fragment.OrderManagerFragment;
 import org.birdback.histudents.activity.LoginActivity;
+import org.birdback.histudents.base.BaseApplication;
 import org.birdback.histudents.core.CoreBaseFragment;
 import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.VerifyUtil;
+import org.birdback.histudents.view.HiDialog;
 import org.birdback.histudents.web.WebFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -60,11 +65,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         checkAudioInfo();
 
         requestPermission();
+
+
+        checkNotice();
+    }
+
+    private void checkNotice() {
+        NotificationManagerCompat manager = NotificationManagerCompat.from(BaseApplication.getApplication());
+        boolean isOpened = manager.areNotificationsEnabled();
+
+        if (!isOpened) {
+            //没有打开通知，弹出提示框询问
+            new HiDialog.Builder(this)
+                    .setContent("您没有开启通知，可能会错过新订单，请立即开启")
+                    .setRightBtnText("去开启")
+                    .setRightCallBack(new HiDialog.RightClickCallBack() {
+                        @Override
+                        public void dialogRightBtnClick() {
+                            Uri packageURI = Uri.parse("package:" + "org.birdback.histudents");
+                            Intent intent =  new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,packageURI);
+                            startActivity(intent);
+                        }
+                    }).build();
+        }
+
     }
 
     private void checkAudioInfo() {
         AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-
         int max = am.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION);
         int current = am.getStreamVolume(AudioManager.STREAM_NOTIFICATION);
         if (max-2 > current) {
