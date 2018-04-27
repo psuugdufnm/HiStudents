@@ -13,6 +13,7 @@ import org.birdback.histudents.utils.TextUtils;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
@@ -25,6 +26,8 @@ public class OrderManagerPresenter extends OrderManagerContract.Presenter {
 
     private PrintBean mPrintBean;
     private BluetoothSocket mmSocket;
+    private OrderListEntity.GrabListBean mGrabListBean;
+    private String shopName;
 
     @Override
     public void onCreate() {
@@ -54,8 +57,15 @@ public class OrderManagerPresenter extends OrderManagerContract.Presenter {
     }
 
     @Override
-    public void requestSubmit(String orderNo,ExecutorService mExecutorService) {
-        initBuleTooth(orderNo,mExecutorService);
+    public void requestSubmit(String orderNo,ExecutorService mExecutorService,String name,OrderListEntity.GrabListBean grabListBean) {
+        mGrabListBean = grabListBean;
+        shopName = name;
+        if (mGrabListBean != null){
+
+            initBuleTooth(orderNo,mExecutorService);
+        }
+
+
     }
 
     @Override
@@ -88,6 +98,7 @@ public class OrderManagerPresenter extends OrderManagerContract.Presenter {
                 mmSocket = mPrintBean.getDevice().createRfcommSocketToServiceRecord(PrintUtils.uuid);
 
                 sendThread(orderNo,mExecutorService);
+                showProgressDialog();
             } catch (IOException e) {
                 mView.handlerSend(1,null);
                 e.printStackTrace();
@@ -113,7 +124,7 @@ public class OrderManagerPresenter extends OrderManagerContract.Presenter {
                     mmSocket.connect();
                     //连接成功获取输出流
                     outputStream = mmSocket.getOutputStream();
-                    PrintUtils.send(outputStream,"",new OrderListEntity.GrabListBean());
+                    PrintUtils.send(outputStream,shopName,mGrabListBean);
                     closeProgressDialog();
 
                     if (mMode != null) {

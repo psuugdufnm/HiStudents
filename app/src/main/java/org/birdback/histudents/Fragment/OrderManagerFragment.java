@@ -14,7 +14,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 
 import org.birdback.histudents.Fragment.Model.OrderManagerModel;
 import org.birdback.histudents.Fragment.Presenter.OrderManagerPresenter;
@@ -26,9 +28,13 @@ import org.birdback.histudents.adapter.OnRecyclerViewListener;
 import org.birdback.histudents.adapter.OrderListAdapter;
 import org.birdback.histudents.core.CoreBaseFragment;
 import org.birdback.histudents.entity.OrderListEntity;
+import org.birdback.histudents.event.MessageEvent;
 import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.TextUtils;
 import org.birdback.histudents.utils.VerifyUtil;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +72,8 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
             }
         }
     };
+    private String shopName;
+    private Switch switchTab;
 
     @Override
     public void  handlerSend(int what,String message){
@@ -85,7 +93,11 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
         mRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
         mRecyclerView = view.findViewById(R.id.recycler_view);
         mEmptyView = view.findViewById(R.id.ll_empty_view);
+        switchTab = view.findViewById(R.id.switch_tab);
         mContext = getActivity();
+
+        //注册事件
+        EventBus.getDefault().register(this);
 
     }
 
@@ -93,6 +105,16 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
     public void initListener() {
         mIvPrint.setOnClickListener(this);
         mRefreshLayout.setOnRefreshListener(this);
+
+        boolean autoGet = Session.getAutoGet();
+        switchTab.setChecked(autoGet);
+
+        switchTab.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Session.setAutoGet(b);
+            }
+        });
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         adapter = new OrderListAdapter(mDatas);
@@ -180,14 +202,28 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
         if (mRefreshLayout.isRefreshing()){
             mRefreshLayout.setRefreshing(false);
         }
-        if (entity.getGrab_list().size() > 0){
+        shopName = entity.getStore_name();
+        List<OrderListEntity.GrabListBean> grab_list = entity.getGrab_list();
+        if (grab_list.size() > 0){
             mEmptyView.setVisibility(View.GONE);
             mDatas.clear();
             mDatas.addAll(entity.getGrab_list());
             adapter.notifyDataSetChanged();
+
+
+            if (switchTab.isChecked()){
+                for (int i = 0; i < grab_list.size(); i++) {
+                    OrderListEntity.GrabListBean grabListBean = grab_list.get(i);
+                    mPresenter.requestSubmit(grabListBean.getOrder_no(),mExecutorService,shopName,grabListBean);
+                }
+            }
+
+
         }else {
             mEmptyView.setVisibility(View.VISIBLE);
         }
+
+
 
     }
 
@@ -214,9 +250,10 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
         }
 
         if (itemView.getId() == R.id.btn_jiedan) {
-            String orderNo = mDatas.get(position).getOrder_no();
+            OrderListEntity.GrabListBean grabListBean = mDatas.get(position);
+            String orderNo = grabListBean.getOrder_no();
             if (!VerifyUtil.isEmpty(orderNo)) {
-                mPresenter.requestSubmit(orderNo,mExecutorService);
+                mPresenter.requestSubmit(orderNo,mExecutorService,shopName,grabListBean);
             }else {
                 TextUtils.makeText("订单异常，请刷新");
             }
@@ -227,7 +264,16 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
     public void onDestroy() {
         super.onDestroy();
         mHandler.removeCallbacksAndMessages(null);
+
+        EventBus.getDefault().unregister(this);
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMoonEvent(MessageEvent messageEvent){
+        //收到通知，刷新页面
+        requestData();
+
+    }
 
 }

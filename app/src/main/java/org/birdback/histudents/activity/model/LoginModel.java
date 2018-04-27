@@ -39,7 +39,7 @@ public class LoginModel implements LoginContract.Model {
         }, new OnFailureCallBack() {
             @Override
             public void onFailure(int code, String msg) {
-                mPresenter.showMessage(msg);
+                mPresenter.mView.showMessage(msg);
 
             }
         });

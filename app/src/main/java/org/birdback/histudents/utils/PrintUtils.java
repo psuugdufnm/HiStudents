@@ -8,6 +8,7 @@ import org.birdback.histudents.entity.OrderListEntity;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -103,7 +104,7 @@ public class PrintUtils {
     /**
      * 打印三列时，第一列汉字最多显示几个文字
      */
-    private static final int LEFT_TEXT_MAX_LENGTH = 5;
+    private static final int LEFT_TEXT_MAX_LENGTH = 10;
 
     public static void setOutputStream(OutputStream outputStream){
         mOutputStream = outputStream;
@@ -213,6 +214,65 @@ public class PrintUtils {
      * 发送数据
      */
     public static synchronized void send(OutputStream outputStream, String shopName, OrderListEntity.GrabListBean bean) {
+        PrintUtils.setOutputStream(outputStream);
+        PrintUtils.selectCommand(PrintUtils.RESET);
+        PrintUtils.selectCommand(PrintUtils.LINE_SPACING_DEFAULT);
+        PrintUtils.selectCommand(PrintUtils.ALIGN_CENTER);
+        PrintUtils.selectCommand(PrintUtils.DOUBLE_HEIGHT_WIDTH);
+        PrintUtils.printText(shopName + "\n\n");
+        PrintUtils.printText("#" + bean.getOrder_num() + "\n\n");
+        PrintUtils.selectCommand(PrintUtils.NORMAL);
+        PrintUtils.selectCommand(PrintUtils.ALIGN_LEFT);
+        PrintUtils.printText(PrintUtils.printTwoData("订单号:", bean.getOrder_no() + "\n"));
+        PrintUtils.printText(PrintUtils.printTwoData("时间:", bean.getPay_time() + "\n"));
+        PrintUtils.printText(PrintUtils.printTwoData("人数:" + bean.getTableware_num(), "\n"));
+
+        PrintUtils.printText("--------------------------------\n");
+        PrintUtils.selectCommand(PrintUtils.BOLD);
+        PrintUtils.printText(PrintUtils.printThreeData("项目", "数量", "金额\n"));
+        PrintUtils.printText("--------------------------------\n");
+        PrintUtils.selectCommand(PrintUtils.BOLD_CANCEL);
+
+        int size = bean.getGoods_list().size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                List<OrderListEntity.GrabListBean.GoodsListBean> goods_list = bean.getGoods_list();
+                OrderListEntity.GrabListBean.GoodsListBean goodsListBean = goods_list.get(i);
+
+                PrintUtils.printText(PrintUtils.printThreeData("" + goodsListBean.getName(),
+                        "x" + goodsListBean.getNum(),
+                        goodsListBean.getPrice() + "\n"));
+                PrintUtils.printText(goodsListBean.getShowDesc() +"\n\n");
+            }
+        }
+
+        PrintUtils.printText("--------------------------------\n");
+        PrintUtils.printText(PrintUtils.printTwoData("合计", bean.getReal_price() + "\n"));
+        PrintUtils.printText(PrintUtils.printTwoData("折扣", bean.getRebate() + "\n"));
+        PrintUtils.printText(PrintUtils.printTwoData("实付", bean.getPay_price() + "\n"));
+        PrintUtils.printText("--------------------------------\n");
+
+        PrintUtils.selectCommand(PrintUtils.ALIGN_LEFT);
+        PrintUtils.printText("备注:" + bean.getRemark() + "\n");
+        PrintUtils.printText("-------------------------------\n");
+        PrintUtils.printText("称呼：" + bean.getAddr_name() + "("+bean.getAddr_sex()+")\n");
+
+        PrintUtils.selectCommand(PrintUtils.DOUBLE_HEIGHT_WIDTH);
+        PrintUtils.printText("手机:\n");
+        PrintUtils.printText("" + bean.getAddr_phone() + "\n\n");
+        PrintUtils.selectCommand(PrintUtils.NORMAL);
+
+        String address = bean.getAddress();
+
+        PrintUtils.printText("地址：\n" + address + "\n");
+        PrintUtils.printText("\n\n\n\n\n");
+    }
+
+
+    /**
+     * 发送数据 测试
+     */
+    public static synchronized void send(OutputStream outputStream) {
         PrintUtils.setOutputStream(outputStream);
         PrintUtils.selectCommand(PrintUtils.RESET);
         PrintUtils.selectCommand(PrintUtils.LINE_SPACING_DEFAULT);

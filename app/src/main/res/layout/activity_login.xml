@@ -35,7 +35,6 @@
                 style="@style/etStyle"
                 android:gravity="left|center"
                 android:layout_marginLeft="@dimen/dp20"
-                android:inputType="number"
                 android:maxLength="11"
                 android:padding="15dp"
                 android:textSize="@dimen/sp15"

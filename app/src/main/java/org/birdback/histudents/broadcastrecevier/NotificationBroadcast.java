@@ -8,7 +8,9 @@ import android.util.Log;
 import com.umeng.message.UTrack;
 import com.umeng.message.entity.UMessage;
 
+import org.birdback.histudents.event.MessageEvent;
 import org.birdback.histudents.service.MyNotificationService;
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,7 +24,9 @@ public class NotificationBroadcast extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
         String message = intent.getStringExtra(EXTRA_KEY_MSG);
+
         int action = intent.getIntExtra(EXTRA_KEY_ACTION, EXTRA_ACTION_NOT_EXIST);
         try {
             UMessage msg = new UMessage(new JSONObject(message));
@@ -38,6 +42,8 @@ public class NotificationBroadcast extends BroadcastReceiver {
                     UTrack.getInstance(context).setClearPrevMessage(true);
                     MyNotificationService.oldMessage = null;
                     UTrack.getInstance(context).trackMsgClick(msg);
+                    //点击了通知
+                    //如果应用没打开，启动应用
                     break;
             }
         } catch (JSONException e) {

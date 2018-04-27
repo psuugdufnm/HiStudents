@@ -16,6 +16,8 @@ import com.umeng.message.entity.UMessage;
 
 import org.birdback.histudents.R;
 import org.birdback.histudents.broadcastrecevier.NotificationBroadcast;
+import org.birdback.histudents.event.MessageEvent;
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,6 +36,9 @@ public class MyNotificationService extends Service {
             return super.onStartCommand(intent, flags, startId);
         }
         String message = intent.getStringExtra("UmengMsg");
+        //通知fragment刷新数据
+        EventBus.getDefault().post(new MessageEvent(message));
+
         try {
             UMessage msg = new UMessage(new JSONObject(message));
             if (oldMessage != null) {

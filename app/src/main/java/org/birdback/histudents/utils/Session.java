@@ -13,12 +13,22 @@ public class Session {
     private static String bluetoothAddress = ""; //蓝牙打印机地址
 
     private static boolean isFirstOpen;//是否第一次打开应用
+    private static boolean autoGet;//自动接单
+
+
+    public static boolean getAutoGet() {
+        autoGet = SharedPreUtil.getValue("autoGet", false);
+        return autoGet;
+    }
+
+    public static void setAutoGet(boolean autoGet) {
+        Session.autoGet = autoGet;
+        SharedPreUtil.putValue("autoGet", autoGet);
+    }
 
 
     public static boolean isFirstOpen() {
-        if (VerifyUtil.isEmpty(isFirstOpen)) {
-            isFirstOpen = SharedPreUtil.getValue("isFirstOpen", false);
-        }
+        isFirstOpen = SharedPreUtil.getValue("isFirstOpen", false);
         return isFirstOpen;
     }
 
@@ -68,7 +78,6 @@ public class Session {
 
     public static void logout(){
         Session.setCookie("");
-        Session.setDeviceToken("");
     }
 
 

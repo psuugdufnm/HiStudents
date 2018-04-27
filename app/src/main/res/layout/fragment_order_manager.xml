@@ -34,6 +34,7 @@
                     android:padding="@dimen/dp15"
                     android:text="自动接单"/>
                 <Switch
+                    android:id="@+id/switch_tab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <View

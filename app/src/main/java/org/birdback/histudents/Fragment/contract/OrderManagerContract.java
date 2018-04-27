@@ -35,7 +35,7 @@ public interface OrderManagerContract {
 
         public abstract void requestListSuccess(OrderListEntity entity);
 
-        public abstract void requestSubmit(String orderNo,ExecutorService mExecutorService);
+        public abstract void requestSubmit(String orderNo,ExecutorService mExecutorService,String name,OrderListEntity.GrabListBean grabListBean);
 
         public abstract void submitSuccess();
 

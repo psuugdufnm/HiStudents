@@ -28,14 +28,6 @@ public class UmengNotificationService extends UmengMessageService {
         Intent intent1 = new Intent();
         intent1.setClass(context, MyNotificationService.class);
         intent1.putExtra("UmengMsg", msg);
-
-       /* try {
-            showNotifications(context, new UMessage(new JSONObject(msg)));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
-
-
         context.startService(intent1);
 
 

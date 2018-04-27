@@ -65,7 +65,6 @@ public class BaseApplication extends Application {
             }
         });
         mPushAgent.setPushIntentServiceClass(UmengNotificationService.class);
-        //mPushAgent.setPushIntentServiceClass(null);
     }
 
     @Override

@@ -134,7 +134,7 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
                     mmSocket.connect();
                     //连接成功获取输出流
                     outputStream = mmSocket.getOutputStream();
-                    PrintUtils.send(outputStream,"",new OrderListEntity.GrabListBean());
+                    PrintUtils.send(outputStream);
                     mHandler.sendEmptyMessage(4);
                 } catch (Exception connectException) {
                     mHandler.sendEmptyMessage(4);
