@@ -17,6 +17,9 @@ import android.view.ViewGroup;
 import org.birdback.histudents.R;
 import org.birdback.histudents.utils.ReflectUtil;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 
 /**
  * Created by meixin.song on 2018/3/9
@@ -31,6 +34,8 @@ public abstract class CoreBaseFragment<P extends CoreBaseContract.CoreBasePresen
     public Activity mActivity;
     private Dialog mProgressDialog;
     protected Handler mHandler;
+    protected ExecutorService mExecutorService;
+
 
     @Override
     public void onAttach(Context context) {
@@ -42,6 +47,7 @@ public abstract class CoreBaseFragment<P extends CoreBaseContract.CoreBasePresen
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mExecutorService = Executors.newFixedThreadPool(4);//初始化线程池
         if (getLayoutView() != null) {
             return getLayoutView();
         } else {

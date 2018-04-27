@@ -20,6 +20,9 @@ public class RequestUrl {
      * 订单列表
      */
     public static final String ORDER_LIST = "/order/grab_list";
+    /**
+     * 接单
+     */
     public static final String ORDER_SUBMIT = "/order/grab_order";
     public static final String HOME_INDEX = "/home/index";
 

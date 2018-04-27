@@ -4,6 +4,7 @@ import org.birdback.histudents.core.CoreBaseContract;
 import org.birdback.histudents.entity.OrderListEntity;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 /**
  * Created by Administrator on 2018/4/9.
@@ -17,7 +18,8 @@ public interface OrderManagerContract {
 
         void submitSuccess();
 
-        void submitFailure();
+        void submitFailure(int code, String msg);
+        void handlerSend(int what,String message);
     }
 
     interface Model extends CoreBaseContract.CoreBaseModel<Presenter> {
@@ -33,11 +35,11 @@ public interface OrderManagerContract {
 
         public abstract void requestListSuccess(OrderListEntity entity);
 
-        public abstract void requestSubmit(String orderNo);
+        public abstract void requestSubmit(String orderNo,ExecutorService mExecutorService);
 
         public abstract void submitSuccess();
 
-        public abstract void submitFailure();
+        public abstract void submitFailure(int code, String msg);
     }
 
 

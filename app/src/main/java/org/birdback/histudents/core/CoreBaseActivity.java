@@ -23,6 +23,9 @@ import android.widget.TextView;
 import org.birdback.histudents.R;
 import org.birdback.histudents.utils.ReflectUtil;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 
 /**
  * base activity
@@ -36,11 +39,14 @@ public abstract class CoreBaseActivity<P extends CoreBaseContract.CoreBasePresen
     public M mModel;
     private String mTAG;
     protected Dialog mProgressDialog = null;
+    protected ExecutorService mExecutorService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
+        mExecutorService = Executors.newFixedThreadPool(4);//初始化线程池
+
         if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }

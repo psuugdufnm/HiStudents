@@ -13,7 +13,7 @@ public class OrderListEntity {
      * store_name : 测试店2
      */
 
-    private String store_name;
+    private String store_name = "";
     private List<GrabListBean> grab_list;
 
     public String getStore_name() {

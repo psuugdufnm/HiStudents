@@ -50,7 +50,7 @@ public class OrderManagerModel implements OrderManagerContract.Model {
         }, new OnFailureCallBack() {
             @Override
             public void onFailure(int code, String msg) {
-                presenter.submitFailure();
+                presenter.submitFailure(code, msg);
             }
         });
     }

@@ -7,6 +7,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,6 +53,27 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
     private String phone;
     private View mEmptyView;
 
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 1:
+                    TextUtils.makeText("蓝牙打印机连接异常，请检查");
+                    PrinterManagerActivity.start(getActivity());
+                    break;
+
+            }
+        }
+    };
+
+    @Override
+    public void  handlerSend(int what,String message){
+        if (VerifyUtil.isEmpty(message)){
+            mHandler.sendEmptyMessage(what);
+        }
+    }
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_order_manager;
@@ -76,11 +99,18 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
         mRecyclerView.setAdapter(adapter);
         adapter.setOnRecyclerViewListener(this);
 
-        mRefreshLayout.setRefreshing(true);
-        mPresenter.requestList();
+        requestData();
 
         initPrinterView();
 
+    }
+
+    /**
+     * 请求数据
+     */
+    private void requestData() {
+        mRefreshLayout.setRefreshing(true);
+        mPresenter.requestList();
     }
 
     private void initPrinterView() {
@@ -115,6 +145,7 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+        requestData();
     }
 
     @Override
@@ -141,8 +172,7 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
 
     @Override
     public void onRefresh() {
-        mPresenter.requestList();
-
+        requestData();
     }
 
     @Override
@@ -163,12 +193,12 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
 
     @Override
     public void submitSuccess() {
-        //TODO 接单成功
+        requestData();
     }
 
     @Override
-    public void submitFailure() {
-
+    public void submitFailure(int code, String msg) {
+        TextUtils.makeText(msg);
     }
 
 
@@ -186,10 +216,18 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
         if (itemView.getId() == R.id.btn_jiedan) {
             String orderNo = mDatas.get(position).getOrder_no();
             if (!VerifyUtil.isEmpty(orderNo)) {
-                mPresenter.requestSubmit(orderNo);
+                mPresenter.requestSubmit(orderNo,mExecutorService);
             }else {
                 TextUtils.makeText("订单异常，请刷新");
             }
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
+    }
+
+
 }
