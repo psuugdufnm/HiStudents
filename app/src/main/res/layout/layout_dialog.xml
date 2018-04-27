@@ -41,7 +41,7 @@
             android:paddingBottom="@dimen/dp10"
             android:textSize="@dimen/sp16"
             android:background="@drawable/selector_bg_gary_item"
-            android:layout_marginRight="@dimen/dp1"
+            android:layout_marginRight="@dimen/dp10"
             android:gravity="center"
             android:text="取消"/>
         <TextView

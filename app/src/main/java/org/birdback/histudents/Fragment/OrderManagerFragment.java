@@ -79,7 +79,16 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
         mRefreshLayout.setRefreshing(true);
         mPresenter.requestList();
 
+        initPrinterView();
+
     }
+
+    private void initPrinterView() {
+        if(VerifyUtil.isEmpty(Session.getBluetoothAddress())){
+            SeachPrinterActivity.start(getActivity());
+        }
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults) {
@@ -154,7 +163,7 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
 
     @Override
     public void submitSuccess() {
-        //TODO
+        //TODO 接单成功
     }
 
     @Override

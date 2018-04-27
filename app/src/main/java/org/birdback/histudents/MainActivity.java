@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
@@ -24,10 +25,16 @@ import org.birdback.histudents.Fragment.OrderManagerFragment;
 import org.birdback.histudents.activity.LoginActivity;
 import org.birdback.histudents.base.BaseApplication;
 import org.birdback.histudents.core.CoreBaseFragment;
+import org.birdback.histudents.utils.DeviceUtil;
 import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.VerifyUtil;
 import org.birdback.histudents.view.HiDialog;
 import org.birdback.histudents.web.WebFragment;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -62,13 +69,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switchFragment(0);
 
-        checkAudioInfo();
+        checkAudioInfo();/**提示音音量开到最大*/
 
-        requestPermission();
+        requestPermission(); /**定位权限*/
+
+        checkNotice();  /**通知*/
+
+        isMIUI();
 
 
-        checkNotice();
+        Session.setIsFirstOpen(true);
     }
+
+    public void isMIUI() {
+        if (isFirstOpen() && "Xiaomi".equals(DeviceUtil.getBrand())) {
+            new HiDialog.Builder(this)
+                    .setContent("检测到您是小米用户，如果您是MIUI9版本，建议将通知种类设置为重要通知")
+                    .setRightBtnText("不再提醒，去设置")
+                    .setRightCallBack(new HiDialog.RightClickCallBack() {
+                        @Override
+                        public void dialogRightBtnClick() {
+                            Uri packageURI = Uri.parse("package:" + "org.birdback.histudents");
+                            Intent intent =  new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,packageURI);
+                            startActivity(intent);
+                        }
+                    }).build();
+        }
+    }
+
+    private boolean isFirstOpen(){
+        return Session.isFirstOpen();
+    }
+
 
     private void checkNotice() {
         NotificationManagerCompat manager = NotificationManagerCompat.from(BaseApplication.getApplication());

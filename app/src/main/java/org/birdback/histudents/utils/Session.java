@@ -12,6 +12,23 @@ public class Session {
 
     private static String bluetoothAddress = ""; //蓝牙打印机地址
 
+    private static boolean isFirstOpen;//是否第一次打开应用
+
+
+    public static boolean isFirstOpen() {
+        if (VerifyUtil.isEmpty(isFirstOpen)) {
+            isFirstOpen = SharedPreUtil.getValue("isFirstOpen", false);
+        }
+        return isFirstOpen;
+    }
+
+    public static void setIsFirstOpen(boolean isFirstOpen) {
+        Session.isFirstOpen = isFirstOpen;
+        SharedPreUtil.putValue("isFirstOpen", isFirstOpen);
+    }
+
+
+
     public static String getBluetoothAddress() {
         if (VerifyUtil.isEmpty(bluetoothAddress)) {
             bluetoothAddress = SharedPreUtil.getValue("bluetoothAddress", "");

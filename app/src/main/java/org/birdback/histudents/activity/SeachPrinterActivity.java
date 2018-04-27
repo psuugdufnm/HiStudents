@@ -3,6 +3,7 @@ package org.birdback.histudents.activity;
 
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -29,6 +30,11 @@ import org.birdback.histudents.utils.TextUtils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+
+import static android.bluetooth.BluetoothClass.Device.AUDIO_VIDEO_WEARABLE_HEADSET;
+import static android.bluetooth.BluetoothClass.Device.COMPUTER_DESKTOP;
+import static android.bluetooth.BluetoothClass.Device.COMPUTER_LAPTOP;
+import static android.bluetooth.BluetoothClass.Device.PHONE_SMART;
 
 
 /**
@@ -125,8 +131,18 @@ public class SeachPrinterActivity extends CoreBaseActivity implements OnRecycler
             if (action.equals(BluetoothDevice.ACTION_FOUND)) {
 
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                int deviceClass = device.getBluetoothClass().getDeviceClass();
 
-                deviceList.add(device);
+                /**
+                 * 防止设备过多，过滤掉手机耳机电脑等设备类型
+                 */
+                if (deviceClass != PHONE_SMART
+                        && deviceClass != AUDIO_VIDEO_WEARABLE_HEADSET
+                        && deviceClass != COMPUTER_DESKTOP
+                        && deviceClass != COMPUTER_LAPTOP){
+
+                    deviceList.add(device);
+                }
                 listAdapter.notifyDataSetChanged();
                 tvTip2.setText(String.format(getResources().getString(R.string.string_fond_bluetooth_tip),String.valueOf(deviceList.size())));
 

@@ -185,7 +185,7 @@ public class DeviceUtil {
     }
 
     public static String getPhoneAllInfo(Context context) {
-        String allInfo = "XXD FIANCE Android AppVersionCode " + getAPPVersionCode(context)
+        String allInfo = "hi student Android AppVersionCode " + getAPPVersionCode(context)
                 + " SystemVersion " + Build.VERSION.RELEASE
                 + " SDK " + Build.VERSION.SDK_INT
                 + " Brand " + getBrand()

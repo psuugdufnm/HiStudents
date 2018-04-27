@@ -45,6 +45,16 @@
             android:gravity="center"
             android:textSize="@dimen/sp14"
             android:textColor="@color/txt_color1"/>
+
+        <TextView
+            android:id="@+id/tv_tip3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="为防止设备过多，已经过滤掉手机、电脑、耳机等设备"
+            android:padding="@dimen/dp10"
+            android:gravity="center"
+            android:textSize="@dimen/sp14"
+            android:textColor="@color/txt_color1"/>
     </LinearLayout>
     <View
         style="@style/common_line_horizontal_80"/>
