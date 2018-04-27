@@ -44,6 +44,8 @@
 
 
         <service android:name="org.birdback.histudents.service.UmengNotificationService"/>
+        <service android:name="org.birdback.histudents.service.MyNotificationService"/>
+        <receiver android:name=".broadcastrecevier.NotificationBroadcast"/>
 
     </application>
 

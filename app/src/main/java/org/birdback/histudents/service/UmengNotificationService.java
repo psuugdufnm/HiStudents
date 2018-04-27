@@ -16,7 +16,6 @@ import com.umeng.message.entity.UMessage;
 import org.android.agoo.common.AgooConstants;
 import org.birdback.histudents.MainActivity;
 import org.birdback.histudents.R;
-import org.birdback.histudents.utils.LogUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,22 +23,20 @@ import org.json.JSONObject;
 public class UmengNotificationService extends UmengMessageService {
     @Override
     public void onMessage(Context context, Intent intent) {
-        LogUtil.d("UmengNotificationService Looper.getMainLooper().getThread() = " +Looper.getMainLooper().getThread());
-        LogUtil.d("UmengNotificationService Thread.currentThread() = " +Thread.currentThread());
 
         String msg = intent.getStringExtra(AgooConstants.MESSAGE_BODY);
-       /* Intent intent1 = new Intent();
-        //intent1.setClass(context, MainActivity.class);
-        //intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent intent1 = new Intent();
+        intent1.setClass(context, MyNotificationService.class);
         intent1.putExtra("UmengMsg", msg);
-        //context.startService(intent1);*/
 
-        try {
-            UMessage message = new UMessage(new JSONObject(msg));
-            showNotifications(context, message);
+       /* try {
+            showNotifications(context, new UMessage(new JSONObject(msg)));
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
+
+
+        context.startService(intent1);
 
 
     }
