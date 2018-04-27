@@ -43,6 +43,7 @@
             android:screenOrientation="portrait"/>
 
 
+        <service android:name="org.birdback.histudents.service.UmengNotificationService"/>
 
     </application>
 

@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         isMIUI();
 
 
-        Session.setIsFirstOpen(true);
+        Session.setIsFirstOpen(false);
     }
 
     public void isMIUI() {
