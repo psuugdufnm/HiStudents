@@ -14,6 +14,7 @@ import android.content.Context;
 import com.umeng.message.UTrack;
 import com.umeng.message.entity.UMessage;
 
+import org.birdback.histudents.MainActivity;
 import org.birdback.histudents.R;
 import org.birdback.histudents.broadcastrecevier.NotificationBroadcast;
 import org.birdback.histudents.event.MessageEvent;
@@ -73,15 +74,15 @@ public class MyNotificationService extends Service {
     }
 
     public PendingIntent getClickPendingIntent(Context context, UMessage msg) {
-        Intent clickIntent = new Intent();
-        clickIntent.setClass(context, NotificationBroadcast.class);
-        clickIntent.putExtra(NotificationBroadcast.EXTRA_KEY_MSG,
-                msg.getRaw().toString());
-        clickIntent.putExtra(NotificationBroadcast.EXTRA_KEY_ACTION,
-                NotificationBroadcast.ACTION_CLICK);
-        PendingIntent clickPendingIntent = PendingIntent.getBroadcast(context,
-                (int) (System.currentTimeMillis()),
-                clickIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        Intent clickIntent = new Intent(context, MainActivity.class);
+
+        clickIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        clickIntent.putExtra(NotificationBroadcast.EXTRA_KEY_MSG, msg.getRaw().toString());
+        clickIntent.putExtra(NotificationBroadcast.EXTRA_KEY_ACTION, NotificationBroadcast.ACTION_CLICK);
+
+
+        PendingIntent clickPendingIntent = PendingIntent.getActivity(context, 0,
+                clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         return clickPendingIntent;
     }

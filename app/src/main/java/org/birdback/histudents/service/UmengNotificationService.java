@@ -42,7 +42,9 @@ public class UmengNotificationService extends UmengMessageService {
     public void showNotifications(Context context, UMessage msg) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setContentTitle(msg.title)
@@ -54,10 +56,9 @@ public class UmengNotificationService extends UmengMessageService {
                 .setColor(Color.parseColor("#41b5ea"))
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setAutoCancel(true)
-                .setContentIntent(resultPendingIntent);
-        PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
-                intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(contentIntent);
+                .setContentIntent(pendingIntent);
+
+
         mNotificationManager.notify(100, builder.build());
     }
 }

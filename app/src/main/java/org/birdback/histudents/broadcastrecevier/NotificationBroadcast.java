@@ -8,6 +8,7 @@ import android.util.Log;
 import com.umeng.message.UTrack;
 import com.umeng.message.entity.UMessage;
 
+import org.birdback.histudents.MainActivity;
 import org.birdback.histudents.event.MessageEvent;
 import org.birdback.histudents.service.MyNotificationService;
 import org.greenrobot.eventbus.EventBus;
@@ -37,14 +38,12 @@ public class NotificationBroadcast extends BroadcastReceiver {
                     UTrack.getInstance(context).setClearPrevMessage(true);
                     UTrack.getInstance(context).trackMsgDismissed(msg);
                     break;
-                case ACTION_CLICK:
+                /*case ACTION_CLICK://这里应该收不到了
                     Log.i(TAG, "click notification");
                     UTrack.getInstance(context).setClearPrevMessage(true);
                     MyNotificationService.oldMessage = null;
                     UTrack.getInstance(context).trackMsgClick(msg);
-                    //点击了通知
-                    //如果应用没打开，启动应用
-                    break;
+                    break;*/
             }
         } catch (JSONException e) {
             e.printStackTrace();

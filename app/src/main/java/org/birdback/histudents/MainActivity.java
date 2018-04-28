@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         int max = am.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION);
         int current = am.getStreamVolume(AudioManager.STREAM_NOTIFICATION);
-        if (max-2 > current) {
+        if (max-5 > current) {
             //把音量设置到最大
             am.setStreamVolume(AudioManager.STREAM_NOTIFICATION, max,1);
         }
