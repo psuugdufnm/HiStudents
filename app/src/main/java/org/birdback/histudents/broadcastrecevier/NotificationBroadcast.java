@@ -8,10 +8,6 @@ import android.util.Log;
 import com.umeng.message.UTrack;
 import com.umeng.message.entity.UMessage;
 
-import org.birdback.histudents.MainActivity;
-import org.birdback.histudents.event.MessageEvent;
-import org.birdback.histudents.service.MyNotificationService;
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 

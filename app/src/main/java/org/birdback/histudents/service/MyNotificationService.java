@@ -12,13 +12,15 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+
+import com.google.gson.Gson;
 import com.umeng.message.UTrack;
 import com.umeng.message.entity.UMessage;
 
 import org.birdback.histudents.MainActivity;
 import org.birdback.histudents.R;
 import org.birdback.histudents.broadcastrecevier.NotificationBroadcast;
-import org.birdback.histudents.event.MessageEvent;
+import org.birdback.histudents.event.UmengNotifyEntity;
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +41,8 @@ public class MyNotificationService extends Service {
         }
         String message = intent.getStringExtra("UmengMsg");
         //通知fragment刷新数据
-        EventBus.getDefault().post(new MessageEvent(message));
+        UmengNotifyEntity entity = new Gson().fromJson(message, UmengNotifyEntity.class);
+        EventBus.getDefault().post(entity);
 
         try {
             UMessage msg = new UMessage(new JSONObject(message));
@@ -81,7 +84,6 @@ public class MyNotificationService extends Service {
         clickIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         clickIntent.putExtra(NotificationBroadcast.EXTRA_KEY_MSG, msg.getRaw().toString());
         clickIntent.putExtra(NotificationBroadcast.EXTRA_KEY_ACTION, NotificationBroadcast.ACTION_CLICK);
-
 
         PendingIntent clickPendingIntent = PendingIntent.getActivity(context, 0,
                 clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);

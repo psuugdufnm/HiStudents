@@ -28,7 +28,7 @@ import org.birdback.histudents.adapter.OnRecyclerViewListener;
 import org.birdback.histudents.adapter.OrderListAdapter;
 import org.birdback.histudents.core.CoreBaseFragment;
 import org.birdback.histudents.entity.OrderListEntity;
-import org.birdback.histudents.event.MessageEvent;
+import org.birdback.histudents.event.UmengNotifyEntity;
 import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.TextUtils;
 import org.birdback.histudents.utils.VerifyUtil;
@@ -74,6 +74,7 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
     };
     private String shopName;
     private Switch switchTab;
+    private String autoOrderNo;
 
     @Override
     public void  handlerSend(int what,String message){
@@ -211,10 +212,15 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
             adapter.notifyDataSetChanged();
 
 
-            if (switchTab.isChecked()){
+            if (switchTab.isChecked() && !VerifyUtil.isEmpty(autoOrderNo)){
+
                 for (int i = 0; i < grab_list.size(); i++) {
                     OrderListEntity.GrabListBean grabListBean = grab_list.get(i);
-                    mPresenter.requestSubmit(grabListBean.getOrder_no(),mExecutorService,shopName,grabListBean);
+                    if(autoOrderNo.equals(grabListBean.getOrder_no())){
+
+                        mPresenter.requestSubmit(grabListBean.getOrder_no(),mExecutorService,shopName,grabListBean);
+                    }
+
                 }
             }
 
@@ -270,10 +276,11 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMoonEvent(MessageEvent messageEvent){
+    public void onMoonEvent(UmengNotifyEntity entity){
         //收到通知，刷新页面
-        requestData();
 
+        requestData();
+        autoOrderNo = entity.getExtra().getOrder_no();
     }
 
 }
