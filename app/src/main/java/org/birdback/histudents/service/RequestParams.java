@@ -9,8 +9,15 @@ import org.birdback.histudents.net.RequestUrl;
 import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.VerifyUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.http.Part;
 
 
 /**
@@ -72,12 +79,12 @@ public class RequestParams {
     }
 
     public RequestVo getAjaxRequest(String url, String postData) {
-        HashMap<String, String> map = bornPostParam(postData);
+        List<MultipartBody.Part> list = bornPostParam(postData);
         RequestVo reqVo = new RequestVo();
         reqVo.hasDialog = true;
         if (!VerifyUtil.isEmpty(postData)){
 
-            reqVo.observable = HttpServer.getService(OrderService.class).requestTest(url,map);
+            reqVo.observable = HttpServer.getService(OrderService.class).requestTest(url,list);
         }else {
 
             reqVo.observable = HttpServer.getService(OrderService.class).requestTest(url);
@@ -91,18 +98,20 @@ public class RequestParams {
      * @param postParam
      * @return
      */
-    public HashMap<String, String> bornPostParam(String postParam) {
-        HashMap hashMap = new HashMap();
+    public List<MultipartBody.Part> bornPostParam(String postParam) {
+        List<MultipartBody.Part> list = new ArrayList<>();
+
         if (!TextUtils.isEmpty(postParam)) {
             String[] param = postParam.split("&");
             for (int i = 0; i < param.length; ++i) {
                 int index = param[i].lastIndexOf("=");
                 if (index != -1) {
-                    hashMap.put(param[i].substring(0, index), param[i].substring(index + 1));
+                    MultipartBody.Part part = MultipartBody.Part.createFormData(param[i].substring(0, index),param[i].substring(index + 1));
+                    list.add(part);
                 }
             }
         }
-        return hashMap;
+        return list;
     }
 
 }

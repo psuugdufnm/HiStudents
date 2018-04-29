@@ -33,7 +33,7 @@ public interface OrderService {
 
     @Multipart
     @POST
-    Observable<ResponseEntity<Object>> requestTest(@Url String url, @PartMap Map<String, String> map);
+    Observable<ResponseEntity<Object>> requestTest(@Url String url, @Part List<MultipartBody.Part> list);
 
     @POST
     Observable<ResponseEntity<Object>> requestTest(@Url String url);

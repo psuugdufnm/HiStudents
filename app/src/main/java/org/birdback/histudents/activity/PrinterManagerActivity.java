@@ -26,6 +26,7 @@ import org.birdback.histudents.utils.TextUtils;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 /**
@@ -134,11 +135,21 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
                     mmSocket.connect();
                     //连接成功获取输出流
                     outputStream = mmSocket.getOutputStream();
-                    PrintUtils.send(outputStream);
+
+                    ArrayList<OrderListEntity.GrabListBean.GoodsListBean> goodsListBeans = new ArrayList<>();
+                    goodsListBeans.add(new OrderListEntity.GrabListBean.GoodsListBean("柠檬椰果养乐多/大杯",5,"多放辣椒","15"));
+                    goodsListBeans.add(new OrderListEntity.GrabListBean.GoodsListBean("轻奶茶西米露（大杯）",5,"多放辣椒","15"));
+                    goodsListBeans.add(new OrderListEntity.GrabListBean.GoodsListBean("香芋奶茶",5,"多放辣椒","15"));
+                    OrderListEntity.GrabListBean grabListBean = new OrderListEntity.GrabListBean("1523887175136322221", "99",
+                            "2018-04-16 21:59:39", "宋美馨", "13816522064",
+                            "女同学", "明基上午广场D座淞虹路207号明基商务广场D栋", "6"
+                            , "快递员小哥哥能不能帮我画一只小老虎", "63.33", "21.22", "300.39", 3,
+                            goodsListBeans);
+
+                    PrintUtils.send(outputStream,"测试店铺名称",grabListBean);
                     mHandler.sendEmptyMessage(4);
                 } catch (Exception connectException) {
                     mHandler.sendEmptyMessage(4);
-                    TextUtils.makeText("打印失败，请检查蓝牙是否断开");
                     connectException.printStackTrace();
                 }
             }

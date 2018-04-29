@@ -89,22 +89,22 @@ public class PrintUtils {
     /**
      * 打印纸一行最大的字节
      */
-    private static final int LINE_BYTE_SIZE = 26;
+    private static final int LINE_BYTE_SIZE = 28;
 
     /**
      * 打印三列时，中间一列的中心线距离打印纸左侧的距离
      */
-    private static final int LEFT_LENGTH = 13;
+    private static final int LEFT_LENGTH = 18;
 
     /**
      * 打印三列时，中间一列的中心线距离打印纸右侧的距离
      */
-    private static final int RIGHT_LENGTH = 13;
+    private static final int RIGHT_LENGTH = 10;
 
     /**
      * 打印三列时，第一列汉字最多显示几个文字
      */
-    private static final int LEFT_TEXT_MAX_LENGTH = 10;
+    private static final int LEFT_TEXT_MAX_LENGTH = 8;
 
     public static void setOutputStream(OutputStream outputStream){
         mOutputStream = outputStream;
@@ -181,33 +181,55 @@ public class PrintUtils {
     @SuppressLint("NewApi")
     public static String printThreeData(String leftText, String middleText, String rightText) {
         StringBuilder sb = new StringBuilder();
-        // 左边最多显示 LEFT_TEXT_MAX_LENGTH 个汉字 + 两个点
+
+
         if (leftText.length() > LEFT_TEXT_MAX_LENGTH) {
-            leftText = leftText.substring(0, LEFT_TEXT_MAX_LENGTH) + "..";
+
+            leftText = leftText + "\n";
+
+            sb.append(leftText);
+
+            for (int i = 0; i < LEFT_LENGTH - 1; i++) {
+                sb.append(" ");
+            }
+            sb.append(middleText);
+
+            int middleTextLength = getBytesLength(middleText);
+            int rightTextLength = getBytesLength(rightText);
+            int marginBetweenMiddleAndRight = RIGHT_LENGTH - middleTextLength / 2 - rightTextLength;
+
+            for (int i = 0; i < marginBetweenMiddleAndRight; i++) {
+                sb.append(" ");
+            }
+
+            sb.delete(sb.length() - 1, sb.length()).append(rightText);
+        }else {
+            int leftTextLength = getBytesLength(leftText);
+            int middleTextLength = getBytesLength(middleText);
+            int rightTextLength = getBytesLength(rightText);
+
+            sb.append(leftText);
+            // 计算左侧文字和中间文字的空格长度
+            int marginBetweenLeftAndMiddle = LEFT_LENGTH - leftTextLength - middleTextLength / 2;
+
+            for (int i = 0; i < marginBetweenLeftAndMiddle; i++) {
+                sb.append(" ");
+            }
+            sb.append(middleText);
+
+            // 计算右侧文字和中间文字的空格长度
+            int marginBetweenMiddleAndRight = RIGHT_LENGTH - middleTextLength / 2 - rightTextLength;
+
+            for (int i = 0; i < marginBetweenMiddleAndRight; i++) {
+                sb.append(" ");
+            }
+
+            // 打印的时候发现，最右边的文字总是偏右一个字符，所以需要删除一个空格
+            sb.delete(sb.length() - 1, sb.length()).append(rightText);
         }
-        int leftTextLength = getBytesLength(leftText);
-        int middleTextLength = getBytesLength(middleText);
-        int rightTextLength = getBytesLength(rightText);
 
-        sb.append(leftText);
-        // 计算左侧文字和中间文字的空格长度
-        int marginBetweenLeftAndMiddle = LEFT_LENGTH - leftTextLength - middleTextLength / 2;
-
-        for (int i = 0; i < marginBetweenLeftAndMiddle; i++) {
-            sb.append(" ");
-        }
-        sb.append(middleText);
-
-        // 计算右侧文字和中间文字的空格长度
-        int marginBetweenMiddleAndRight = RIGHT_LENGTH - middleTextLength / 2 - rightTextLength;
-
-        for (int i = 0; i < marginBetweenMiddleAndRight; i++) {
-            sb.append(" ");
-        }
-
-        // 打印的时候发现，最右边的文字总是偏右一个字符，所以需要删除一个空格
-        sb.delete(sb.length() - 1, sb.length()).append(rightText);
         return sb.toString();
+
     }
 
     /**
@@ -215,24 +237,26 @@ public class PrintUtils {
      */
     public static synchronized void send(OutputStream outputStream, String shopName, OrderListEntity.GrabListBean bean) {
         PrintUtils.setOutputStream(outputStream);
+
         PrintUtils.selectCommand(PrintUtils.RESET);
         PrintUtils.selectCommand(PrintUtils.LINE_SPACING_DEFAULT);
+        PrintUtils.selectCommand(PrintUtils.DOUBLE_HEIGHT);
         PrintUtils.selectCommand(PrintUtils.ALIGN_CENTER);
-        PrintUtils.selectCommand(PrintUtils.DOUBLE_HEIGHT_WIDTH);
-        PrintUtils.printText(shopName + "\n\n");
-        PrintUtils.printText("#" + bean.getOrder_num() + "\n\n");
-        PrintUtils.selectCommand(PrintUtils.NORMAL);
-        PrintUtils.selectCommand(PrintUtils.ALIGN_LEFT);
-        PrintUtils.printText(PrintUtils.printTwoData("订单号:", bean.getOrder_no() + "\n"));
-        PrintUtils.printText(PrintUtils.printTwoData("时间:", bean.getPay_time() + "\n"));
-        PrintUtils.printText(PrintUtils.printTwoData("人数:" + bean.getTableware_num(), "\n"));
+        PrintUtils.printText("****#" + bean.getOrder_num() + "同学快跑订单****\n\n");
 
+        PrintUtils.selectCommand(PrintUtils.NORMAL);
+        PrintUtils.printText(shopName + "\n\n");
+
+        PrintUtils.printText("--已在线支付--\n\n");
+        PrintUtils.selectCommand(PrintUtils.ALIGN_LEFT);
         PrintUtils.printText("--------------------------------\n");
-        PrintUtils.selectCommand(PrintUtils.BOLD);
-        PrintUtils.printText(PrintUtils.printThreeData("项目", "数量", "金额\n"));
+        PrintUtils.printText("时间:"+bean.getPay_time() + "\n");
+        PrintUtils.printText("餐具数量:" + bean.getTableware_num()+ "\n");
         PrintUtils.printText("--------------------------------\n");
+
         PrintUtils.selectCommand(PrintUtils.BOLD_CANCEL);
 
+        PrintUtils.selectCommand(PrintUtils.DOUBLE_HEIGHT);
         int size = bean.getGoods_list().size();
         if (size > 0) {
             for (int i = 0; i < size; i++) {
@@ -242,10 +266,11 @@ public class PrintUtils {
                 PrintUtils.printText(PrintUtils.printThreeData("" + goodsListBean.getName(),
                         "x" + goodsListBean.getNum(),
                         goodsListBean.getPrice() + "\n"));
+
                 PrintUtils.printText(goodsListBean.getShowDesc() +"\n\n");
             }
         }
-
+        PrintUtils.selectCommand(PrintUtils.NORMAL);
         PrintUtils.printText("--------------------------------\n");
         PrintUtils.printText(PrintUtils.printTwoData("合计", bean.getReal_price() + "\n"));
         PrintUtils.printText(PrintUtils.printTwoData("折扣", bean.getRebate() + "\n"));
@@ -255,60 +280,25 @@ public class PrintUtils {
         PrintUtils.selectCommand(PrintUtils.ALIGN_LEFT);
         PrintUtils.printText("备注:" + bean.getRemark() + "\n");
         PrintUtils.printText("-------------------------------\n");
-        PrintUtils.printText("称呼：" + bean.getAddr_name() + "("+bean.getAddr_sex()+")\n");
 
         PrintUtils.selectCommand(PrintUtils.DOUBLE_HEIGHT_WIDTH);
-        PrintUtils.printText("手机:\n");
-        PrintUtils.printText("" + bean.getAddr_phone() + "\n\n");
-        PrintUtils.selectCommand(PrintUtils.NORMAL);
+
+
 
         String address = bean.getAddress();
 
-        PrintUtils.printText("地址：\n" + address + "\n");
-        PrintUtils.printText("\n\n\n\n\n");
-    }
 
-
-    /**
-     * 发送数据 测试
-     */
-    public static synchronized void send(OutputStream outputStream) {
-        PrintUtils.setOutputStream(outputStream);
-        PrintUtils.selectCommand(PrintUtils.RESET);
-        PrintUtils.selectCommand(PrintUtils.LINE_SPACING_DEFAULT);
-        PrintUtils.selectCommand(PrintUtils.ALIGN_CENTER);
-        PrintUtils.printText("美食餐厅\n\n");
         PrintUtils.selectCommand(PrintUtils.DOUBLE_HEIGHT_WIDTH);
-        //PrintUtils.printText("桌号：1号桌\n\n");
+
+        PrintUtils.printText(address + "\n");
+        PrintUtils.printText(bean.getAddr_name() + "("+bean.getAddr_sex()+")" + "\n\n");
+        PrintUtils.printText(bean.getAddr_phone() + "\n");
+
         PrintUtils.selectCommand(PrintUtils.NORMAL);
-        PrintUtils.selectCommand(PrintUtils.ALIGN_LEFT);
-        PrintUtils.printText(PrintUtils.printTwoData("订单编号", "201507161515\n"));
-        PrintUtils.printText(PrintUtils.printTwoData("点菜时间", "2016-02-16 10:46\n"));
-        PrintUtils.printText(PrintUtils.printTwoData("上菜时间", "2016-02-16 11:46\n"));
-        PrintUtils.printText(PrintUtils.printTwoData("人数：2人", "收银员：张三\n"));
-
-        PrintUtils.printText("--------------------------------\n");
-        PrintUtils.selectCommand(PrintUtils.BOLD);
-        PrintUtils.printText(PrintUtils.printThreeData("项目", "数量", "金额\n"));
-        PrintUtils.printText("--------------------------------\n");
-        PrintUtils.selectCommand(PrintUtils.BOLD_CANCEL);
-        PrintUtils.printText(PrintUtils.printThreeData("面", "1", "0.00\n"));
-        PrintUtils.printText(PrintUtils.printThreeData("米饭", "1", "6.00\n"));
-        PrintUtils.printText(PrintUtils.printThreeData("铁板烧", "1", "26.00\n"));
-        PrintUtils.printText(PrintUtils.printThreeData("一个测试", "1", "226.00\n"));
-        PrintUtils.printText(PrintUtils.printThreeData("牛肉面啊啊", "1", "2226.00\n"));
-        PrintUtils.printText(PrintUtils.printThreeData("牛肉面啊啊啊牛肉面啊啊啊", "888", "98886.00\n"));
-
-        PrintUtils.printText("--------------------------------\n");
-        PrintUtils.printText(PrintUtils.printTwoData("合计", "53.50\n"));
-        PrintUtils.printText(PrintUtils.printTwoData("抹零", "3.50\n"));
-        PrintUtils.printText("--------------------------------\n");
-        PrintUtils.printText(PrintUtils.printTwoData("应收", "50.00\n"));
-        PrintUtils.printText("--------------------------------\n");
-
-        PrintUtils.selectCommand(PrintUtils.ALIGN_LEFT);
-        PrintUtils.printText("备注：不要辣、不要香菜");
-        PrintUtils.printText("\n\n\n\n\n");
+        PrintUtils.printText("订单号:"+ bean.getOrder_no() + "\n\n");
+        PrintUtils.selectCommand(PrintUtils.DOUBLE_HEIGHT);
+        PrintUtils.selectCommand(PrintUtils.ALIGN_CENTER);
+        PrintUtils.printText("*********#" + bean.getOrder_num() + "完*********");
+        PrintUtils.printText("\n\n\n\n");
     }
-
 }

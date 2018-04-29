@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -88,6 +89,7 @@ public class WebFragment extends CoreBaseFragment implements SwipeRefreshLayout.
         swipeRefreshLayout.setOnRefreshListener(this);
     }
 
+
     @Override
     public void initListener() {
         mWebView.loadUrl(mWebUrl == null ? "http://store.birdback.org/test/index" :mWebUrl);
@@ -125,7 +127,10 @@ public class WebFragment extends CoreBaseFragment implements SwipeRefreshLayout.
                 }
             }
         });
+
     }
+
+
 
     @Override
     public void onRefresh() {
@@ -166,7 +171,6 @@ public class WebFragment extends CoreBaseFragment implements SwipeRefreshLayout.
         @JavascriptInterface
         public void ajaxRequest(String json){
             final AjaxRequestInfo info = new Gson().fromJson(json, AjaxRequestInfo.class);
-
             HttpServer.getDataFromServer(WebFragment.this,
                     RequestParams.getInstance().getAjaxRequest(info.url,info.postData),
                     new OnSuccessCallBack<Object>() {

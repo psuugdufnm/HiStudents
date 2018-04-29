@@ -65,6 +65,26 @@ public class OrderListEntity {
         private float rebate;
         private List<GoodsListBean> goods_list;
 
+        public GrabListBean(String order_no, String order_num, String pay_time, String addr_name,
+                            String addr_phone, String addr_sex, String address, String tableware_num,
+                            String remark, String real_price, String pay_price, String goods_price,
+                            float rebate, List<GoodsListBean> goods_list) {
+            this.order_no = order_no;
+            this.order_num = order_num;
+            this.pay_time = pay_time;
+            this.addr_name = addr_name;
+            this.addr_phone = addr_phone;
+            this.addr_sex = addr_sex;
+            this.address = address;
+            this.tableware_num = tableware_num;
+            this.remark = remark;
+            this.real_price = real_price;
+            this.pay_price = pay_price;
+            this.goods_price = goods_price;
+            this.rebate = rebate;
+            this.goods_list = goods_list;
+        }
+
         public String getOrder_no() {
             return order_no;
         }
@@ -178,6 +198,13 @@ public class OrderListEntity {
         }
 
         public static class GoodsListBean {
+            public GoodsListBean(String name, int num, String showDesc, String price) {
+                this.name = name;
+                this.num = num;
+                this.showDesc = showDesc;
+                this.price = price;
+            }
+
             /**
              * name : 鱼香肉丝
              * num : 1
@@ -188,13 +215,13 @@ public class OrderListEntity {
             private int num;
             private String showDesc = "";
 
-            private float price;
+            private String price;
 
-            public float getPrice() {
+            public String getPrice() {
                 return price;
             }
 
-            public void setPrice(float price) {
+            public void setPrice(String price) {
                 this.price = price;
             }
 

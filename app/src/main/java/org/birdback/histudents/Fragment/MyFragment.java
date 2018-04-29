@@ -1,9 +1,7 @@
 package org.birdback.histudents.Fragment;
 
-import android.content.Intent;
-import android.net.Uri;
+
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;

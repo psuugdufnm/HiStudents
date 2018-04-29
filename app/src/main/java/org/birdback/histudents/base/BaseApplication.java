@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.MsgConstant;
 import com.umeng.message.PushAgent;
 
 import org.birdback.histudents.service.UmengNotificationService;
@@ -64,7 +65,9 @@ public class BaseApplication extends Application {
             public void onFailure(String s, String s1) {
             }
         });
+
         mPushAgent.setPushIntentServiceClass(UmengNotificationService.class);
+
     }
 
     @Override

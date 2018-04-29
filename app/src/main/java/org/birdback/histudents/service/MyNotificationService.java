@@ -2,6 +2,7 @@ package org.birdback.histudents.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.IBinder;
 
 
@@ -70,6 +71,7 @@ public class MyNotificationService extends Service {
         PendingIntent dismissPendingIntent = getDismissPendingIntent(this, msg);
         notification.deleteIntent = dismissPendingIntent;
         notification.contentIntent = clickPendingIntent;
+        notification.sound = Uri.parse("android.resource://" + getPackageName() + "/" +R.raw.umeng_push_notification_default_sound);
         manager.notify(id, notification);
     }
 
