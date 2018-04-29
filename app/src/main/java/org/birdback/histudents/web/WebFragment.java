@@ -1,6 +1,9 @@
 package org.birdback.histudents.web;
 
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,15 +29,23 @@ import org.birdback.histudents.R;
 import org.birdback.histudents.activity.LoginActivity;
 import org.birdback.histudents.base.TitleView;
 import org.birdback.histudents.core.CoreBaseFragment;
+import org.birdback.histudents.entity.OrderListEntity;
+import org.birdback.histudents.entity.PrintBean;
 import org.birdback.histudents.net.Callback.OnFailureCallBack;
 import org.birdback.histudents.net.Callback.OnSuccessCallBack;
 import org.birdback.histudents.net.HttpServer;
 import org.birdback.histudents.service.RequestParams;
 import org.birdback.histudents.utils.LogUtil;
+import org.birdback.histudents.utils.PrintUtils;
 import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.TextUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Set;
+import java.util.concurrent.ExecutorService;
 
 
 /**
@@ -65,9 +76,14 @@ public class WebFragment extends CoreBaseFragment implements SwipeRefreshLayout.
                     swipeRefreshLayout.setRefreshing(true);
                     mWebView.loadUrl(mWebUrl == null ? "http://store.birdback.org/" : mWebUrl);
                     break;
+                case 3:
+                    closeProgressDialog();
+                    break;
             }
         }
     };
+    private PrintBean mPrintBean;
+    private BluetoothSocket mmSocket;
 
     public void setUrl(String webUrl){
         this.mWebUrl = webUrl;
@@ -137,8 +153,83 @@ public class WebFragment extends CoreBaseFragment implements SwipeRefreshLayout.
         mHandler.sendEmptyMessage(2);
     }
 
-    private final class JSInterface {
 
+    private void initBuleTooth(ExecutorService mExecutorService,final String shopName, final OrderListEntity.GrabListBean mGrabListBean,final String successFunc) {
+        BluetoothAdapter bluetoothAdapter = PrintUtils.getBluetoothAdapter();
+
+        if (!bluetoothAdapter.isEnabled()) {
+            bluetoothAdapter.enable();
+            return;
+        }
+        Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+        if (pairedDevices.size() > 0) {
+            for (BluetoothDevice device : pairedDevices) {
+                if (Session.getBluetoothAddress().equals(device.getAddress())){
+                    mPrintBean = new PrintBean(device);
+                }
+            }
+        }
+        if (mPrintBean != null) {
+            try {
+                mmSocket = mPrintBean.getDevice().createRfcommSocketToServiceRecord(PrintUtils.uuid);
+
+                sendThread(mExecutorService,shopName,mGrabListBean,successFunc);
+                showProgressDialog();
+            } catch (IOException e) {
+                mHandler.sendEmptyMessage(3);
+                e.printStackTrace();
+            }
+        }else {
+            mHandler.sendEmptyMessage(3);
+        }
+
+    }
+
+    /**
+     * 发送数据
+     * @param executorService
+     */
+    private void sendThread(ExecutorService executorService, final String shopName, final OrderListEntity.GrabListBean mGrabListBean,final String successFunc) {
+        executorService.execute(new Runnable() {
+            private OutputStream outputStream;
+
+            @Override
+            public void run() {
+                try {
+                    //连接socket
+                    mmSocket.connect();
+                    //连接成功获取输出流
+                    outputStream = mmSocket.getOutputStream();
+                    PrintUtils.send(outputStream,shopName,mGrabListBean);
+                    mHandler.sendEmptyMessage(3);
+
+                    final String js = "javascript:window."+ successFunc;
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                                mWebView.evaluateJavascript(js, new ValueCallback<String>() {
+                                    @Override
+                                    public void onReceiveValue(String value) {
+                                        LogUtil.i("onReceiveValue value: " + value);
+                                    }
+                                });
+                            } else {
+                                mWebView.loadUrl(js);
+                            }
+                        }
+                    });
+
+
+                } catch (Exception connectException) {
+                    mHandler.sendEmptyMessage(3);
+                    connectException.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private final class JSInterface {
 
         @JavascriptInterface
         public void showTips(String json){
@@ -206,6 +297,26 @@ public class WebFragment extends CoreBaseFragment implements SwipeRefreshLayout.
             });
         }
 
+
+        @JavascriptInterface
+        public void printerOrder(String json){
+
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject(json);
+                String arg = jsonObject.optString("arg");
+                String successFunc = jsonObject.optString("successFunc");
+                String shopName = jsonObject.optString("shop_name");
+
+                final OrderListEntity.GrabListBean entity = new Gson().fromJson(arg, OrderListEntity.GrabListBean.class);
+
+                initBuleTooth(mExecutorService,shopName,entity,successFunc);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
 
     }
 }
