@@ -333,7 +333,12 @@ public class WebFragment extends CoreBaseFragment implements SwipeRefreshLayout.
             }, new OnFailureCallBack() {
                 @Override
                 public void onFailure(int code, String msg) {
+
                     mWebView.loadUrl("javascript:'"+ info.errorFunc + "'()");
+                    if (code == -1) {
+                        Session.logout();
+                        LoginActivity.start(getActivity());
+                    }
                 }
             });
         }

@@ -39,6 +39,7 @@
         <activity android:name=".web.WebActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".activity.LoginActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
         <activity android:name=".activity.SeachPrinterActivity"
             android:screenOrientation="portrait"/>

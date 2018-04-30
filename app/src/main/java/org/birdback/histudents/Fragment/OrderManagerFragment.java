@@ -23,6 +23,7 @@ import org.birdback.histudents.Fragment.Model.OrderManagerModel;
 import org.birdback.histudents.Fragment.Presenter.OrderManagerPresenter;
 import org.birdback.histudents.Fragment.contract.OrderManagerContract;
 import org.birdback.histudents.R;
+import org.birdback.histudents.activity.LoginActivity;
 import org.birdback.histudents.activity.PrinterManagerActivity;
 import org.birdback.histudents.activity.SeachPrinterActivity;
 import org.birdback.histudents.adapter.OnRecyclerViewListener;
@@ -201,6 +202,7 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
     public void showMessage(String msg) {
         closeProgressDialog();
         TextUtils.makeText(msg);
+
     }
 
     @Override
@@ -250,6 +252,11 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
 
     @Override
     public void submitFailure(int code, String msg) {
+        if (code == -1) {
+            Session.logout();
+            LoginActivity.start(getActivity());
+        }
+
         TextUtils.makeText(msg);
     }
 

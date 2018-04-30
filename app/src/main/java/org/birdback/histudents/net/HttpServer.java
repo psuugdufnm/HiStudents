@@ -18,6 +18,8 @@ import io.reactivex.functions.IntFunction;
 import io.reactivex.schedulers.Schedulers;
 
 
+import org.birdback.histudents.activity.LoginActivity;
+import org.birdback.histudents.base.BaseApplication;
 import org.birdback.histudents.core.CoreBaseActivity;
 import org.birdback.histudents.core.CoreBaseContract;
 import org.birdback.histudents.core.CoreBaseFragment;
@@ -27,6 +29,7 @@ import org.birdback.histudents.net.Callback.OnFailureCallBack;
 import org.birdback.histudents.net.Callback.OnSuccessCallBack;
 import org.birdback.histudents.net.helper.RetrofitHelper;
 import org.birdback.histudents.utils.LogUtil;
+import org.birdback.histudents.utils.Session;
 
 
 public class HttpServer {
@@ -235,7 +238,7 @@ public class HttpServer {
                     T t = response.getData();
                     t = t == null ? (T) "" : t;
                     e.onNext(t);
-                } else {
+                }else {
                     e.onError(new APIException(response.getOk(), response.getMessage()));
                 }
                 e.onComplete();

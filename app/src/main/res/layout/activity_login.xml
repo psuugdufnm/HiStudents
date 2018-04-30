@@ -37,7 +37,7 @@
                 style="@style/etStyle"
                 android:gravity="left|center"
                 android:layout_marginLeft="@dimen/dp20"
-                android:maxLength="11"
+                android:maxLength="20"
                 android:padding="15dp"
                 android:textSize="@dimen/sp15"
                 android:hint="请输入用户名"/>

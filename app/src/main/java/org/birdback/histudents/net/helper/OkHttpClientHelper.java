@@ -17,7 +17,7 @@ import okhttp3.OkHttpClient;
 
 public class OkHttpClientHelper {
 
-    private final static long TIMEOUT = 30;  //超时时间
+    private final static long TIMEOUT = 20;  //超时时间
     private static HttpInterceptor mInterceptor;
     private static ReceivedCookiesInterceptor receivedCookiesInterceptor;
     private static AddCookiesInterceptor addCookiesInterceptor;

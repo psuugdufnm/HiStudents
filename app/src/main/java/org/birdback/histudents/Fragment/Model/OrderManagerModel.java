@@ -3,6 +3,7 @@ package org.birdback.histudents.Fragment.Model;
 import android.support.v4.app.FragmentActivity;
 
 import org.birdback.histudents.Fragment.contract.OrderManagerContract;
+import org.birdback.histudents.activity.LoginActivity;
 import org.birdback.histudents.activity.contract.PrinterManagerContract;
 import org.birdback.histudents.core.CoreBaseContract;
 import org.birdback.histudents.entity.OrderListEntity;
@@ -10,6 +11,7 @@ import org.birdback.histudents.net.Callback.OnFailureCallBack;
 import org.birdback.histudents.net.Callback.OnSuccessCallBack;
 import org.birdback.histudents.net.HttpServer;
 import org.birdback.histudents.service.RequestParams;
+import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.TextUtils;
 
 
@@ -19,10 +21,12 @@ import org.birdback.histudents.utils.TextUtils;
 
 public class OrderManagerModel implements OrderManagerContract.Model {
     private OrderManagerContract.Presenter presenter;
+    FragmentActivity activity;
 
     @Override
     public void onStart(FragmentActivity activity, OrderManagerContract.Presenter presenter) {
         this.presenter = presenter;
+        this.activity = activity;
     }
 
     @Override
@@ -36,6 +40,10 @@ public class OrderManagerModel implements OrderManagerContract.Model {
             @Override
             public void onFailure(int code, String msg) {
                 presenter.mView.showMessage(msg);
+                if (code == -1) {
+                    Session.logout();
+                    LoginActivity.start(activity);
+                }
             }
         });
     }
@@ -51,6 +59,10 @@ public class OrderManagerModel implements OrderManagerContract.Model {
             @Override
             public void onFailure(int code, String msg) {
                 presenter.submitFailure(code, msg);
+                if (code == -1) {
+                    Session.logout();
+                    LoginActivity.start(activity);
+                }
             }
         });
     }
@@ -67,6 +79,10 @@ public class OrderManagerModel implements OrderManagerContract.Model {
             @Override
             public void onFailure(int code, String msg) {
                 presenter.mView.showMessage(msg);
+                if (code == -1) {
+                    Session.logout();
+                    LoginActivity.start(activity);
+                }
             }
         });
     }

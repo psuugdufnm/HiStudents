@@ -137,21 +137,9 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentM
                     .setRightCallBack(new HiDialog.RightClickCallBack() {
                         @Override
                         public void dialogRightBtnClick() {
-                            HttpServer.getDataFromServer(MyFragment.this,
-                                    RequestParams.getInstance().logout(),
-                                    new OnSuccessCallBack() {
-                                        @Override
-                                        public void onSuccess(Object entity) {
-                                            Session.logout();
-                                            LoginActivity.start(getActivity());
-                                            getActivity().finish();
-                                        }
-                            }, new OnFailureCallBack() {
-                                        @Override
-                                        public void onFailure(int code, String msg) {
-                                            TextUtils.makeText(msg);
-                                        }
-                                    });
+                            mPresenter.logout();
+                            Session.logout();
+                            LoginActivity.start(getActivity());
                         }
                     }).build();
 

@@ -15,9 +15,9 @@ public class DialogEntity {
      * cancelFunc : Callback.run(3)
      */
 
-    private String msg;
-    private String title;
-    private String enterLabel;
+    private String msg = "";
+    private String title = "提示";
+    private String enterLabel = "确定";
     private String enterFunc;
     private String cancelLabel;
     private String cancelFunc;

@@ -27,7 +27,7 @@ public class LoginActivity extends CoreBaseActivity<LoginPresenter,LoginModel> i
     private EditText mEtPwd;
     private Button mBtnLogin;
 
-    public static void start(Context context){
+    public static void start(Context context) {
         context.startActivity(new Intent(context,LoginActivity.class));
     }
 

@@ -249,6 +249,10 @@ public class WebActivity extends CoreBaseActivity implements SwipeRefreshLayout.
                         @Override
                         public void onFailure(int code, String msg) {
                             mWebView.loadUrl("javascript:'"+ info.errorFunc + "'()");
+                            if (code == -1) {
+                                Session.logout();
+                                LoginActivity.start(WebActivity.this);
+                            }
                         }
                     });
         }

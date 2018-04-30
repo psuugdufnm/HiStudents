@@ -18,11 +18,15 @@ public interface MyContract {
     interface Model extends CoreBaseContract.CoreBaseModel<Presenter> {
 
         void getList();
+
+        void logout();
     }
 
     abstract class Presenter extends CoreBaseContract.CoreBasePresenter<View,Model> {
 
         public abstract void getList();
+
+        public abstract void logout();
     }
 
 

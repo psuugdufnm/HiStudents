@@ -16,6 +16,7 @@ import android.view.Window;
 import android.widget.TextView;
 
 import org.birdback.histudents.R;
+import org.birdback.histudents.utils.VerifyUtil;
 
 public class HiDialog extends DialogFragment implements View.OnClickListener {
 
@@ -85,12 +86,12 @@ public class HiDialog extends DialogFragment implements View.OnClickListener {
     private void setData() {
         mTvTitle.setText(getArguments().getString("title") == null ? mTvTitle.getText().toString() : getArguments().getString("title"));
         mTvContent.setText(getArguments().getString("content") == null ? mTvContent.getText().toString() : getArguments().getString("content"));
-        if (getArguments().getString("leftBtnText") == null) {
+        if (VerifyUtil.isEmpty(getArguments().getString("leftBtnText"))) {
             mTvLeft.setVisibility(View.GONE);
         } else {
             mTvLeft.setText(getArguments().getString("leftBtnText"));
         }
-        if (getArguments().getString("rightBtnText") == null) {
+        if (VerifyUtil.isEmpty(getArguments().getString("rightBtnText"))) {
             mTvRight.setVisibility(View.GONE);
         } else {
             mTvRight.setText(getArguments().getString("rightBtnText"));

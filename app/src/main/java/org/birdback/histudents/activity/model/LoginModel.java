@@ -42,7 +42,10 @@ public class LoginModel implements LoginContract.Model {
             @Override
             public void onFailure(int code, String msg) {
                 mPresenter.mView.showMessage(msg);
-
+                if (code == -1) {
+                    Session.logout();
+                    LoginActivity.start(mActivity);
+                }
             }
         });
     }

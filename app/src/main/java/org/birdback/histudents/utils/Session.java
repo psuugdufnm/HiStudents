@@ -94,6 +94,7 @@ public class Session {
 
     public static void logout(){
         Session.setCookie("");
+        Session.setUid("");
     }
 
 
