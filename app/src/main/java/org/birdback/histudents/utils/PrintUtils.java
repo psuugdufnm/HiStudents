@@ -242,10 +242,10 @@ public class PrintUtils {
         PrintUtils.selectCommand(PrintUtils.LINE_SPACING_DEFAULT);
         PrintUtils.selectCommand(PrintUtils.DOUBLE_HEIGHT);
         PrintUtils.selectCommand(PrintUtils.ALIGN_CENTER);
-        PrintUtils.printText("****#" + bean.getOrder_num() + "同学快跑订单****\n\n");
+        PrintUtils.printText("*******#" + bean.getOrder_num() + "同学快跑订单******\n\n");
 
-        PrintUtils.selectCommand(PrintUtils.NORMAL);
         PrintUtils.printText(shopName + "\n\n");
+        PrintUtils.selectCommand(PrintUtils.NORMAL);
 
         PrintUtils.printText("--已在线支付--\n\n");
         PrintUtils.selectCommand(PrintUtils.ALIGN_LEFT);
@@ -273,7 +273,7 @@ public class PrintUtils {
         PrintUtils.selectCommand(PrintUtils.NORMAL);
         PrintUtils.printText("--------------------------------\n");
         PrintUtils.printText(PrintUtils.printTwoData("合计", bean.getReal_price() + "\n"));
-        PrintUtils.printText(PrintUtils.printTwoData("折扣", bean.getRebate() + "\n"));
+        PrintUtils.printText(PrintUtils.printTwoData("折扣", "-" + bean.getRebate() + "\n"));
         PrintUtils.printText(PrintUtils.printTwoData("实付", bean.getPay_price() + "\n"));
         PrintUtils.printText("--------------------------------\n");
 
@@ -298,7 +298,7 @@ public class PrintUtils {
         PrintUtils.printText("订单号:"+ bean.getOrder_no() + "\n\n");
         PrintUtils.selectCommand(PrintUtils.DOUBLE_HEIGHT);
         PrintUtils.selectCommand(PrintUtils.ALIGN_CENTER);
-        PrintUtils.printText("*********#" + bean.getOrder_num() + "完*********");
+        PrintUtils.printText("***********#" + bean.getOrder_num() + "完***********");
         PrintUtils.printText("\n\n\n\n");
     }
 }
