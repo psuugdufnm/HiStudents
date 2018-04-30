@@ -30,6 +30,11 @@ public class RequestUrl {
     public static final String REFUND_ORDER = "/order/refund_order";
     public static final String HOME_INDEX = "/home/index";
 
+    /**
+     * 退出登录
+     */
+    public static final String LOGOUT = "/account/logout";
+
 
 
 }

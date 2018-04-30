@@ -68,7 +68,7 @@ public class RequestParams {
         return reqVo;
     }
     /**
-     * 立即接单
+     *
      * @return
      */
     public RequestVo getList() {
@@ -118,6 +118,12 @@ public class RequestParams {
         RequestVo reqVo = new RequestVo();
         reqVo.hasDialog = true;
         reqVo.observable = HttpServer.getService(OrderService.class).requestJudan(orderNo);
+        return reqVo;
+    }
+    public RequestVo logout() {
+        RequestVo reqVo = new RequestVo();
+        reqVo.hasDialog = true;
+        reqVo.observable = HttpServer.getService(OrderService.class).logout();
         return reqVo;
     }
 }

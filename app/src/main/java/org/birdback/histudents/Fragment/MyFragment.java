@@ -17,8 +17,13 @@ import org.birdback.histudents.adapter.GridAdapter;
 import org.birdback.histudents.adapter.OnRecyclerViewListener;
 import org.birdback.histudents.core.CoreBaseFragment;
 import org.birdback.histudents.entity.MyMenuEntity;
+import org.birdback.histudents.net.Callback.OnFailureCallBack;
+import org.birdback.histudents.net.Callback.OnSuccessCallBack;
+import org.birdback.histudents.net.HttpServer;
 import org.birdback.histudents.net.RequestUrl;
+import org.birdback.histudents.service.RequestParams;
 import org.birdback.histudents.utils.Session;
+import org.birdback.histudents.utils.TextUtils;
 import org.birdback.histudents.utils.VerifyUtil;
 import org.birdback.histudents.view.HiDialog;
 import org.birdback.histudents.web.WebActivity;
@@ -132,9 +137,21 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentM
                     .setRightCallBack(new HiDialog.RightClickCallBack() {
                         @Override
                         public void dialogRightBtnClick() {
-                            Session.logout();
-                            LoginActivity.start(getActivity());
-                            getActivity().finish();
+                            HttpServer.getDataFromServer(MyFragment.this,
+                                    RequestParams.getInstance().logout(),
+                                    new OnSuccessCallBack() {
+                                        @Override
+                                        public void onSuccess(Object entity) {
+                                            Session.logout();
+                                            LoginActivity.start(getActivity());
+                                            getActivity().finish();
+                                        }
+                            }, new OnFailureCallBack() {
+                                        @Override
+                                        public void onFailure(int code, String msg) {
+                                            TextUtils.makeText(msg);
+                                        }
+                                    });
                         }
                     }).build();
 

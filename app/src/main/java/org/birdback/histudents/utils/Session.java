@@ -12,8 +12,24 @@ public class Session {
 
     private static String bluetoothAddress = ""; //蓝牙打印机地址
 
+    private static String uid = ""; //uid
+
     private static boolean isFirstOpen;//是否第一次打开应用
     private static boolean autoGet;//自动接单
+
+
+    public static String getUid() {
+
+        if (VerifyUtil.isEmpty(uid)) {
+            uid = SharedPreUtil.getValue("uid", "");
+        }
+        return uid;
+    }
+
+    public static void setUid(String uid) {
+        Session.uid = uid;
+        SharedPreUtil.putValue("uid", VerifyUtil.isEmpty(uid) ? "" : uid);
+    }
 
 
     public static boolean getAutoGet() {

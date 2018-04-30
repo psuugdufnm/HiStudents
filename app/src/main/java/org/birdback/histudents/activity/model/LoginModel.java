@@ -5,10 +5,12 @@ import android.support.v4.app.FragmentActivity;
 import org.birdback.histudents.MainActivity;
 import org.birdback.histudents.activity.LoginActivity;
 import org.birdback.histudents.activity.contract.LoginContract;
+import org.birdback.histudents.entity.UidEntity;
 import org.birdback.histudents.net.Callback.OnFailureCallBack;
 import org.birdback.histudents.net.Callback.OnSuccessCallBack;
 import org.birdback.histudents.net.HttpServer;
 import org.birdback.histudents.service.RequestParams;
+import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.TextUtils;
 
 /**
@@ -30,11 +32,11 @@ public class LoginModel implements LoginContract.Model {
     @Override
     public void requestLogin(String name, String pwd) {
         HttpServer.getDataFromServer(mPresenter,
-                RequestParams.getInstance().login(name,pwd), new OnSuccessCallBack<Object>() {
+                RequestParams.getInstance().login(name,pwd), new OnSuccessCallBack<UidEntity>() {
             @Override
-            public void onSuccess(Object entity) {
+            public void onSuccess(UidEntity entity) {
+                Session.setUid(entity.getUid());
                 mPresenter.loginSuccess();
-
             }
         }, new OnFailureCallBack() {
             @Override

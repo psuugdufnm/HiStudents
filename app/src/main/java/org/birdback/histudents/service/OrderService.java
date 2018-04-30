@@ -4,6 +4,7 @@ package org.birdback.histudents.service;
 import org.birdback.histudents.entity.MyMenuEntity;
 import org.birdback.histudents.entity.OrderListEntity;
 import org.birdback.histudents.entity.ResponseEntity;
+import org.birdback.histudents.entity.UidEntity;
 import org.birdback.histudents.net.RequestUrl;
 
 
@@ -40,8 +41,8 @@ public interface OrderService {
 
     @FormUrlEncoded
     @POST(RequestUrl.BASE_URL + RequestUrl.LOGIN)
-    Observable<ResponseEntity<Object>> login(@Field("mobile") String mobile,
-                                             @Field("pwd") String pwd,
+    Observable<ResponseEntity<UidEntity>> login(@Field("mobile") String mobile,
+                                                @Field("pwd") String pwd,
                                                 @Field("deviceToken") String deviceToken);
 
     @GET(RequestUrl.BASE_URL + RequestUrl.ORDER_LIST)
@@ -58,4 +59,8 @@ public interface OrderService {
     @FormUrlEncoded
     @POST(RequestUrl.BASE_URL + RequestUrl.REFUND_ORDER)
     Observable<ResponseEntity<Object>> requestJudan(@Field("order_no") String orderNo);
+
+
+    @GET(RequestUrl.BASE_URL + RequestUrl.LOGOUT)
+    Observable<ResponseEntity<OrderListEntity>> logout();
 }
