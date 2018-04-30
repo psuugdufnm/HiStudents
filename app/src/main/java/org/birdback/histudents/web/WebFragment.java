@@ -27,11 +27,13 @@ import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 
+import org.birdback.histudents.Fragment.MyFragment;
 import org.birdback.histudents.MainActivity;
 import org.birdback.histudents.R;
 import org.birdback.histudents.activity.LoginActivity;
 import org.birdback.histudents.base.TitleView;
 import org.birdback.histudents.core.CoreBaseFragment;
+import org.birdback.histudents.entity.DialogEntity;
 import org.birdback.histudents.entity.OrderListEntity;
 import org.birdback.histudents.entity.PrintBean;
 import org.birdback.histudents.net.Callback.OnFailureCallBack;
@@ -43,6 +45,7 @@ import org.birdback.histudents.utils.PrintUtils;
 import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.TextUtils;
 import org.birdback.histudents.utils.VerifyUtil;
+import org.birdback.histudents.view.HiDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -320,7 +323,7 @@ public class WebFragment extends CoreBaseFragment implements SwipeRefreshLayout.
                                         LogUtil.i("onReceiveValue value: " + value);
                                     }
                                 });
-                            } else {
+                            }else {
                                 mWebView.loadUrl(js);
                             }
                         }
@@ -337,7 +340,7 @@ public class WebFragment extends CoreBaseFragment implements SwipeRefreshLayout.
 
 
         @JavascriptInterface
-        public void printerOrder(String json){
+        public void printerOrder(String json) {
 
             JSONObject jsonObject = null;
             try {
@@ -353,6 +356,31 @@ public class WebFragment extends CoreBaseFragment implements SwipeRefreshLayout.
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+        }
+
+        @JavascriptInterface
+        public void showConfirmDialog(String json) {
+            final DialogEntity dialogEntity = new Gson().fromJson(json, DialogEntity.class);
+
+            new HiDialog.Builder(getActivity())
+                    .setTitle(dialogEntity.getTitle())
+                    .setContent(dialogEntity.getMsg())
+                    .setLeftBtnText(dialogEntity.getCancelLabel())
+                    .setRightBtnText(dialogEntity.getEnterLabel())
+                    .setRightCallBack(new HiDialog.RightClickCallBack() {
+                        @Override
+                        public void dialogRightBtnClick() {
+                            mWebView.loadUrl("javascript:window."+ dialogEntity.getEnterFunc());
+                        }
+                    })
+                    .setLeftCallBack(new HiDialog.LeftClickCallBack() {
+                        @Override
+                        public void dialogLeftBtnClick() {
+                            mWebView.loadUrl("javascript:window."+ dialogEntity.getCancelFunc());
+                        }
+                    })
+                    .build();
 
         }
 

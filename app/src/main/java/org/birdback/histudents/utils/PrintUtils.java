@@ -89,17 +89,17 @@ public class PrintUtils {
     /**
      * 打印纸一行最大的字节
      */
-    private static final int LINE_BYTE_SIZE = 28;
+    private static final int LINE_BYTE_SIZE = 32;
 
     /**
      * 打印三列时，中间一列的中心线距离打印纸左侧的距离
      */
-    private static final int LEFT_LENGTH = 18;
+    private static final int LEFT_LENGTH = 20;
 
     /**
      * 打印三列时，中间一列的中心线距离打印纸右侧的距离
      */
-    private static final int RIGHT_LENGTH = 10;
+    private static final int RIGHT_LENGTH = 12;
 
     /**
      * 打印三列时，第一列汉字最多显示几个文字
