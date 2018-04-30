@@ -68,6 +68,7 @@
                     android:layout_gravity="center"
                     android:drawableTop="@drawable/icon_dingdan"
                     android:drawablePadding="@dimen/dp10"
+                    android:textColor="@color/txt_color4"
                     android:text="暂无新订单"/>
             </LinearLayout>
 

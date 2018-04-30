@@ -117,7 +117,7 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentM
         tvWaitCome.setText(orderStat.getWait_succ());
 
         MyMenuEntity.MonthStatBean monthStat = entity.getMonth_stat();
-        tvMonthOrderNum.setText(monthStat.getGoods_num());
+        tvMonthOrderNum.setText(monthStat.getPay_num());
         tvMonthTurnover.setText(monthStat.getPay_money());
         tvMonthViewNum.setText(monthStat.getView_num());
     }
