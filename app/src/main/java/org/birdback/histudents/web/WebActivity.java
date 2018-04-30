@@ -11,6 +11,8 @@ import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.ValueCallback;
@@ -34,6 +36,7 @@ import org.birdback.histudents.service.RequestParams;
 import org.birdback.histudents.utils.LogUtil;
 import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.TextUtils;
+import org.birdback.histudents.utils.VerifyUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -92,9 +95,35 @@ public class WebActivity extends CoreBaseActivity implements SwipeRefreshLayout.
     }
 
     private void loadWebView(){
-        //mWebUrl = "http://store.birdback.org/test/index";
-        mWebView.loadUrl(mWebUrl == null ? "http://store.birdback.org/test/index" :mWebUrl);
+        if (VerifyUtil.isEmpty(mWebUrl)) {
+            return;
+        }
+        synCookies(this,mWebUrl,Session.getCookie());
+        mWebView.loadUrl(mWebUrl);
     }
+
+    /**
+     * 给webview请求的url设置cookie
+     * 如果不设置，webview会有一个自动配置的cookie
+     * @param context
+     * @param url
+     * @param cookie
+     */
+    public void synCookies(Context context, String url, String cookie) {
+        CookieSyncManager.createInstance(context);
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        cookieManager.setCookie(url, cookie);
+        CookieSyncManager.getInstance().sync();
+    }
+
+    public static void removeCookie(Context context) {
+        CookieSyncManager.createInstance(context);
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.removeAllCookie();
+        CookieSyncManager.getInstance().sync();
+    }
+
 
     @Override
     public void initListener() {

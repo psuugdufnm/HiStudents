@@ -24,6 +24,10 @@ public class RequestUrl {
      * 接单
      */
     public static final String ORDER_SUBMIT = "/order/grab_order";
+    /**
+     * 拒单
+     */
+    public static final String REFUND_ORDER = "/order/refund_order";
     public static final String HOME_INDEX = "/home/index";
 
 

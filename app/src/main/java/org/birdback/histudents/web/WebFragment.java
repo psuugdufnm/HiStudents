@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +12,8 @@ import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.ValueCallback;
@@ -39,11 +42,13 @@ import org.birdback.histudents.utils.LogUtil;
 import org.birdback.histudents.utils.PrintUtils;
 import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.TextUtils;
+import org.birdback.histudents.utils.VerifyUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
@@ -74,7 +79,7 @@ public class WebFragment extends CoreBaseFragment implements SwipeRefreshLayout.
                     break;
                 case 2:
                     swipeRefreshLayout.setRefreshing(true);
-                    mWebView.loadUrl(mWebUrl == null ? "http://store.birdback.org/" : mWebUrl);
+                    webViewLoadUrl();
                     break;
                 case 3:
                     closeProgressDialog();
@@ -87,6 +92,38 @@ public class WebFragment extends CoreBaseFragment implements SwipeRefreshLayout.
 
     public void setUrl(String webUrl){
         this.mWebUrl = webUrl;
+    }
+
+    private void webViewLoadUrl(){
+
+        if (VerifyUtil.isEmpty(mWebUrl)) {
+            return;
+        }
+        synCookies(getActivity(),mWebUrl,Session.getCookie());
+        mWebView.loadUrl(mWebUrl);
+    }
+
+
+    /**
+     * 给webview请求的url设置cookie
+     * 如果不设置，webview会有一个自动配置的cookie
+     * @param context
+     * @param url
+     * @param cookie
+     */
+    public void synCookies(Context context, String url, String cookie) {
+        CookieSyncManager.createInstance(context);
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        cookieManager.setCookie(url, cookie);
+        CookieSyncManager.getInstance().sync();
+    }
+
+    public static void removeCookie(Context context) {
+        CookieSyncManager.createInstance(context);
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.removeAllCookie();
+        CookieSyncManager.getInstance().sync();
     }
 
     @Override
@@ -108,7 +145,8 @@ public class WebFragment extends CoreBaseFragment implements SwipeRefreshLayout.
 
     @Override
     public void initListener() {
-        mWebView.loadUrl(mWebUrl == null ? "http://store.birdback.org/test/index" :mWebUrl);
+        webViewLoadUrl();
+
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setJavaScriptEnabled(true);

@@ -20,6 +20,8 @@ public interface OrderManagerContract {
 
         void submitFailure(int code, String msg);
         void handlerSend(int what,String message);
+
+        void judanSuccess();
     }
 
     interface Model extends CoreBaseContract.CoreBaseModel<Presenter> {
@@ -27,6 +29,8 @@ public interface OrderManagerContract {
         void requestList();
 
         void requestSubmit(String orderNo);
+
+        void requestJudan(String orderNo);
     }
 
     abstract class Presenter extends CoreBaseContract.CoreBasePresenter<View,Model> {
@@ -40,6 +44,10 @@ public interface OrderManagerContract {
         public abstract void submitSuccess();
 
         public abstract void submitFailure(int code, String msg);
+
+        public abstract void requestJudan(String orderNo);
+
+        public abstract void judanSuccess();
     }
 
 

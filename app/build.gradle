@@ -52,8 +52,7 @@ dependencies {
     //友盟推送基础库
     compile 'com.umeng.sdk:common:latest.integration'
     compile 'com.umeng.sdk:utdid:1.1.5.3'
-    //TODO 集成调试库，上线前务必删除
-    compile 'com.umeng.sdk:debug:latest.integration'
+
 
     //PushSDK
     compile 'com.umeng.sdk:push:4.1.0'

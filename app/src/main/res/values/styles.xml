@@ -54,13 +54,14 @@
 
 
 
-    <!--渐变的按钮样式 通用-->
+    <!--按钮样式 通用-->
     <style name="buttonStyle" parent="@style/Widget.AppCompat.Button.Borderless">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">47dp</item>
         <item name="android:textColor">#ffffff</item>
         <item name="android:textSize">15sp</item>
     </style>
+
 
     <!--通用EditText 样式-->
     <style name="etStyle">

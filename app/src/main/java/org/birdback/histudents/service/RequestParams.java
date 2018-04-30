@@ -114,4 +114,10 @@ public class RequestParams {
         return list;
     }
 
+    public RequestVo requestJudan(String orderNo) {
+        RequestVo reqVo = new RequestVo();
+        reqVo.hasDialog = true;
+        reqVo.observable = HttpServer.getService(OrderService.class).requestJudan(orderNo);
+        return reqVo;
+    }
 }

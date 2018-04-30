@@ -55,8 +55,10 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
         holder.tvPhone.setTag(String.valueOf(position));
         holder.btnJiedan.setTag(String.valueOf(position));
+        holder.btnJudan.setTag(String.valueOf(position));
         holder.tvPhone.setOnClickListener(this);
         holder.btnJiedan.setOnClickListener(this);
+        holder.btnJudan.setOnClickListener(this);
 
     }
 
@@ -90,6 +92,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
         private final TextView tvRebate; //优惠金额
         private final TextView tvRemake; //备注
         private final Button btnJiedan; //接单
+        private final Button btnJudan; //拒单
         private final RecyclerView recyclerView;//商品列表
 
 
@@ -105,6 +108,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             tvRebate = itemView.findViewById(R.id.tv_rebate);
             tvRemake = itemView.findViewById(R.id.tv_remake);
             btnJiedan = itemView.findViewById(R.id.btn_jiedan);
+            btnJudan = itemView.findViewById(R.id.btn_judan);
             recyclerView = itemView.findViewById(R.id.recycler_view);
             //禁用滑动事件
             recyclerView.setNestedScrollingEnabled(false);

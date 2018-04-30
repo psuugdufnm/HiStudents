@@ -78,6 +78,18 @@ public class OrderManagerPresenter extends OrderManagerContract.Presenter {
         mView.submitFailure(code,msg);
     }
 
+    @Override
+    public void requestJudan(String orderNo) {
+        if (mMode!= null){
+            mMode.requestJudan(orderNo);
+        }
+    }
+
+    @Override
+    public void judanSuccess() {
+        mView.judanSuccess();
+    }
+
     private void initBuleTooth(String orderNo,ExecutorService mExecutorService) {
         BluetoothAdapter bluetoothAdapter = PrintUtils.getBluetoothAdapter();
 

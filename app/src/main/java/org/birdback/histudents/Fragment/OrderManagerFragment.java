@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,6 +33,7 @@ import org.birdback.histudents.event.UmengNotifyEntity;
 import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.TextUtils;
 import org.birdback.histudents.utils.VerifyUtil;
+import org.birdback.histudents.view.HiDialog;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -75,12 +77,19 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
     private String shopName;
     private Switch switchTab;
     private String autoOrderNo;
+    private HiDialog.Builder builder;
 
     @Override
     public void  handlerSend(int what,String message){
         if (VerifyUtil.isEmpty(message)){
             mHandler.sendEmptyMessage(what);
         }
+    }
+
+    @Override
+    public void judanSuccess() {
+        //拒单成功刷新页面
+        requestData();
     }
 
     @Override
@@ -190,7 +199,8 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
 
     @Override
     public void showMessage(String msg) {
-
+        closeProgressDialog();
+        TextUtils.makeText(msg);
     }
 
     @Override
@@ -245,7 +255,7 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
 
 
     @Override
-    public void onItemClick(View itemView, int position) {
+    public void onItemClick(View itemView, final int position) {
         if (itemView.getId() == R.id.tv_phone) {
             phone = mDatas.get(position).getAddr_phone();
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
@@ -263,6 +273,28 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
             }else {
                 TextUtils.makeText("订单异常，请刷新");
             }
+        }
+
+        if (itemView.getId() == R.id.btn_judan) {
+            if (builder == null){
+                builder = new HiDialog.Builder(getActivity())
+                        .setContent("拒单后，钱款原路退回到顾客支付账户，确定要拒绝此订单吗？")
+                        .setRightBtnText("确定")
+                        .setRightCallBack(new HiDialog.RightClickCallBack() {
+                            @Override
+                            public void dialogRightBtnClick() {
+                                OrderListEntity.GrabListBean grabListBean = mDatas.get(position);
+                                String orderNo = grabListBean.getOrder_no();
+                                if (!VerifyUtil.isEmpty(orderNo)) {
+                                    mRefreshLayout.setRefreshing(true);
+                                    mPresenter.requestJudan(orderNo);
+                                } else {
+                                    TextUtils.makeText("订单异常，请刷新");
+                                }
+                            }
+                        }).setLeftBtnText("取消");
+            }
+            builder.build();
         }
     }
 

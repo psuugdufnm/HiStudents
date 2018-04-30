@@ -54,4 +54,20 @@ public class OrderManagerModel implements OrderManagerContract.Model {
             }
         });
     }
+
+    @Override
+    public void requestJudan(String orderNo) {
+        HttpServer.getDataFromServer(RequestParams.getInstance().requestJudan(orderNo),
+                new OnSuccessCallBack() {
+            @Override
+            public void onSuccess(Object entity) {
+                presenter.judanSuccess();
+            }
+        }, new OnFailureCallBack() {
+            @Override
+            public void onFailure(int code, String msg) {
+                presenter.mView.showMessage(msg);
+            }
+        });
+    }
 }
