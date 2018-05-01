@@ -25,11 +25,13 @@ import org.birdback.histudents.R;
 import org.birdback.histudents.adapter.OnRecyclerViewListener;
 import org.birdback.histudents.adapter.SeachBluetoothAdapter;
 import org.birdback.histudents.core.CoreBaseActivity;
+import org.birdback.histudents.entity.PrintBean;
 import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.TextUtils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Set;
 
 import static android.bluetooth.BluetoothClass.Device.AUDIO_VIDEO_WEARABLE_HEADSET;
 import static android.bluetooth.BluetoothClass.Device.COMPUTER_DESKTOP;
@@ -108,6 +110,7 @@ public class SeachPrinterActivity extends CoreBaseActivity implements OnRecycler
             TextUtils.makeText("您的手机不支持蓝牙，请更换手机");
             return;
         }
+        requestPermission();
 
         //注册广播
         IntentFilter intentFilter = new IntentFilter();
@@ -115,8 +118,14 @@ public class SeachPrinterActivity extends CoreBaseActivity implements OnRecycler
         intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         intentFilter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
         registerReceiver(mReceiver, intentFilter);
+        //已配对的设备
+        Set<BluetoothDevice> pairedDevices = mAdapter.getBondedDevices();
+        if (pairedDevices.size() > 0) {
+            for (BluetoothDevice device : pairedDevices) {
+                deviceList.add(device);
+            }
+        }
 
-        requestPermission();
     }
 
 
