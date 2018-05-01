@@ -122,7 +122,14 @@ public class SeachPrinterActivity extends CoreBaseActivity implements OnRecycler
         Set<BluetoothDevice> pairedDevices = mAdapter.getBondedDevices();
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice device : pairedDevices) {
-                deviceList.add(device);
+                int deviceClass = device.getBluetoothClass().getDeviceClass();
+                if (deviceClass != PHONE_SMART
+                        && deviceClass != AUDIO_VIDEO_WEARABLE_HEADSET
+                        && deviceClass != COMPUTER_DESKTOP
+                        && deviceClass != COMPUTER_LAPTOP){
+
+                    deviceList.add(device);
+                }
             }
         }
 

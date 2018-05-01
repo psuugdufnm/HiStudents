@@ -31,11 +31,12 @@
                     android:layout_below="@id/tv_text1"
                     android:layout_centerHorizontal="true"
                     android:textStyle="bold"
-                    android:textSize="@dimen/sp36"/>
+                    android:textSize="@dimen/sp24"/>
                 <LinearLayout
                     android:layout_below="@id/tv_day_money"
                     android:orientation="horizontal"
                     android:background="@color/colorAccent"
+                    android:paddingBottom="@dimen/dp10"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <LinearLayout
@@ -47,6 +48,7 @@
                             android:id="@+id/tv_day_browse_num"
                             style="@style/style_text1"
                             android:layout_marginTop="@dimen/dp10"
+                            android:text="sss"
                             android:textSize="@dimen/sp14"/>
                     </LinearLayout>
                     <LinearLayout
