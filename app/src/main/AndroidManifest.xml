@@ -44,6 +44,9 @@
         <activity android:name=".activity.SeachPrinterActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".activity.SettingActivity"
+            android:screenOrientation="portrait"/>
+
 
         <service android:name="org.birdback.histudents.service.UmengNotificationService"/>
         <service android:name="org.birdback.histudents.service.MyNotificationService"/>

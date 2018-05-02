@@ -67,4 +67,23 @@
     <View
         style="@style/common_line_horizontal_80"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="@color/write">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp15"
+            android:text="打印商家联" />
+        <Switch
+            android:id="@+id/switch_tab_print"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp10"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
 </LinearLayout>

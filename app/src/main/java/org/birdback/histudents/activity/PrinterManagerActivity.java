@@ -10,6 +10,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 
@@ -42,6 +44,7 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
     private OutputStream outputStream;
 
     private TextView mTvPrintTest,mTvPrintName,mTvConnectStatus,mTvPrintChange;
+    private Switch switchTabPrint;
     private PrintBean mPrintBean;
     private BluetoothAdapter mBluetoothAdapter;
 
@@ -67,6 +70,9 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
                     //什么都不做，只是为了
                     closeProgressDialog();
                     break;
+
+                    default:
+                        break;
             }
         }
     };
@@ -87,12 +93,21 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
         mTvPrintChange = findViewById(R.id.tv_print_change);
         mTvPrintName = findViewById(R.id.tv_print_name);
         mTvConnectStatus = findViewById(R.id.tv_connect_status);
+        switchTabPrint = findViewById(R.id.switch_tab_print);
     }
 
     @Override
     public void initListener() {
         mTvPrintTest.setOnClickListener(this);
         mTvPrintChange.setOnClickListener(this);
+
+        switchTabPrint.setChecked(Session.getPrintDouble());
+        switchTabPrint.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Session.setPrintDouble(b);
+            }
+        });
 
         initBuleTooth();
         initInfo();

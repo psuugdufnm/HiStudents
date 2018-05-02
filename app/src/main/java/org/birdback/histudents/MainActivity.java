@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int current = am.getStreamVolume(AudioManager.STREAM_NOTIFICATION);
         if (max-5 > current) {
             //把音量设置到最大
-            am.setStreamVolume(AudioManager.STREAM_NOTIFICATION, max,1);
+            //am.setStreamVolume(AudioManager.STREAM_NOTIFICATION, max,1);
         }
     }
 

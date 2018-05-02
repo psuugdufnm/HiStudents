@@ -236,14 +236,32 @@ public class PrintUtils {
      * 发送数据
      */
     public static synchronized void send(OutputStream outputStream, String shopName, OrderListEntity.GrabListBean bean) {
+
         PrintUtils.setOutputStream(outputStream);
 
+        if (Session.getPrintDouble()){
+            //打印双份
+            sendData(shopName,bean,"商家联");
+            sendData(shopName,bean,"顾客联");
+        }else {
+            sendData(shopName,bean,"顾客联");
+        }
+
+
+    }
+
+    private static synchronized void sendData(String shopName, OrderListEntity.GrabListBean bean,String title){
         PrintUtils.selectCommand(PrintUtils.RESET);
         PrintUtils.selectCommand(PrintUtils.LINE_SPACING_DEFAULT);
+
+
         PrintUtils.selectCommand(PrintUtils.DOUBLE_HEIGHT);
         PrintUtils.selectCommand(PrintUtils.ALIGN_CENTER);
         PrintUtils.printText("*******#" + bean.getOrder_num() + "同学快跑订单******\n\n");
 
+        PrintUtils.selectCommand(PrintUtils.DOUBLE_HEIGHT_WIDTH);
+        PrintUtils.printText(title + "\n\n");
+        PrintUtils.selectCommand(PrintUtils.DOUBLE_HEIGHT);
         PrintUtils.printText(shopName + "\n\n");
         PrintUtils.selectCommand(PrintUtils.NORMAL);
 
@@ -255,7 +273,6 @@ public class PrintUtils {
         PrintUtils.printText("--------------------------------\n");
 
         PrintUtils.selectCommand(PrintUtils.BOLD_CANCEL);
-
         PrintUtils.selectCommand(PrintUtils.DOUBLE_HEIGHT);
         int size = bean.getGoods_list().size();
         if (size > 0) {
@@ -282,15 +299,7 @@ public class PrintUtils {
         PrintUtils.printText("-------------------------------\n");
 
         PrintUtils.selectCommand(PrintUtils.DOUBLE_HEIGHT_WIDTH);
-
-
-
-        String address = bean.getAddress();
-
-
-        PrintUtils.selectCommand(PrintUtils.DOUBLE_HEIGHT_WIDTH);
-
-        PrintUtils.printText(address + "\n");
+        PrintUtils.printText(bean.getAddress() + "\n");
         PrintUtils.printText(bean.getAddr_name() + "("+bean.getAddr_sex()+")" + "\n\n");
         PrintUtils.printText(bean.getAddr_phone() + "\n");
 

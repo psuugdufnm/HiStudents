@@ -16,6 +16,18 @@ public class Session {
 
     private static boolean isFirstOpen;//是否第一次打开应用
     private static boolean autoGet;//自动接单
+    private static boolean printDouble;//打印商家栏
+
+
+    public static boolean getPrintDouble() {
+        printDouble = SharedPreUtil.getValue("printDouble", false);
+        return printDouble;
+    }
+
+    public static void setPrintDouble(boolean printDouble) {
+        Session.printDouble = printDouble;
+        SharedPreUtil.putValue("printDouble", printDouble);
+    }
 
 
     public static String getUid() {

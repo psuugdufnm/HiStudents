@@ -13,8 +13,10 @@ import org.birdback.histudents.Fragment.Presenter.MyFragmentPresenter;
 import org.birdback.histudents.Fragment.contract.MyContract;
 import org.birdback.histudents.R;
 import org.birdback.histudents.activity.LoginActivity;
+import org.birdback.histudents.activity.SettingActivity;
 import org.birdback.histudents.adapter.GridAdapter;
 import org.birdback.histudents.adapter.OnRecyclerViewListener;
+import org.birdback.histudents.base.TitleView;
 import org.birdback.histudents.core.CoreBaseFragment;
 import org.birdback.histudents.entity.MyMenuEntity;
 import org.birdback.histudents.net.Callback.OnFailureCallBack;
@@ -45,6 +47,7 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentM
     private TextView tvMonthOrderNum,tvMonthTurnover,tvMonthViewNum;
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView tvLogout;
+    private TitleView titleView;
 
     @Override
     public int getLayoutId() {
@@ -67,6 +70,7 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentM
         tvMonthTurnover = view.findViewById(R.id.tv_month_turnover);
         tvMonthViewNum = view.findViewById(R.id.tv_month_view_num);
         tvLogout = view.findViewById(R.id.tv_logout);
+        titleView = view.findViewById(R.id.title_view);
 
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),4));
         gridAdapter = new GridAdapter(mData);
@@ -85,6 +89,15 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentM
                 if (!VerifyUtil.isEmpty(menuBean.getUrl())){
                     WebActivity.start(getActivity(), RequestUrl.BASE_URL + menuBean.getUrl());
                 }
+            }
+        });
+
+        titleView.setOnTitleClickListener(new TitleView.OnTitleClickListener() {
+            @Override
+            public void onLeftClick(View v) {}
+            @Override
+            public void onRightClick(View v) {
+                SettingActivity.start(getActivity());
             }
         });
     }

@@ -223,7 +223,9 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
             mDatas.addAll(entity.getGrab_list());
             adapter.notifyDataSetChanged();
 
-
+            /**
+             * 自动接单
+             */
             if (switchTab.isChecked() && !VerifyUtil.isEmpty(autoOrderNo)){
 
                 for (int i = 0; i < grab_list.size(); i++) {
