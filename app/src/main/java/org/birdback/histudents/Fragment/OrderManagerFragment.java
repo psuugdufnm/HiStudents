@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -147,7 +146,7 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
     }
 
     private void initPrinterView() {
-        if(VerifyUtil.isEmpty(Session.getBluetoothAddress())){
+        if(VerifyUtil.isEmpty(Session.getBluetoothAddress()) && !Session.getClosePrint()){
             SeachPrinterActivity.start(getActivity());
         }
     }
@@ -185,13 +184,9 @@ public class OrderManagerFragment extends CoreBaseFragment<OrderManagerPresenter
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_print:
-                if(!VerifyUtil.isEmpty(Session.getBluetoothAddress())){
-                    //已有配对蓝牙打印机
-                    PrinterManagerActivity.start(mContext);
-                }else {
-                    //无配对打印机
-                    SeachPrinterActivity.start(mContext);
-                }
+
+                PrinterManagerActivity.start(mContext);
+
                 break;
             default:
                 break;

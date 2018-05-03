@@ -17,6 +17,17 @@ public class Session {
     private static boolean isFirstOpen;//是否第一次打开应用
     private static boolean autoGet;//自动接单
     private static boolean printDouble;//打印商家栏
+    private static boolean closePrint;//关闭打印功能
+
+    public static boolean getClosePrint() {
+        closePrint = SharedPreUtil.getValue("closePrint", false);
+        return closePrint;
+    }
+
+    public static void setClosePrint(boolean closePrint) {
+        Session.closePrint = closePrint;
+        SharedPreUtil.putValue("closePrint", closePrint);
+    }
 
 
     public static boolean getPrintDouble() {

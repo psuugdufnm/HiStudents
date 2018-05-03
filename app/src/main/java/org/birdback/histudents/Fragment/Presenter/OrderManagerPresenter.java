@@ -60,9 +60,15 @@ public class OrderManagerPresenter extends OrderManagerContract.Presenter {
     public void requestSubmit(String orderNo,ExecutorService mExecutorService,String name,OrderListEntity.GrabListBean grabListBean) {
         mGrabListBean = grabListBean;
         shopName = name;
-        if (mGrabListBean != null){
+        if (mGrabListBean != null && !Session.getClosePrint()){
 
             initBuleTooth(orderNo,mExecutorService);
+
+        }else {
+            //不需要打印订单，直接调用接单接口
+            if (mMode != null) {
+                mMode.requestSubmit(orderNo);
+            }
         }
 
 

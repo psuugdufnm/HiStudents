@@ -5,9 +5,11 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -25,6 +27,7 @@ import org.birdback.histudents.entity.PrintBean;
 import org.birdback.histudents.utils.PrintUtils;
 import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.TextUtils;
+import org.birdback.histudents.view.HiDialog;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -36,7 +39,7 @@ import java.util.concurrent.ExecutorService;
  * Created by meixin.song on 2018/4/9.
  */
 
-public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPresenter,PrinterManagerModel> implements PrinterManagerContract.View, View.OnClickListener {
+public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPresenter,PrinterManagerModel> implements PrinterManagerContract.View, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private static final String CONNSTATUS1 = "已连接";
     private static final String CONNSTATUS2 = "失去连接";
@@ -44,7 +47,7 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
     private OutputStream outputStream;
 
     private TextView mTvPrintTest,mTvPrintName,mTvConnectStatus,mTvPrintChange;
-    private Switch switchTabPrint;
+    private Switch switchTabPrint,switchTabClose;
     private PrintBean mPrintBean;
     private BluetoothAdapter mBluetoothAdapter;
 
@@ -94,6 +97,7 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
         mTvPrintName = findViewById(R.id.tv_print_name);
         mTvConnectStatus = findViewById(R.id.tv_connect_status);
         switchTabPrint = findViewById(R.id.switch_tab_print);
+        switchTabClose = findViewById(R.id.switch_tab_close);
     }
 
     @Override
@@ -102,12 +106,9 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
         mTvPrintChange.setOnClickListener(this);
 
         switchTabPrint.setChecked(Session.getPrintDouble());
-        switchTabPrint.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Session.setPrintDouble(b);
-            }
-        });
+        switchTabClose.setChecked(Session.getClosePrint());
+        switchTabPrint.setOnCheckedChangeListener(this);
+        switchTabClose.setOnCheckedChangeListener(this);
 
         initBuleTooth();
         initInfo();
@@ -243,5 +244,17 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
     @Override
     public void showMessage(String msg) {
 
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
+        switch (compoundButton.getId()){
+            case R.id.switch_tab_print:
+                Session.setPrintDouble(b);
+                break;
+            case R.id.switch_tab_close:
+                Session.setClosePrint(b);
+                break;
+        }
     }
 }
