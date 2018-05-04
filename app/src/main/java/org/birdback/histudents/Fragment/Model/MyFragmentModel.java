@@ -49,11 +49,11 @@ public class MyFragmentModel implements MyContract.Model {
 
     @Override
     public void logout() {
-        HttpServer.getDataFromServer(RequestParams.getInstance().logout(),
+        HttpServer.getDataFromServer(RequestParams.getInstance().logout(Session.getDeviceToken()),
                 new OnSuccessCallBack() {
                     @Override
                     public void onSuccess(Object entity) {
-
+                        mPresenter.logoutSuccess();
                     }
                 }, new OnFailureCallBack() {
                     @Override

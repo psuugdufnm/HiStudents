@@ -8,5 +8,5 @@
     <org.birdback.histudents.base.TitleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title_center_text="设置"/>
+        app:title_center_text="店铺管理"/>
 </LinearLayout>

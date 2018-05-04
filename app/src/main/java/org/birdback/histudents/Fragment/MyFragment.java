@@ -136,6 +136,12 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentM
     }
 
     @Override
+    public void logoutSuccess() {
+        Session.logout();
+        LoginActivity.start(getActivity());
+    }
+
+    @Override
     public void onRefresh() {
         mPresenter.getList();
     }
@@ -151,8 +157,6 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentM
                         @Override
                         public void dialogRightBtnClick() {
                             mPresenter.logout();
-                            Session.logout();
-                            LoginActivity.start(getActivity());
                         }
                     }).build();
 

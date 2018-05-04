@@ -39,4 +39,9 @@ public class MyFragmentPresenter extends MyContract.Presenter {
     public void logout() {
         mMode.logout();
     }
+
+    @Override
+    public void logoutSuccess() {
+        mView.logoutSuccess();
+    }
 }

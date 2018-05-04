@@ -60,7 +60,7 @@ public interface OrderService {
     @POST(RequestUrl.BASE_URL + RequestUrl.REFUND_ORDER)
     Observable<ResponseEntity<Object>> requestJudan(@Field("order_no") String orderNo);
 
-
-    @GET(RequestUrl.BASE_URL + RequestUrl.LOGOUT)
-    Observable<ResponseEntity<OrderListEntity>> logout();
+    @FormUrlEncoded
+    @POST(RequestUrl.BASE_URL + RequestUrl.LOGOUT)
+    Observable<ResponseEntity<OrderListEntity>> logout(@Field("deviceToken") String deviceToken);
 }

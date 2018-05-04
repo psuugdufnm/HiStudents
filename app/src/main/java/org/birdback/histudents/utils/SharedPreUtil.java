@@ -297,7 +297,8 @@ public class SharedPreUtil {
      * @throws NoSuchProviderException
      */
     private static SecretKeySpec getKeySpec(String seed) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {//added by lijun on 2016/8/5.因Android N 废弃了Crypto提供者所以N版本以上将采用以下方式生成SecretKeySpec
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            //added by lijun on 2016/8/5.因Android N 废弃了Crypto提供者所以N版本以上 将采用以下方式生成SecretKeySpec
             byte[] salt = new byte[32];
             KeySpec keySpec = new PBEKeySpec(seed.toCharArray(), salt, 100, salt.length * 8);
             SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");

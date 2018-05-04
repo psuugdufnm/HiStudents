@@ -120,10 +120,10 @@ public class RequestParams {
         reqVo.observable = HttpServer.getService(OrderService.class).requestJudan(orderNo);
         return reqVo;
     }
-    public RequestVo logout() {
+    public RequestVo logout(String deviceToken) {
         RequestVo reqVo = new RequestVo();
         reqVo.hasDialog = true;
-        reqVo.observable = HttpServer.getService(OrderService.class).logout();
+        reqVo.observable = HttpServer.getService(OrderService.class).logout(deviceToken);
         return reqVo;
     }
 }

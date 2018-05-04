@@ -13,6 +13,8 @@ public interface MyContract {
     interface View extends CoreBaseContract.CoreBaseView {
 
         void getListSuccess(MyMenuEntity entity);
+
+        void logoutSuccess();
     }
 
     interface Model extends CoreBaseContract.CoreBaseModel<Presenter> {
@@ -27,6 +29,8 @@ public interface MyContract {
         public abstract void getList();
 
         public abstract void logout();
+
+        public abstract void logoutSuccess();
     }
 
 
