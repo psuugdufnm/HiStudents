@@ -5,17 +5,14 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-
 
 import org.birdback.histudents.R;
 import org.birdback.histudents.activity.contract.PrinterManagerContract;
@@ -27,7 +24,6 @@ import org.birdback.histudents.entity.PrintBean;
 import org.birdback.histudents.utils.PrintUtils;
 import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.TextUtils;
-import org.birdback.histudents.view.HiDialog;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -111,6 +107,7 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
         switchTabClose.setOnCheckedChangeListener(this);
 
         initBuleTooth();
+
         initInfo();
 
         showProgressDialog();
