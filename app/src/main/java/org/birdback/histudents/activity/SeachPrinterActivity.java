@@ -128,7 +128,11 @@ public class SeachPrinterActivity extends CoreBaseActivity implements OnRecycler
                         && deviceClass != COMPUTER_DESKTOP
                         && deviceClass != COMPUTER_LAPTOP){
 
-                    deviceList.add(device);
+
+                    if (!deviceList.contains(device)){
+
+                        deviceList.add(device);
+                    }
                 }
             }
         }
@@ -157,7 +161,10 @@ public class SeachPrinterActivity extends CoreBaseActivity implements OnRecycler
                         && deviceClass != COMPUTER_DESKTOP
                         && deviceClass != COMPUTER_LAPTOP){
 
-                    deviceList.add(device);
+                    if (!deviceList.contains(device)){
+
+                        deviceList.add(device);
+                    }
                 }
                 listAdapter.notifyDataSetChanged();
                 tvTip2.setText(String.format(getResources().getString(R.string.string_fond_bluetooth_tip),String.valueOf(deviceList.size())));
