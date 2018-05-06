@@ -19,13 +19,8 @@ import org.birdback.histudents.adapter.OnRecyclerViewListener;
 import org.birdback.histudents.base.TitleView;
 import org.birdback.histudents.core.CoreBaseFragment;
 import org.birdback.histudents.entity.MyMenuEntity;
-import org.birdback.histudents.net.Callback.OnFailureCallBack;
-import org.birdback.histudents.net.Callback.OnSuccessCallBack;
-import org.birdback.histudents.net.HttpServer;
 import org.birdback.histudents.net.RequestUrl;
-import org.birdback.histudents.service.RequestParams;
 import org.birdback.histudents.utils.Session;
-import org.birdback.histudents.utils.TextUtils;
 import org.birdback.histudents.utils.VerifyUtil;
 import org.birdback.histudents.view.HiDialog;
 import org.birdback.histudents.web.WebActivity;
@@ -34,47 +29,48 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by 店铺管理 on 2018/4/8.
+ * Created by Administrator on 2018/4/8.
  */
 
-public class MyFragment extends CoreBaseFragment<MyFragmentPresenter, MyFragmentModel> implements MyContract.View, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class OldMyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragmentModel> implements MyContract.View, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private RecyclerView recyclerView;
     private List<MyMenuEntity.MenuBean> mData = new ArrayList<>();
     private GridAdapter gridAdapter;
-    private TextView tvDayMoney, tvDayBrowseNum, tvDayPayNum;
-    private TextView tvWaitReceipt, tvWaitSend, tvWaitCome;
-    private TextView tvMonthOrderNum, tvMonthTurnover, tvMonthViewNum;
+    private TextView tvDayMoney,tvDayBrowseNum,tvDayPayNum,tvDayNum;
+    private TextView tvWaitReceipt,tvWaitSend,tvWaitCome;
+    private TextView tvMonthOrderNum,tvMonthTurnover,tvMonthViewNum;
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView tvLogout;
+    private TitleView titleView;
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_my_new;
+        return R.layout.fragment_my;
     }
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
         recyclerView = view.findViewById(R.id.recycler_view);
-        tvDayMoney = view.findViewById(R.id.tv_today_money);
-        tvDayPayNum = view.findViewById(R.id.tv_today_order);
-        tvDayBrowseNum = view.findViewById(R.id.tv_today_view);
-
+        tvDayMoney = view.findViewById(R.id.tv_day_money);
+        tvDayBrowseNum = view.findViewById(R.id.tv_day_browse_num);
+        tvDayPayNum = view.findViewById(R.id.tv_day_pay_num);
+        tvDayNum = view.findViewById(R.id.tv_day_num);
         tvWaitReceipt = view.findViewById(R.id.tv_wait_receipt);
         tvWaitSend = view.findViewById(R.id.tv_wait_send);
         tvWaitCome = view.findViewById(R.id.tv_wait_come);
 
-        tvMonthOrderNum = view.findViewById(R.id.tv_month_order);
-        tvMonthTurnover = view.findViewById(R.id.tv_month_money);
-        tvMonthViewNum = view.findViewById(R.id.tv_month_view);
+        tvMonthOrderNum = view.findViewById(R.id.tv_month_order_num);
+        tvMonthTurnover = view.findViewById(R.id.tv_month_turnover);
+        tvMonthViewNum = view.findViewById(R.id.tv_month_view_num);
         tvLogout = view.findViewById(R.id.tv_logout);
+        titleView = view.findViewById(R.id.title_view);
 
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),4));
         gridAdapter = new GridAdapter(mData);
         recyclerView.setAdapter(gridAdapter);
     }
-
     @Override
     public void initListener() {
         tvLogout.setOnClickListener(this);
@@ -85,13 +81,20 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter, MyFragment
             @Override
             public void onItemClick(View itemView, int position) {
                 MyMenuEntity.MenuBean menuBean = mData.get(position);
-                if (!VerifyUtil.isEmpty(menuBean.getUrl())) {
+                if (!VerifyUtil.isEmpty(menuBean.getUrl())){
                     WebActivity.start(getActivity(), RequestUrl.BASE_URL + menuBean.getUrl());
                 }
             }
         });
 
-
+        titleView.setOnTitleClickListener(new TitleView.OnTitleClickListener() {
+            @Override
+            public void onLeftClick(View v) {}
+            @Override
+            public void onRightClick(View v) {
+                SettingActivity.start(getActivity());
+            }
+        });
     }
 
     @Override
@@ -105,7 +108,7 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter, MyFragment
         mData.clear();
         mData.addAll(entity.getMenu());
         gridAdapter.notifyDataSetChanged();
-        if (swipeRefreshLayout != null) {
+        if (swipeRefreshLayout != null){
             swipeRefreshLayout.setRefreshing(false);
         }
 
@@ -114,6 +117,7 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter, MyFragment
         tvDayMoney.setText(dayStat.getPay_money());
         tvDayBrowseNum.setText(dayStat.getView_num());
         tvDayPayNum.setText(dayStat.getPay_num());
+        tvDayNum.setText(dayStat.getGoods_num());
 
         MyMenuEntity.OrderStatBean orderStat = entity.getOrder_stat();
         tvWaitReceipt.setText(orderStat.getWait_grab());
