@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.webkit.CookieManager;
@@ -23,11 +22,9 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 
-import org.birdback.histudents.Fragment.MyFragment;
 import org.birdback.histudents.MainActivity;
 import org.birdback.histudents.R;
 import org.birdback.histudents.activity.LoginActivity;
@@ -51,7 +48,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.HashMap;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
@@ -118,6 +114,7 @@ public class WebFragment extends CoreBaseFragment implements SwipeRefreshLayout.
         CookieSyncManager.createInstance(context);
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
+
         cookieManager.setCookie(url, cookie);
         CookieSyncManager.getInstance().sync();
     }
@@ -148,11 +145,13 @@ public class WebFragment extends CoreBaseFragment implements SwipeRefreshLayout.
 
     @Override
     public void initListener() {
+
         webViewLoadUrl();
 
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
         //自适应屏幕
         webSettings.setUseWideViewPort(true);
         webSettings.setLoadWithOverviewMode(true);
@@ -165,7 +164,11 @@ public class WebFragment extends CoreBaseFragment implements SwipeRefreshLayout.
                 return super.onJsAlert(view, url, message, result);
             }
 
+
+
         });
+
+
 
         mWebView.setWebViewClient(new WebViewClient(){
             @Override

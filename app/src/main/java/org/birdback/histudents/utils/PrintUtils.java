@@ -284,7 +284,7 @@ public class PrintUtils {
                         "x" + goodsListBean.getNum(),
                         goodsListBean.getPrice() + "\n"));
 
-                PrintUtils.printText(goodsListBean.getShowDesc() +"\n\n");
+                PrintUtils.printText(goodsListBean.getShowDesc() +"\n");
             }
         }
         PrintUtils.selectCommand(PrintUtils.NORMAL);
