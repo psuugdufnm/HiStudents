@@ -43,8 +43,7 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.10.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
 
-    compile 'com.android.support:recyclerview-v7:23.4.0'
-
+    implementation 'com.android.support:recyclerview-v7:22.0.0'
     compile 'com.jiongbull:jlog:1.0.5'
     // 获取walle写入信息(渠道&utm等)
     compile 'com.meituan.android.walle:library:1.1.5'

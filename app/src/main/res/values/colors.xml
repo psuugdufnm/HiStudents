@@ -18,5 +18,6 @@
     <color name="txt_color_red">#d81e06</color>
     <color name="txt_color_green">#7fdf02</color>
     <color name="color_d8d8d8">#d8d8d8</color>
+    <color name="color_blue">#1296db</color>
 
 </resources>

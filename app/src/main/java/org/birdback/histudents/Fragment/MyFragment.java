@@ -141,7 +141,7 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter, MyFragment
         switch (view.getId()) {
             case R.id.tv_logout:
                 new HiDialog.Builder(getActivity())
-                        .setContent("退出登录后将收不到新订单通知，确定要退出登录吗？")
+                        .setContent("退出登录后将收不到新订单，确定要退出登录吗？")
                         .setLeftBtnText("取消")
                         .setRightBtnText("确定")
                         .setRightCallBack(new HiDialog.RightClickCallBack() {
