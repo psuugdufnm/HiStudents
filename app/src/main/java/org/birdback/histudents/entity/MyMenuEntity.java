@@ -12,6 +12,7 @@ public class MyMenuEntity {
      * day_stat : {"view_num":"1202","pay_num":"46","goods_num":"100","pay_money":"894.00"}
      * month_stat : {"view_num":"1252","pay_num":"47","goods_num":"101","pay_money":"894.10"}
      * order_stat : {"wait_grab":1,"wait_send":1,"wait_succ":30}
+     *
      * menu : [{"name":"店铺管理","url":"/store/index","icon":"http://juhuijia2.birdback.org/mapi/i/home2/shop.png?gv=16_9"},
      * {"name":"商品管理","url":"/store/index","icon":"http://juhuijia2.birdback.org/mapi/i/home2/shop.png?gv=16_9"},
      * {"name":"分类管理","url":"/store/index","icon":"http://juhuijia2.birdback.org/mapi/i/home2/shop.png?gv=16_9"},
