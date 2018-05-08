@@ -35,6 +35,8 @@
             <EditText
                 android:id="@+id/et_name"
                 style="@style/etStyle"
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:gravity="left|center"
                 android:layout_marginLeft="@dimen/dp20"
                 android:maxLength="20"
@@ -64,8 +66,16 @@
                 android:padding="15dp"
                 android:hint="请输入密码"
                 android:inputType="textPassword"
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:textSize="@dimen/sp15"/>
-
+            <ImageView
+                android:id="@+id/iv_show_pwd"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:scaleType="center"
+                android:src="@mipmap/icon_biyan"/>
         </LinearLayout>
         <View
             style="@style/common_line_horizontal_80"/>

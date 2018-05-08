@@ -3,9 +3,11 @@ package org.birdback.histudents.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import org.birdback.histudents.MainActivity;
 import org.birdback.histudents.R;
@@ -26,6 +28,8 @@ public class LoginActivity extends CoreBaseActivity<LoginPresenter,LoginModel> i
     private EditText mEtName;
     private EditText mEtPwd;
     private Button mBtnLogin;
+    private ImageView ivShowPwd;
+    private boolean isChecked;
 
     public static void start(Context context) {
         context.startActivity(new Intent(context,LoginActivity.class));
@@ -33,8 +37,21 @@ public class LoginActivity extends CoreBaseActivity<LoginPresenter,LoginModel> i
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.btn_login) {
-            mPresenter.requestLogin(mEtName.getText().toString(),mEtPwd.getText().toString());
+        switch (view.getId()) {
+            case R.id.btn_login:
+                mPresenter.requestLogin(mEtName.getText().toString(),mEtPwd.getText().toString());
+                break;
+            case R.id.iv_show_pwd:
+                if (isChecked){
+                    ivShowPwd.setImageResource(R.mipmap.icon_biyan);
+                    mEtPwd.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    isChecked = false;
+                }else {
+                    ivShowPwd.setImageResource(R.mipmap.icon_zhengyan);
+                    mEtPwd.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    isChecked = true;
+                }
+                break;
         }
     }
 
@@ -46,6 +63,7 @@ public class LoginActivity extends CoreBaseActivity<LoginPresenter,LoginModel> i
     @Override
     public void initListener() {
         mBtnLogin.setOnClickListener(this);
+        ivShowPwd.setOnClickListener(this);
     }
 
     @Override
@@ -53,6 +71,7 @@ public class LoginActivity extends CoreBaseActivity<LoginPresenter,LoginModel> i
         mEtName = findViewById(R.id.et_name);
         mEtPwd = findViewById(R.id.et_pwd);
         mBtnLogin = findViewById(R.id.btn_login);
+        ivShowPwd = findViewById(R.id.iv_show_pwd);
     }
 
     @Override
