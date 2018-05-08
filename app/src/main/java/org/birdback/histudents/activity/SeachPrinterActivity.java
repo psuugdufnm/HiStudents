@@ -51,6 +51,7 @@ public class SeachPrinterActivity extends CoreBaseActivity implements OnRecycler
     private ArrayList<BluetoothDevice> deviceList = new ArrayList<>();
     private SeachBluetoothAdapter listAdapter;
     private int REQUEST_PERMISSION_ACCESS_LOCATION = 102;
+    private boolean ifRegister;
 
     public static void start(Context mContext) {
         mContext.startActivity(new Intent(mContext,SeachPrinterActivity.class));
@@ -99,7 +100,10 @@ public class SeachPrinterActivity extends CoreBaseActivity implements OnRecycler
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(mReceiver);
+        if (ifRegister){
+            //被注册过才可以解绑
+            unregisterReceiver(mReceiver);
+        }
     }
 
     private void initBlueTooth() {
@@ -117,6 +121,7 @@ public class SeachPrinterActivity extends CoreBaseActivity implements OnRecycler
         intentFilter.addAction(BluetoothDevice.ACTION_FOUND);
         intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         intentFilter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+        ifRegister = true;
         registerReceiver(mReceiver, intentFilter);
         //已配对的设备
         Set<BluetoothDevice> pairedDevices = mAdapter.getBondedDevices();

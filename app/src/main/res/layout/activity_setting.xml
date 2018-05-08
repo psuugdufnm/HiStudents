@@ -8,5 +8,84 @@
     <org.birdback.histudents.base.TitleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title_center_text="店铺管理"/>
+        app:title_center_text="商品管理"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+        <View
+            style="@style/common_line_vertical"/>
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+    <View
+        style="@style/common_line_horizontal_80"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/write"
+        android:paddingTop="@dimen/dp5"
+        android:paddingBottom="@dimen/dp5"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dp10"
+            android:paddingBottom="@dimen/dp10"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="管理分类"
+                android:drawableLeft="@mipmap/icon_class"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <View
+            style="@style/common_line_vertical" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/dp10"
+                android:paddingBottom="@dimen/dp10"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/icon_paixu"
+                    android:layout_gravity="center"
+                    android:text="商品排序"/>
+            </LinearLayout>
+            <View
+                style="@style/common_line_vertical" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/dp10"
+                android:paddingBottom="@dimen/dp10"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableLeft="@mipmap/icon_add"
+                    android:text="新建商品"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

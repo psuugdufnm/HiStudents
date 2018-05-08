@@ -10,7 +10,7 @@
         android:id="@+id/tv_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableTop="@mipmap/icon_error"
+        android:drawableTop="@mipmap/icon_zhengyan"
         android:drawablePadding="@dimen/dp15"
         android:textSize="@dimen/sp14"
         android:textColor="@color/txt_color2"

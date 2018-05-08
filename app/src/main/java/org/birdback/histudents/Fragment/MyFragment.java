@@ -12,20 +12,14 @@ import org.birdback.histudents.Fragment.Model.MyFragmentModel;
 import org.birdback.histudents.Fragment.Presenter.MyFragmentPresenter;
 import org.birdback.histudents.Fragment.contract.MyContract;
 import org.birdback.histudents.R;
+import org.birdback.histudents.activity.GoodsSettingActivity;
 import org.birdback.histudents.activity.LoginActivity;
-import org.birdback.histudents.activity.SettingActivity;
 import org.birdback.histudents.adapter.GridAdapter;
 import org.birdback.histudents.adapter.OnRecyclerViewListener;
-import org.birdback.histudents.base.TitleView;
 import org.birdback.histudents.core.CoreBaseFragment;
 import org.birdback.histudents.entity.MyMenuEntity;
-import org.birdback.histudents.net.Callback.OnFailureCallBack;
-import org.birdback.histudents.net.Callback.OnSuccessCallBack;
-import org.birdback.histudents.net.HttpServer;
 import org.birdback.histudents.net.RequestUrl;
-import org.birdback.histudents.service.RequestParams;
 import org.birdback.histudents.utils.Session;
-import org.birdback.histudents.utils.TextUtils;
 import org.birdback.histudents.utils.VerifyUtil;
 import org.birdback.histudents.view.HiDialog;
 import org.birdback.histudents.web.WebActivity;
@@ -47,6 +41,7 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter, MyFragment
     private TextView tvMonthOrderNum, tvMonthTurnover, tvMonthViewNum;
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView tvLogout;
+    private TextView tvGoodsManager;
 
     @Override
     public int getLayoutId() {
@@ -57,6 +52,9 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter, MyFragment
     protected void initView(View view, Bundle savedInstanceState) {
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
         recyclerView = view.findViewById(R.id.recycler_view);
+
+        tvGoodsManager = view.findViewById(R.id.tv_goods_manager);
+
         tvDayMoney = view.findViewById(R.id.tv_today_money);
         tvDayPayNum = view.findViewById(R.id.tv_today_order);
         tvDayBrowseNum = view.findViewById(R.id.tv_today_view);
@@ -78,6 +76,7 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter, MyFragment
     @Override
     public void initListener() {
         tvLogout.setOnClickListener(this);
+        tvGoodsManager.setOnClickListener(this);
         swipeRefreshLayout.setOnRefreshListener(this);
         mPresenter.getList();
 
@@ -139,18 +138,22 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter, MyFragment
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.tv_logout) {
-            new HiDialog.Builder(getActivity())
-                    .setContent("退出登录后将收不到新订单通知，确定要退出登录吗？")
-                    .setLeftBtnText("取消")
-                    .setRightBtnText("确定")
-                    .setRightCallBack(new HiDialog.RightClickCallBack() {
-                        @Override
-                        public void dialogRightBtnClick() {
-                            mPresenter.logout();
-                        }
-                    }).build();
-
+        switch (view.getId()) {
+            case R.id.tv_logout:
+                new HiDialog.Builder(getActivity())
+                        .setContent("退出登录后将收不到新订单通知，确定要退出登录吗？")
+                        .setLeftBtnText("取消")
+                        .setRightBtnText("确定")
+                        .setRightCallBack(new HiDialog.RightClickCallBack() {
+                            @Override
+                            public void dialogRightBtnClick() {
+                                mPresenter.logout();
+                            }
+                        }).build();
+                break;
+            case R.id.tv_goods_manager:
+                GoodsSettingActivity.start(getActivity());
+                break;
         }
     }
 }

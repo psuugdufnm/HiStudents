@@ -5,13 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import org.birdback.histudents.R;
+import org.birdback.histudents.activity.contract.GoodsSettingContract;
+import org.birdback.histudents.activity.model.GoodsManagerModel;
+import org.birdback.histudents.activity.presenter.GoodsManagerPresenter;
 import org.birdback.histudents.core.CoreBaseActivity;
 
-public class SettingActivity extends CoreBaseActivity {
+public class GoodsSettingActivity extends CoreBaseActivity<GoodsManagerPresenter,GoodsManagerModel> implements GoodsSettingContract.View {
 
 
     public static void start(Context context) {
-        context.startActivity(new Intent(context,SettingActivity.class));
+        context.startActivity(new Intent(context,GoodsSettingActivity.class));
     }
 
     @Override
@@ -29,4 +32,8 @@ public class SettingActivity extends CoreBaseActivity {
 
     }
 
+    @Override
+    public void showMessage(String msg) {
+
+    }
 }

@@ -13,7 +13,6 @@ import org.birdback.histudents.Fragment.Presenter.MyFragmentPresenter;
 import org.birdback.histudents.Fragment.contract.MyContract;
 import org.birdback.histudents.R;
 import org.birdback.histudents.activity.LoginActivity;
-import org.birdback.histudents.activity.SettingActivity;
 import org.birdback.histudents.adapter.GridAdapter;
 import org.birdback.histudents.adapter.OnRecyclerViewListener;
 import org.birdback.histudents.base.TitleView;
@@ -87,14 +86,6 @@ public class OldMyFragment extends CoreBaseFragment<MyFragmentPresenter,MyFragme
             }
         });
 
-        titleView.setOnTitleClickListener(new TitleView.OnTitleClickListener() {
-            @Override
-            public void onLeftClick(View v) {}
-            @Override
-            public void onRightClick(View v) {
-                SettingActivity.start(getActivity());
-            }
-        });
     }
 
     @Override

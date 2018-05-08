@@ -44,7 +44,7 @@
         <activity android:name=".activity.SeachPrinterActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".activity.SettingActivity"
+        <activity android:name=".activity.GoodsSettingActivity"
             android:screenOrientation="portrait"/>
 
 
