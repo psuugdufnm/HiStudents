@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp10">
+   <ImageView
+       android:id="@+id/iv_goods_icon"
+       android:layout_width="70dp"
+       android:layout_height="70dp"
+       android:layout_marginRight="@dimen/dp10"
+       android:src="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:id="@+id/tv_goods_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv_goods_icon"
+        android:text="鸡肉沙拉"
+        android:textSize="@dimen/sp14"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_goods_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv_goods_icon"
+        android:layout_below="@id/tv_goods_name"
+        android:layout_marginTop="@dimen/dp8"
+        android:text="月售9 库存90"
+        android:textSize="@dimen/sp12"
+        android:textColor="@color/txt_color3" />
+
+    <TextView
+        android:id="@+id/tv_goods_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv_goods_icon"
+        android:layout_below="@id/tv_goods_num"
+        android:layout_marginTop="@dimen/dp8"
+        android:text="￥32.88"
+        android:textSize="@dimen/sp16"
+        android:textColor="@color/txt_color_yellow" />
+</RelativeLayout>
