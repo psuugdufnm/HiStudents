@@ -150,8 +150,8 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
                     outputStream = mmSocket.getOutputStream();
 
                     ArrayList<OrderListEntity.GrabListBean.GoodsListBean> goodsListBeans = new ArrayList<>();
-                    goodsListBeans.add(new OrderListEntity.GrabListBean.GoodsListBean("柠檬椰果养乐多/大杯",5,"","15"));
-                    goodsListBeans.add(new OrderListEntity.GrabListBean.GoodsListBean("轻奶茶西米露（大杯）",5,"","15"));
+                    goodsListBeans.add(new OrderListEntity.GrabListBean.GoodsListBean("柠檬椰果",5,"","15"));
+                    goodsListBeans.add(new OrderListEntity.GrabListBean.GoodsListBean("轻奶茶西米露",5,"","15"));
                     goodsListBeans.add(new OrderListEntity.GrabListBean.GoodsListBean("香芋奶茶",5,"红豆，布丁","15"));
                     OrderListEntity.GrabListBean grabListBean = new OrderListEntity.GrabListBean("1523887175136322221", "99",
                             "2018-04-16 21:59:39", "小明", "18888888888",

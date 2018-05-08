@@ -6,7 +6,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import org.birdback.histudents.Fragment.Model.MyFragmentModel;
 import org.birdback.histudents.Fragment.Presenter.MyFragmentPresenter;
@@ -42,6 +45,8 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter, MyFragment
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView tvLogout;
     private TextView tvGoodsManager;
+    private TextView tvShopName;
+    private ImageView ivShopLogo;
 
     @Override
     public int getLayoutId() {
@@ -54,6 +59,8 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter, MyFragment
         recyclerView = view.findViewById(R.id.recycler_view);
 
         tvGoodsManager = view.findViewById(R.id.tv_goods_manager);
+        tvShopName = view.findViewById(R.id.tv_shop_name);
+        ivShopLogo = view.findViewById(R.id.iv_logo);
 
         tvDayMoney = view.findViewById(R.id.tv_today_money);
         tvDayPayNum = view.findViewById(R.id.tv_today_order);
@@ -123,6 +130,13 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter, MyFragment
         tvMonthOrderNum.setText(monthStat.getPay_num());
         tvMonthTurnover.setText(monthStat.getPay_money());
         tvMonthViewNum.setText(monthStat.getView_num());
+
+        MyMenuEntity.StoreInfoBean storeInfo = entity.getStore_info();
+        tvShopName.setText(storeInfo.getShop_name());
+
+        Glide.with(this).load(storeInfo.getImg_path()).into(ivShopLogo);
+
+
     }
 
     @Override

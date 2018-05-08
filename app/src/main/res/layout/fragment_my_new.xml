@@ -21,19 +21,10 @@
             android:textColor="@color/write"
             android:textSize="@dimen/sp16"
             android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_height="wrap_content"
             android:text="店铺名称"/>
-        <TextView
-            android:id="@+id/tv_shop_id"
-            android:layout_toRightOf="@id/iv_logo"
-            android:layout_below="@id/tv_shop_name"
-            android:layout_marginLeft="@dimen/dp10"
-            android:textColor="@color/write"
-            android:textSize="@dimen/sp12"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="@dimen/dp8"
-            android:layout_height="wrap_content"
-            android:text="id:1234567890"/>
+
         <TextView
             android:id="@+id/tv_logout"
             android:layout_width="wrap_content"
@@ -60,11 +51,12 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:background="@color/write">
                     <TextView
                         android:id="@+id/tv_goods_manager"
                         android:padding="@dimen/dp20"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="商品管理"
                         android:drawablePadding="@dimen/dp10"

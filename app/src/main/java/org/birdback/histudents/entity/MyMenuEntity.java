@@ -24,6 +24,16 @@ public class MyMenuEntity {
     private OrderStatBean order_stat;
     private List<MenuBean> menu;
 
+    private StoreInfoBean store_info;
+
+    public StoreInfoBean getStore_info() {
+        return store_info;
+    }
+
+    public void setStore_info(StoreInfoBean store_info) {
+        this.store_info = store_info;
+    }
+
     public DayStatBean getDay_stat() {
         return day_stat;
     }
@@ -218,5 +228,27 @@ public class MyMenuEntity {
         public void setIcon(String icon) {
             this.icon = icon;
         }
+    }
+
+    public class StoreInfoBean {
+        public String getShop_name() {
+            return shop_name;
+        }
+
+        public void setShop_name(String shop_name) {
+            this.shop_name = shop_name;
+        }
+
+        public String getImg_path() {
+            return img_path;
+        }
+
+        public void setImg_path(String img_path) {
+            this.img_path = img_path;
+        }
+
+        private String shop_name;
+        private String img_path;
+
     }
 }

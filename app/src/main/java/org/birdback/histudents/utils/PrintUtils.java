@@ -265,7 +265,7 @@ public class PrintUtils {
         PrintUtils.printText(shopName + "\n\n");
         PrintUtils.selectCommand(PrintUtils.NORMAL);
 
-        PrintUtils.printText("--已在线支付--\n\n");
+        PrintUtils.printText("--已在线支付--\n");
         PrintUtils.selectCommand(PrintUtils.ALIGN_LEFT);
         PrintUtils.printText("--------------------------------\n");
         PrintUtils.printText("时间:"+bean.getPay_time() + "\n");
@@ -283,7 +283,7 @@ public class PrintUtils {
                 PrintUtils.printText(PrintUtils.printThreeData("" + goodsListBean.getName(),
                         "x" + goodsListBean.getNum(),
                         goodsListBean.getPrice() + "\n"));
-
+                if (!VerifyUtil.isEmpty(goodsListBean.getShowDesc()))
                 PrintUtils.printText(goodsListBean.getShowDesc() +"\n");
             }
         }
