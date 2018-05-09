@@ -47,6 +47,11 @@
         <activity android:name=".activity.GoodsSettingActivity"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name="org.birdback.histudents.activity.MipushTestActivity"
+            android:launchMode="singleTask"
+            android:exported="true" />
+
 
         <service android:name="org.birdback.histudents.service.UmengNotificationService"/>
         <service android:name="org.birdback.histudents.service.MyNotificationService"/>

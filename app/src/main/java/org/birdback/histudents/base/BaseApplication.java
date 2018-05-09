@@ -53,7 +53,7 @@ public class BaseApplication extends Application {
     }
 
     private void initMiPush() {
-        MiPushRegistar.register(mApplication, "UGxju+siPoP0Byl+0uj0rQ==","5631778619336");
+        MiPushRegistar.register(mApplication, "2882303761517786336","5631778619336");
     }
 
     private void initUMeng() {
