@@ -18,6 +18,7 @@ import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.MsgConstant;
 import com.umeng.message.PushAgent;
 
+import org.android.agoo.xiaomi.MiPushRegistar;
 import org.birdback.histudents.service.UmengNotificationService;
 import org.birdback.histudents.utils.DeviceUtil;
 import org.birdback.histudents.utils.LogUtil;
@@ -46,10 +47,15 @@ public class BaseApplication extends Application {
         SharedPreUtil.initialize(this);
         DeviceUtil.initChannel();
         initUMeng();
-
+        initMiPush();
         openBlueTooth();
         mApplication.registerReceiver(mReceiver,makeFilter());
     }
+
+    private void initMiPush() {
+        MiPushRegistar.register(mApplication, "UGxju+siPoP0Byl+0uj0rQ==","5631778619336");
+    }
+
     private void initUMeng() {
         UMConfigure.setLogEnabled(true);//log开关
         UMConfigure.init(mApplication,

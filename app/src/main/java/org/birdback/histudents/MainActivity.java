@@ -167,7 +167,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case 1:
                 if (searchFragment == null) {
                     searchFragment = new WebFragment();
-                    searchFragment.setUrl("http://store.birdback.org/order/order_list");
+//                    searchFragment.setUrl("http://store.birdback.org/order/order_list");
+                    searchFragment.setUrl("http://testchw.usercenter.papa91.com/static/wallet.html");
                     transaction.add(R.id.container, searchFragment, MyFragment.class.getSimpleName());
                 } else {
                     transaction.show(searchFragment);
