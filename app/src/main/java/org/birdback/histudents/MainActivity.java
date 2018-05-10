@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switchFragment(0);
 
-        //checkAudioInfo();/**提示音音量开到最大*/
+        checkAudioInfo();/**提示音音量开到最大*/
 
         requestPermission(); /**定位权限*/
 
