@@ -1,7 +1,8 @@
 package org.birdback.histudents.entity;
 
 /**
- * Created by Administrator on 2018/4/30.
+ * 通用的dialogentity
+ * Created by meixin.song on 2018/4/30.
  */
 
 public class DialogEntity {

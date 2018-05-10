@@ -1,23 +1,18 @@
 package org.birdback.histudents.base;
 
-import android.Manifest;
 import android.app.Application;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
-import com.umeng.message.MsgConstant;
 import com.umeng.message.PushAgent;
 
+import org.android.agoo.mezu.MeizuRegister;
 import org.android.agoo.xiaomi.MiPushRegistar;
 import org.birdback.histudents.service.UmengNotificationService;
 import org.birdback.histudents.utils.DeviceUtil;
@@ -48,12 +43,17 @@ public class BaseApplication extends Application {
         DeviceUtil.initChannel();
         initUMeng();
         initMiPush();
+        initMeizuPush();
         openBlueTooth();
         mApplication.registerReceiver(mReceiver,makeFilter());
     }
 
     private void initMiPush() {
         MiPushRegistar.register(mApplication, "2882303761517786336","5631778619336");
+    }
+
+    private void initMeizuPush(){
+        MeizuRegister.register(mApplication, "113276", "3036553af8894137aa81a28faa935319");
     }
 
     private void initUMeng() {

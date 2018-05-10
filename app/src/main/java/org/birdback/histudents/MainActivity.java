@@ -177,7 +177,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case 2:
                 if (myFragment == null) {
                     myFragment = new MyFragment();
-//                    myFragment.setUrl("http://store.birdback.org/home/home");
                     transaction.add(R.id.container, myFragment, MyFragment.class.getSimpleName());
                 } else {
                     transaction.show(myFragment);
@@ -190,7 +189,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         transaction.commit();
     }
 
-//
 
     @Override
     public void onClick(View view) {

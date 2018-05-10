@@ -6,5 +6,5 @@
         android:layout_width="match_parent"
         android:gravity="center"
         android:layout_height="match_parent"
-        android:text="mi push test activity"/>
+        android:text="mi push activity"/>
 </android.support.constraint.ConstraintLayout>
