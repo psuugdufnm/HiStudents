@@ -1,25 +1,18 @@
 package org.birdback.histudents.Fragment;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.webkit.JavascriptInterface;
-import android.webkit.JsResult;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.widget.FrameLayout;
-import android.widget.Toast;
-
 import com.flyco.tablayout.SlidingTabLayout;
-
-import org.birdback.histudents.Fragment.Model.OrderManagerModel;
 import org.birdback.histudents.Fragment.Model.OrderSearchModel;
 import org.birdback.histudents.Fragment.Presenter.OrderSearchPresenter;
 import org.birdback.histudents.Fragment.contract.OrderSearchContract;
 import org.birdback.histudents.R;
 import org.birdback.histudents.core.CoreBaseFragment;
-import org.birdback.histudents.utils.TextUtils;
+import java.util.ArrayList;
 
 /**
  * 订单查询fragment
@@ -31,8 +24,8 @@ public class OrderSearchFragment extends CoreBaseFragment<OrderSearchPresenter,O
 
     private SlidingTabLayout slidingTabLayout;
     private ViewPager viewPager;
-    private String[] titles = {"热门", "iOS", "Android"
-            , "前端", "后端", "设计", "工具资源"};
+    private String[] titles = {"待送出", "待送达", "已完成", "已退单"};
+    private ArrayList<Fragment> mFragments = new ArrayList<>();
 
     @Override
     public int getLayoutId() {
@@ -43,6 +36,13 @@ public class OrderSearchFragment extends CoreBaseFragment<OrderSearchPresenter,O
     protected void initView(View view, Bundle savedInstanceState) {
         slidingTabLayout = view.findViewById(R.id.sliding_tab_layout);
         viewPager = view.findViewById(R.id.view_pager);
+
+        for (String title : titles) {
+            mFragments.add(OrderItemFragment.getInstance(title));
+        }
+        MyPagerAdapter mAdapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
+        viewPager.setAdapter(mAdapter);
+        slidingTabLayout.setViewPager(viewPager);
 
     }
 
@@ -55,5 +55,27 @@ public class OrderSearchFragment extends CoreBaseFragment<OrderSearchPresenter,O
     @Override
     public void showMessage(String msg) {
 
+    }
+
+
+    private class MyPagerAdapter extends FragmentPagerAdapter {
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return titles[position];
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
     }
 }

@@ -59,6 +59,7 @@ dependencies {
     implementation 'com.umeng.sdk:push-xiaomi:1.0.0'
     //魅族Push通道
     implementation 'com.umeng.sdk:push-meizu:1.0.0'
+
     //华为Push通道
     implementation 'com.umeng.sdk:push-huawei:1.0.0'
 

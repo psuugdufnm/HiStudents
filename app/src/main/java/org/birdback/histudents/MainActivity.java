@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
@@ -17,7 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.RadioButton;
 
 import org.birdback.histudents.Fragment.MyFragment;
@@ -31,16 +29,10 @@ import org.birdback.histudents.utils.VerifyUtil;
 import org.birdback.histudents.view.HiDialog;
 import org.birdback.histudents.web.WebFragment;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "MainActivity";
     private RadioButton radio0,radio1,radio2;
-    private FrameLayout mFrameLayout;
     private FragmentManager mFragmentManager;
     private CoreBaseFragment mCacheFragment;
     private OrderManagerFragment managerFragment;
@@ -69,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switchFragment(0);
 
-        checkAudioInfo();/**提示音音量开到最大*/
+        //checkAudioInfo();/**提示音音量开到最大*/
 
         requestPermission(); /**定位权限*/
 
@@ -143,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         radio0 = findViewById(R.id.radio_0);
         radio1 = findViewById(R.id.radio_1);
         radio2 = findViewById(R.id.radio_2);
-        mFrameLayout = findViewById(R.id.container);
         mFragmentManager = getSupportFragmentManager();
     }
 
@@ -166,9 +157,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case 1:
                 if (searchFragment == null) {
+//                    searchFragment = new OrderSearchFragment();
                     searchFragment = new WebFragment();
                     searchFragment.setUrl("http://store.birdback.org/order/order_list");
-                    transaction.add(R.id.container, searchFragment, MyFragment.class.getSimpleName());
+                    transaction.add(R.id.container, searchFragment, WebFragment.class.getSimpleName());
                 } else {
                     transaction.show(searchFragment);
                 }
