@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switchFragment(0);
 
-        //checkAudioInfo();/**提示音音量开到最大*/
+        checkAudioInfo();/**提示音音量开到最大*/
 
         requestPermission(); /**定位权限*/
 
@@ -167,8 +167,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case 1:
                 if (searchFragment == null) {
                     searchFragment = new WebFragment();
-//                    searchFragment.setUrl("http://store.birdback.org/order/order_list");
-                    searchFragment.setUrl("http://testchw.usercenter.papa91.com/static/wallet.html");
+                    searchFragment.setUrl("http://store.birdback.org/order/order_list");
                     transaction.add(R.id.container, searchFragment, MyFragment.class.getSimpleName());
                 } else {
                     transaction.show(searchFragment);
@@ -178,7 +177,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case 2:
                 if (myFragment == null) {
                     myFragment = new MyFragment();
-//                    myFragment.setUrl("http://store.birdback.org/home/home");
                     transaction.add(R.id.container, myFragment, MyFragment.class.getSimpleName());
                 } else {
                     transaction.show(myFragment);
@@ -191,7 +189,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         transaction.commit();
     }
 
-//
 
     @Override
     public void onClick(View view) {

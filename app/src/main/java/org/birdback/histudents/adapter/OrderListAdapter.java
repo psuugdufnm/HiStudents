@@ -1,5 +1,6 @@
 package org.birdback.histudents.adapter;
 
+import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -43,7 +44,9 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
         holder.tvRealPrice.setText("￥".concat(entity.getReal_price()));
         holder.tvRebate.setText(String.valueOf(entity.getRebate()));
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(BaseApplication.getApplication()));
-        holder.recyclerView.setAdapter(new GoodListAdapter(entity.getGoods_list()));
+        GoodListAdapter goodListAdapter = new GoodListAdapter(entity.getGoods_list());
+        holder.recyclerView.setAdapter(goodListAdapter);
+
 
         int sum = 0;
         List<OrderListEntity.GrabListBean.GoodsListBean> goods_list = entity.getGoods_list();
@@ -111,7 +114,9 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             btnJudan = itemView.findViewById(R.id.btn_judan);
             recyclerView = itemView.findViewById(R.id.recycler_view);
             //禁用滑动事件
-            recyclerView.setNestedScrollingEnabled(false);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                recyclerView.setNestedScrollingEnabled(false);
+            }
         }
 
 
