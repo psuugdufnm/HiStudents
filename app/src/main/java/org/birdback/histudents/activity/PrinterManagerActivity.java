@@ -127,7 +127,6 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
                     mmSocket.connect();
                     mHandler.sendEmptyMessage(3);
                 } catch (Exception connectException) {
-                    Log.d("", CONNSTATUS2);
                     mHandler.sendEmptyMessage(2);
                     connectException.printStackTrace();
                 }
@@ -140,6 +139,8 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
      * @param executorService
      */
     private void sendThread(ExecutorService executorService) {
+
+
         executorService.execute(new Runnable() {
             @Override
             public void run() {
