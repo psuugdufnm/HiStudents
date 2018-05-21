@@ -5,19 +5,13 @@ import android.text.TextUtils;
 
 import org.birdback.histudents.entity.RequestVo;
 import org.birdback.histudents.net.HttpServer;
-import org.birdback.histudents.net.RequestUrl;
 import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.VerifyUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.http.Part;
 
 
 /**

@@ -3,7 +3,6 @@ package org.birdback.histudents.activity;
 
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,7 +24,6 @@ import org.birdback.histudents.R;
 import org.birdback.histudents.adapter.OnRecyclerViewListener;
 import org.birdback.histudents.adapter.SeachBluetoothAdapter;
 import org.birdback.histudents.core.CoreBaseActivity;
-import org.birdback.histudents.entity.PrintBean;
 import org.birdback.histudents.utils.Session;
 import org.birdback.histudents.utils.TextUtils;
 

@@ -4,15 +4,12 @@ import android.support.v4.app.FragmentActivity;
 
 import org.birdback.histudents.Fragment.contract.OrderManagerContract;
 import org.birdback.histudents.activity.LoginActivity;
-import org.birdback.histudents.activity.contract.PrinterManagerContract;
-import org.birdback.histudents.core.CoreBaseContract;
 import org.birdback.histudents.entity.OrderListEntity;
 import org.birdback.histudents.net.Callback.OnFailureCallBack;
 import org.birdback.histudents.net.Callback.OnSuccessCallBack;
 import org.birdback.histudents.net.HttpServer;
 import org.birdback.histudents.service.RequestParams;
 import org.birdback.histudents.utils.Session;
-import org.birdback.histudents.utils.TextUtils;
 
 
 /**

@@ -1,8 +1,5 @@
 package org.birdback.histudents.net;
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 
 import io.reactivex.Observable;
@@ -14,12 +11,8 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
-import io.reactivex.functions.IntFunction;
 import io.reactivex.schedulers.Schedulers;
 
-
-import org.birdback.histudents.activity.LoginActivity;
-import org.birdback.histudents.base.BaseApplication;
 import org.birdback.histudents.core.CoreBaseActivity;
 import org.birdback.histudents.core.CoreBaseContract;
 import org.birdback.histudents.core.CoreBaseFragment;
@@ -29,7 +22,6 @@ import org.birdback.histudents.net.Callback.OnFailureCallBack;
 import org.birdback.histudents.net.Callback.OnSuccessCallBack;
 import org.birdback.histudents.net.helper.RetrofitHelper;
 import org.birdback.histudents.utils.LogUtil;
-import org.birdback.histudents.utils.Session;
 
 
 public class HttpServer {

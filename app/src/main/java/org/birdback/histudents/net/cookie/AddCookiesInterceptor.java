@@ -2,12 +2,8 @@ package org.birdback.histudents.net.cookie;
 
 
 import android.support.annotation.NonNull;
-import android.widget.Toast;
 
-import org.birdback.histudents.activity.LoginActivity;
-import org.birdback.histudents.base.BaseApplication;
 import org.birdback.histudents.utils.Session;
-import org.birdback.histudents.utils.TextUtils;
 import org.birdback.histudents.utils.VerifyUtil;
 
 import java.io.IOException;

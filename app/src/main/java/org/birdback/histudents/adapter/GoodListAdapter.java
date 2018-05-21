@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import org.birdback.histudents.R;
 import org.birdback.histudents.entity.OrderListEntity;
-import org.birdback.histudents.utils.TextUtils;
 import org.birdback.histudents.utils.VerifyUtil;
 
 import java.util.List;
