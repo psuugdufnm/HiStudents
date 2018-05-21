@@ -1,13 +1,8 @@
 package org.birdback.histudents.net.helper;
 
 import org.birdback.histudents.utils.LogUtil;
-import org.birdback.histudents.utils.Session;
-import org.birdback.histudents.utils.TextUtils;
-import org.birdback.histudents.utils.VerifyUtil;
 
 import java.io.IOException;
-import java.util.HashMap;
-
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.RequestBody;
