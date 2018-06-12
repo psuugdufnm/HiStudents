@@ -47,6 +47,7 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter, MyFragment
     private TextView tvGoodsManager;
     private TextView tvShopName;
     private ImageView ivShopLogo;
+    private TextView mTvMore;
 
     @Override
     public int getLayoutId() {
@@ -73,6 +74,8 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter, MyFragment
         tvMonthOrderNum = view.findViewById(R.id.tv_month_order);
         tvMonthTurnover = view.findViewById(R.id.tv_month_money);
         tvMonthViewNum = view.findViewById(R.id.tv_month_view);
+        mTvMore = view.findViewById(R.id.tv_more);
+
         tvLogout = view.findViewById(R.id.tv_logout);
 
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
@@ -85,6 +88,7 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter, MyFragment
         tvLogout.setOnClickListener(this);
         tvGoodsManager.setOnClickListener(this);
         swipeRefreshLayout.setOnRefreshListener(this);
+        mTvMore.setOnClickListener(this);
         mPresenter.getList();
 
         gridAdapter.setOnItemclickListener(new OnRecyclerViewListener() {
@@ -167,6 +171,9 @@ public class MyFragment extends CoreBaseFragment<MyFragmentPresenter, MyFragment
                 break;
             case R.id.tv_goods_manager:
                 GoodsSettingActivity.start(getActivity());
+                break;
+            case R.id.tv_more:
+
                 break;
         }
     }
