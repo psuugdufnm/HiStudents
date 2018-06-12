@@ -12,6 +12,7 @@ import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 
+import org.android.agoo.huawei.HuaWeiRegister;
 import org.android.agoo.mezu.MeizuRegister;
 import org.android.agoo.xiaomi.MiPushRegistar;
 import org.birdback.histudents.service.UmengNotificationService;
@@ -42,18 +43,18 @@ public class BaseApplication extends Application {
         SharedPreUtil.initialize(this);
         DeviceUtil.initChannel();
         initUMeng();
-        initMiPush();
-        initMeizuPush();
+        initPush();
         openBlueTooth();
         mApplication.registerReceiver(mReceiver,makeFilter());
     }
 
-    private void initMiPush() {
+    private void initPush(){
+        //小米通道
         MiPushRegistar.register(mApplication, "2882303761517786336","5631778619336");
-    }
-
-    private void initMeizuPush(){
+        //魅族通道
         MeizuRegister.register(mApplication, "113276", "3036553af8894137aa81a28faa935319");
+        //华为通道
+        HuaWeiRegister.register(mApplication);
     }
 
     private void initUMeng() {

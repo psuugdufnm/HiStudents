@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -127,7 +126,6 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
                     mmSocket.connect();
                     mHandler.sendEmptyMessage(3);
                 } catch (Exception connectException) {
-                    Log.d("", CONNSTATUS2);
                     mHandler.sendEmptyMessage(2);
                     connectException.printStackTrace();
                 }
@@ -140,6 +138,8 @@ public class PrinterManagerActivity extends CoreBaseActivity<PrinterManagerPrese
      * @param executorService
      */
     private void sendThread(ExecutorService executorService) {
+
+
         executorService.execute(new Runnable() {
             @Override
             public void run() {

@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.birdback.histudents.R;
-import org.birdback.histudents.utils.TextUtils;
 
 import java.util.ArrayList;
 

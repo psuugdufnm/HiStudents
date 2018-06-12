@@ -3,7 +3,6 @@ package org.birdback.histudents.Fragment.contract;
 import org.birdback.histudents.core.CoreBaseContract;
 import org.birdback.histudents.entity.OrderListEntity;
 
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 /**

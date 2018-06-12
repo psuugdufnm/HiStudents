@@ -14,13 +14,10 @@
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/sliding_tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tl:tl_indicator_color="#393E46"
-        tl:tl_indicator_corner_radius="5dp"
-        tl:tl_indicator_margin_left="2dp"
-        tl:tl_indicator_margin_right="2dp"
-        tl:tl_indicator_style="BLOCK"
-        />
+        android:layout_height="48dp"
+        android:background="@color/colorAccent"
+        tl:tl_indicator_color="#eeeeee"
+        tl:tl_indicator_style="TRIANGLE"/>
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"

@@ -283,8 +283,10 @@ public class PrintUtils {
                 PrintUtils.printText(PrintUtils.printThreeData("" + goodsListBean.getName(),
                         "x" + goodsListBean.getNum(),
                         goodsListBean.getPrice() + "\n"));
-                if (!VerifyUtil.isEmpty(goodsListBean.getShowDesc()))
-                PrintUtils.printText(goodsListBean.getShowDesc() +"\n");
+                if (!VerifyUtil.isEmpty(goodsListBean.getShowDesc())){
+
+                    PrintUtils.printText(goodsListBean.getShowDesc() +"\n");
+                }
             }
         }
         PrintUtils.selectCommand(PrintUtils.NORMAL);

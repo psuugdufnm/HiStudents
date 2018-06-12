@@ -9,12 +9,9 @@ import org.birdback.histudents.entity.OrderListEntity;
 import org.birdback.histudents.entity.PrintBean;
 import org.birdback.histudents.utils.PrintUtils;
 import org.birdback.histudents.utils.Session;
-import org.birdback.histudents.utils.TextUtils;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.IllegalFormatCodePointException;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
